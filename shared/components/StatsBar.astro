@@ -1,0 +1,18 @@
+---
+const stats = [
+  { num: '+5,000', label: 'Clientes activos' },
+  { num: '4K',     label: 'Calidad máxima' },
+  { num: '99.9%',  label: 'Disponibilidad' },
+  { num: '24/7',   label: 'Soporte activo' },
+];
+---
+<div class="stats-bar">
+  <div class="stats-inner">
+    {stats.map(s => (
+      <div class="stat-item reveal">
+        <span class="stat-num">{s.num}</span>
+        <span class="stat-label">{s.label}</span>
+      </div>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,52 @@
+---
+const cards = [
+  {
+    img: '/img/deportes.webp', alt: 'Deportes en vivo',
+    title: 'Deportes en Vivo',
+    desc: 'Los principales eventos deportivos nacionales e internacionales en directo y en HD.',
+    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  },
+  {
+    img: '/img/peliculas.webp', alt: 'Cine y películas en HD',
+    title: 'Cine de Estreno',
+    desc: 'Miles de películas en HD y 4K, desde los clásicos hasta los últimos estrenos mundiales.',
+    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>`,
+  },
+  {
+    img: '/img/series.webp', alt: 'Series internacionales',
+    title: 'Series Internacionales',
+    desc: 'Las series más vistas del mundo disponibles en tu idioma y en alta definición.',
+    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  },
+  {
+    img: '/img/tv.webp', alt: 'TV en vivo canales nacionales',
+    title: 'TV en Vivo',
+    desc: 'Canales nacionales e internacionales en transmisión continua, las 24 horas del día.',
+    icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>`,
+  },
+];
+---
+<section class="content-section" id="contenido">
+  <div class="inner">
+    <h2 class="section-title reveal">Todo el contenido <em>que quieres</em></h2>
+    <p class="section-sub reveal">Una plataforma completa para toda la familia</p>
+
+    <div class="content-grid">
+      {cards.map(card => (
+        <div class="content-card reveal">
+          <img src={card.img} alt={card.alt} width="600" height="338" loading="lazy" />
+          <div class="content-overlay" aria-hidden="true"></div>
+          <div class="content-info">
+            <div class="content-icon" aria-hidden="true">
+              <Fragment set:html={card.icon} />
+            </div>
+            <div class="content-text">
+              <h4>{card.title}</h4>
+              <p>{card.desc}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

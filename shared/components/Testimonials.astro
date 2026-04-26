@@ -1,0 +1,54 @@
+---
+interface Props {
+  testimonials?: {
+    initials: string;
+    gradient: string;
+    name: string;
+    city: string;
+    plan: string;
+    text: string;
+  }[];
+}
+
+const defaultTestimonials = [
+  { initials:'RT', gradient:'linear-gradient(135deg,#FF4500,#d93a00)',      name:'Rodrigo Tafur',     city:'Lima Norte',         plan:'Plan Anual',    text:'Llevo casi un año con Oleada TV y nunca he tenido problemas. Lo instalé en mi TV Box en menos de 10 minutos. El soporte por WhatsApp es inmediato y muy amable.' },
+  { initials:'MV', gradient:'linear-gradient(135deg,#7B2FBE,#5B21B6)',      name:'Mónica Vásquez',    city:'Arequipa',            plan:'Plan Mensual',  text:'Antes pagaba más de S/90 al mes por cable y apenas tenía contenido. Ahora pago mucho menos y tengo todo lo que quiero ver, sin cortes y en HD perfecto.' },
+  { initials:'JQ', gradient:'linear-gradient(135deg,#0ea5e9,#0284c7)',      name:'Javier Quispe',     city:'Trujillo',            plan:'Plan Anual',    text:'La calidad de imagen es increíble. Los deportes en vivo se ven sin ningún corte y el Full HD es perfecto. Ya lo recomendé a toda mi familia.' },
+  { initials:'PM', gradient:'linear-gradient(135deg,#10b981,#059669)',      name:'Paola Mendoza',     city:'Cusco',               plan:'Plan Mensual',  text:'Pagué por Yape en segundos y en menos de 5 minutos tenía mi acceso listo. Nunca pensé que fuera tan fácil. El proceso es rapidísimo.' },
+  { initials:'LH', gradient:'linear-gradient(135deg,#f59e0b,#d97706)',      name:'Luis Huanca',       city:'Piura',               plan:'Plan Anual',    text:'Lo tengo en mi Fire Stick y funciona perfectísimo. El equipo de soporte siempre disponible, responde en minutos. Vale cada sol que pagué.' },
+  { initials:'XF', gradient:'linear-gradient(135deg,#ec4899,#db2777)',      name:'Ximena Flores',     city:'Lima — San Isidro',   plan:'Plan Anual',    text:'Al principio tenía dudas, pero pagué con Yape y recibí mis credenciales al instante. Llevo 5 meses y todo funciona a la perfección.' },
+  { initials:'CB', gradient:'linear-gradient(135deg,#06b6d4,#0891b2)',      name:'Carlos Berrios',    city:'Iquitos',             plan:'Plan Mensual',  text:'Aquí en Iquitos no teníamos buenas opciones de cable. Con Oleada TV tengo todo el contenido que quiero sin las tarifas exageradas.' },
+  { initials:'SR', gradient:'linear-gradient(135deg,#8b5cf6,#7c3aed)',      name:'Sandra Ríos',       city:'Huancayo',            plan:'Plan Anual',    text:'Mis hijos ven sus series y yo veo los partidos. Todo en una cuenta, precio muy accesible y el soporte siempre está cuando lo necesito.' },
+];
+
+const { testimonials = defaultTestimonials } = Astro.props;
+---
+<section class="testimonials" id="testimonios">
+  <div class="inner">
+    <h2 class="section-title reveal">Lo que dicen <em>nuestros clientes</em></h2>
+    <p class="section-sub reveal">Más de 5,000 usuarios activos en todo el Perú</p>
+
+    <div class="testi-grid">
+      {testimonials.map(t => (
+        <article class="testi-card reveal">
+          <div class="testi-header">
+            <div class="testi-avatar" style={`background:${t.gradient};`} aria-hidden="true">{t.initials}</div>
+            <div>
+              <p class="testi-name">{t.name}</p>
+              <p class="testi-city">{t.city}</p>
+            </div>
+          </div>
+          <div class="testi-stars" aria-label="5 estrellas">
+            {Array.from({length:5}).map(() => (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            ))}
+          </div>
+          <span class="testi-plan">{t.plan}</span>
+          <p class="testi-text">"{t.text}"</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

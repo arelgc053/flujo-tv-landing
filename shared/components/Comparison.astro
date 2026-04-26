@@ -1,0 +1,38 @@
+---
+interface Props { currency: string; monthlyOffer: string; }
+const { currency, monthlyOffer } = Astro.props;
+
+const rows = [
+  { label: 'Precio mensual',     oleada: `${currency} ${monthlyOffer}`, cable: 'Desde S/ 80', ok: true },
+  { label: 'Contrato mínimo',    oleada: 'Sin permanencia',  cable: '12 a 24 meses',       ok: true },
+  { label: 'Instalación',        oleada: 'Online, inmediata', cable: 'Técnico en casa',    ok: true },
+  { label: 'Dispositivos',       oleada: 'TV, celular, tablet', cable: 'Solo TV principal', ok: true },
+  { label: 'Método de pago',     oleada: 'Yape / Plin',      cable: 'Factura mensual fija', ok: true },
+  { label: 'Activación',         oleada: 'En 5 minutos',     cable: '3 a 5 días hábiles',  ok: true },
+  { label: 'Soporte',            oleada: 'WhatsApp 24/7',    cable: 'Call center limitado', ok: true },
+];
+
+const yes = `<svg class="icon-yes" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+const no  = `<svg class="icon-no"  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+---
+<section class="comparison" id="comparativa">
+  <div class="inner">
+    <h2 class="section-title reveal">Por qué elegir <em>Oleada TV</em></h2>
+    <p class="section-sub reveal">Compara y decide tú mismo</p>
+
+    <div class="compare-table reveal" role="table" aria-label="Comparativa Oleada TV vs Cable">
+      <div class="compare-head" role="row">
+        <div role="columnheader">Característica</div>
+        <div role="columnheader">Oleada TV</div>
+        <div role="columnheader">Cable Tradicional</div>
+      </div>
+      {rows.map(row => (
+        <div class="compare-row" role="row">
+          <div role="cell">{row.label}</div>
+          <div role="cell"><Fragment set:html={yes} />{row.oleada}</div>
+          <div role="cell"><Fragment set:html={no}  />{row.cable}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

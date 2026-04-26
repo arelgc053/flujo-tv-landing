@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+
+# Editor y herramientas locales
+.vscode/
+.claude/
+
+# Archivos de la versión anterior (pre-monorepo) — solo en la raíz
+/src/
+/public/
+/astro.config.mjs
+/tsconfig.json
+/assets/
