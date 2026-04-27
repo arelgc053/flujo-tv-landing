@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://oleadatv.pe/sitemap.xml
+Sitemap: https://oleadatvplus.com/sitemap.xml
