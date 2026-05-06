@@ -30,7 +30,7 @@ oleada-tv/
 │   └── styles/
 │       └── global.css        ← Estilos globales (design system)
 └── apps/
-    └── pe/                   ← Landing de Perú (oleadatv.pe)
+    └── pe/                   ← Landing de Perú (oleadatvplus.com)
         ├── astro.config.mjs  ← Config Astro + alias @shared
         ├── tsconfig.json
         ├── package.json
