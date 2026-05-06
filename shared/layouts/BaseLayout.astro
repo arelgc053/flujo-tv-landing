@@ -1,15 +1,27 @@
 ---
 import '@shared/styles/global.css';
 
+interface ProductSchema {
+  name: string;
+  description: string;
+  price: string;
+  priceCurrency: string;
+  availability?: string;
+}
+
 interface Props {
   title: string;
   description: string;
   keywords: string;
   canonical: string;
+  author?: string;
+  twitterCreator?: string;
+  themeColor?: string;
   lang?: string;
   locale?: string;
   geoRegion?: string;
   faqSchema?: { q: string; a: string }[];
+  productSchema?: ProductSchema | null;
 }
 
 const {
@@ -17,10 +29,14 @@ const {
   description,
   keywords,
   canonical,
+  author = 'Oleada TV Peru',
+  twitterCreator = '@oleadatvplus',
+  themeColor = '#00E5FF',
   lang = 'es-PE',
   locale = 'es_PE',
   geoRegion = 'PE',
   faqSchema = [],
+  productSchema = null,
 } = Astro.props;
 
 const ogImage = new URL('/img/hero.webp', Astro.site).href;
@@ -52,6 +68,27 @@ const faqSchemaFull = faqSchema.length > 0
       })),
     }
   : null;
+
+const productSchemaFull = productSchema
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: productSchema.name,
+      description: productSchema.description,
+      brand: {
+        '@type': 'Brand',
+        name: 'Oleada TV',
+      },
+      offers: {
+        '@type': 'Offer',
+        url: canonical,
+        priceCurrency: productSchema.priceCurrency,
+        price: productSchema.price,
+        availability: productSchema.availability ?? 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
+      },
+    }
+  : null;
 ---
 <!DOCTYPE html>
 <html lang={lang}>
@@ -59,6 +96,8 @@ const faqSchemaFull = faqSchema.length > 0
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow" />
+  <meta name="author" content={author} />
+  <meta name="theme-color" content={themeColor} />
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="keywords" content={keywords} />
@@ -82,6 +121,7 @@ const faqSchemaFull = faqSchema.length > 0
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:creator" content={twitterCreator} />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/favicon.png" />
@@ -99,6 +139,9 @@ const faqSchemaFull = faqSchema.length > 0
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   {faqSchemaFull && (
     <script type="application/ld+json" set:html={JSON.stringify(faqSchemaFull)} />
+  )}
+  {productSchemaFull && (
+    <script type="application/ld+json" set:html={JSON.stringify(productSchemaFull)} />
   )}
 </head>
 <body>

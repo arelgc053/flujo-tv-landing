@@ -77,16 +77,27 @@ const faqItems = [
     a: 'Por el momento no ofrecemos período de prueba gratuito. Sin embargo, nuestro precio de lanzamiento es el más accesible del mercado y puedes empezar con el plan mensual sin compromiso.',
   },
 ];
+
+const productSchema = {
+  name: 'Plan Mensual Oleada TV',
+  description: 'Plan mensual con acceso a deportes en vivo, cine y series en HD y 4K.',
+  price: COUNTRY.monthlyOffer,
+  priceCurrency: 'PEN',
+};
 ---
 <BaseLayout
   title="Oleada TV Perú — Streaming HD · Deportes, Cine y Series desde S/ 11.99"
-  description="Oleada TV: streaming premium en HD y 4K desde S/ 11.99/mes. Deportes en vivo, cine de estreno y series internacionales. Actívate hoy por WhatsApp en menos de 5 minutos. Paga con Yape o Plin."
+  description="Streaming en HD y 4K desde S/ 11.99 al mes. Deportes en vivo, cine y series. Activa por WhatsApp en minutos y paga con Yape o Plin."
   keywords="oleada tv, oleada tv perú, oleada tv precio, oleada tv soles, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, oleada tv yape, streaming perú barato, tv streaming perú, canales en vivo perú, deportes en vivo perú, series hd perú, cine hd perú, streaming hd perú, tv online perú, oleada tv soporte whatsapp"
   canonical="https://oleadatvplus.com/"
+  author="Oleada TV Peru"
+  twitterCreator="@oleadatvplus"
+  themeColor="#00E5FF"
   lang="es-PE"
   locale="es_PE"
   geoRegion="PE"
   faqSchema={faqItems}
+  productSchema={productSchema}
 />
 
 <Navbar brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
