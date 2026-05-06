@@ -2,8 +2,9 @@
   "name": "oleada-tv",
   "private": true,
   "workspaces": ["apps/*"],
-  "scripts": {
+"scripts": {
     "dev": "npm run dev --workspace=apps/pe",
+    "build": "npm run build --workspace=apps/pe", 
     "build:pe": "npm run build --workspace=apps/pe",
     "preview:pe": "npm run preview --workspace=apps/pe",
     "build:all": "npm run build --workspaces --if-present"
