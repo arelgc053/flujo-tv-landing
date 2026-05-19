@@ -6,6 +6,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
   site: 'https://oleadatvplus.com',
+  trailingSlash: 'never',
   compressHTML: true,
   vite: {
     resolve: {

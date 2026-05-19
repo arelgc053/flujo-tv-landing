@@ -9,6 +9,15 @@ interface ProductSchema {
   availability?: string;
 }
 
+interface LocalBusinessSchema {
+  telephone: string;
+  priceRange: string;
+  currenciesAccepted: string;
+  paymentAccepted: string;
+  areaServed: string[];
+  siteName: string;
+}
+
 interface Props {
   title: string;
   description: string;
@@ -20,8 +29,12 @@ interface Props {
   lang?: string;
   locale?: string;
   geoRegion?: string;
+  geoPlacename?: string;
+  geoPosition?: string;
   faqSchema?: { q: string; a: string }[];
   productSchema?: ProductSchema | null;
+  localBusiness?: LocalBusinessSchema | null;
+  breadcrumb?: { name: string; url: string }[];
 }
 
 const {
@@ -29,33 +42,79 @@ const {
   description,
   keywords,
   canonical,
-  author = 'Oleada TV Peru',
+  author = 'Oleada TV',
   twitterCreator = '@oleadatvplus',
   themeColor = '#00E5FF',
-  lang = 'es-PE',
+  lang = 'es',
   locale = 'es_PE',
   geoRegion = 'PE',
+  geoPlacename,
+  geoPosition,
   faqSchema = [],
   productSchema = null,
+  localBusiness = null,
+  breadcrumb = [],
 } = Astro.props;
 
 const ogImage = new URL('/img/hero.webp', Astro.site).href;
 const logoUrl  = new URL('/img/logo.png', Astro.site).href;
 
-const orgSchema = {
+const websiteSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Oleada TV',
+  '@type': 'WebSite',
+  name: localBusiness?.siteName ?? 'Oleada TV',
   url: canonical,
-  logo: logoUrl,
-  description: 'Plataforma de entretenimiento digital premium. Deportes en vivo, cine y series en HD y 4K para Latinoamérica.',
-  contactPoint: {
-    '@type': 'ContactPoint',
-    telephone: '+51940405911',
-    contactType: 'customer service',
-    availableLanguage: 'Spanish',
-  },
+  description,
+  inLanguage: lang,
 };
+
+const orgSchema = localBusiness
+  ? {
+      '@context': 'https://schema.org',
+      '@type': ['Organization', 'LocalBusiness'],
+      name: localBusiness.siteName,
+      url: canonical,
+      logo: {
+        '@type': 'ImageObject',
+        url: logoUrl,
+        width: 260,
+        height: 68,
+      },
+      image: ogImage,
+      description,
+      telephone: localBusiness.telephone,
+      priceRange: localBusiness.priceRange,
+      currenciesAccepted: localBusiness.currenciesAccepted,
+      paymentAccepted: localBusiness.paymentAccepted,
+      areaServed: localBusiness.areaServed.map(name => ({ '@type': 'AdministrativeArea', name })),
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: localBusiness.telephone,
+        contactType: 'customer service',
+        contactOption: 'TollFree',
+        availableLanguage: 'Spanish',
+        hoursAvailable: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+          opens: '00:00',
+          closes: '23:59',
+        },
+      },
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Oleada TV',
+      url: canonical,
+      logo: logoUrl,
+      description,
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+51940405911',
+        contactType: 'customer service',
+        availableLanguage: 'Spanish',
+      },
+    };
 
 const faqSchemaFull = faqSchema.length > 0
   ? {
@@ -75,10 +134,7 @@ const productSchemaFull = productSchema
       '@type': 'Product',
       name: productSchema.name,
       description: productSchema.description,
-      brand: {
-        '@type': 'Brand',
-        name: 'Oleada TV',
-      },
+      brand: { '@type': 'Brand', name: 'Oleada TV' },
       offers: {
         '@type': 'Offer',
         url: canonical,
@@ -86,7 +142,21 @@ const productSchemaFull = productSchema
         price: productSchema.price,
         availability: productSchema.availability ?? 'https://schema.org/InStock',
         itemCondition: 'https://schema.org/NewCondition',
+        seller: { '@type': 'Organization', name: 'Oleada TV' },
       },
+    }
+  : null;
+
+const breadcrumbSchema = breadcrumb.length > 0
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumb.map((item, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: item.name,
+        item: item.url,
+      })),
     }
   : null;
 ---
@@ -95,15 +165,20 @@ const productSchemaFull = productSchema
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="author" content={author} />
   <meta name="theme-color" content={themeColor} />
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="keywords" content={keywords} />
   <link rel="canonical" href={canonical} />
+
+  <!-- Geo -->
   <meta name="geo.region" content={geoRegion} />
   <meta name="language" content="Spanish" />
+  {geoPlacename && <meta name="geo.placename" content={geoPlacename} />}
+  {geoPosition && <meta name="geo.position" content={geoPosition} />}
+  {geoPosition && <meta name="ICBM" content={geoPosition} />}
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -113,6 +188,7 @@ const productSchemaFull = productSchema
   <meta property="og:image" content={ogImage} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
   <meta property="og:locale" content={locale} />
   <meta property="og:site_name" content="Oleada TV" />
 
@@ -136,12 +212,16 @@ const productSchemaFull = productSchema
   <link rel="preload" as="image" href="/img/hero.webp" fetchpriority="high" />
 
   <!-- Schema.org -->
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   {faqSchemaFull && (
     <script type="application/ld+json" set:html={JSON.stringify(faqSchemaFull)} />
   )}
   {productSchemaFull && (
     <script type="application/ld+json" set:html={JSON.stringify(productSchemaFull)} />
+  )}
+  {breadcrumbSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   )}
 </head>
 <body>

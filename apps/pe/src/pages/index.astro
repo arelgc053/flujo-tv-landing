@@ -79,25 +79,44 @@ const faqItems = [
 ];
 
 const productSchema = {
-  name: 'Plan Mensual Oleada TV',
-  description: 'Plan mensual con acceso a deportes en vivo, cine y series en HD y 4K.',
+  name: 'Plan Mensual Oleada TV Perú',
+  description: 'Plan mensual de streaming con acceso ilimitado a deportes en vivo, cine de estreno y series en HD y 4K. Actívate en minutos pagando con Yape o Plin.',
   price: COUNTRY.monthlyOffer,
   priceCurrency: 'PEN',
+  availability: 'https://schema.org/InStock',
 };
+
+const localBusiness = {
+  siteName: 'Oleada TV',
+  telephone: '+51940405911',
+  priceRange: `S/ ${COUNTRY.monthlyOffer} - S/ ${COUNTRY.annualOffer}`,
+  currenciesAccepted: 'PEN',
+  paymentAccepted: 'Yape, Plin, Transferencia Bancaria',
+  areaServed: ['Perú', 'Lima', 'Arequipa', 'Trujillo', 'Cusco', 'Piura', 'Iquitos', 'Chiclayo', 'Huancayo'],
+};
+
+const breadcrumb = [
+  { name: 'Inicio', url: 'https://oleadatvplus.com/' },
+  { name: 'Planes', url: 'https://oleadatvplus.com/#planes' },
+];
 ---
 <BaseLayout
-  title="Oleada TV Perú — Streaming HD · Deportes, Cine y Series desde S/ 11.99"
-  description="Streaming en HD y 4K desde S/ 11.99 al mes. Deportes en vivo, cine y series. Activa por WhatsApp en minutos y paga con Yape o Plin."
-  keywords="oleada tv, oleada tv perú, oleada tv precio, oleada tv soles, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, oleada tv yape, streaming perú barato, tv streaming perú, canales en vivo perú, deportes en vivo perú, series hd perú, cine hd perú, streaming hd perú, tv online perú, oleada tv soporte whatsapp"
+  title="Oleada TV Perú — TV por Internet en HD · Deportes, Cine y Series desde S/ 11.99"
+  description="TV por internet en HD y 4K desde S/ 11.99 al mes. Deportes en vivo, cine y series. Activa por WhatsApp en minutos y paga con Yape o Plin. Disponible en todo el Perú."
+  keywords="oleada tv, oleada tv perú, oleada tv precio, oleada tv soles, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, oleada tv yape, tv por internet perú, tv online perú, canales por internet perú, ver tv online perú, deportes en vivo perú, fútbol en vivo perú, series hd perú, cine hd perú, tv sin cable perú, canales online perú, oleada tv soporte whatsapp, alternativa cable tv perú, pagar tv con yape"
   canonical="https://oleadatvplus.com/"
-  author="Oleada TV Peru"
+  author="Oleada TV Perú"
   twitterCreator="@oleadatvplus"
   themeColor="#00E5FF"
   lang="es-PE"
   locale="es_PE"
   geoRegion="PE"
+  geoPlacename="Lima, Perú"
+  geoPosition="-12.0464;-77.0428"
   faqSchema={faqItems}
   productSchema={productSchema}
+  localBusiness={localBusiness}
+  breadcrumb={breadcrumb}
 />
 
 <Navbar brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
