@@ -2,11 +2,21 @@
   "name": "oleada-tv",
   "private": true,
   "workspaces": ["apps/*"],
-"scripts": {
+
+  "scripts": {
     "dev": "npm run dev --workspace=apps/pe",
-    "build": "npm run build --workspace=apps/pe", 
+
+    "dev:pe": "npm run dev --workspace=apps/pe",
+    "dev:ec": "npm run dev --workspace=apps/ec",
+
+    "build": "npm run build --workspace=apps/pe",
+
     "build:pe": "npm run build --workspace=apps/pe",
+    "build:ec": "npm run build --workspace=apps/ec",
+
     "preview:pe": "npm run preview --workspace=apps/pe",
+    "preview:ec": "npm run preview --workspace=apps/ec",
+
     "build:all": "npm run build --workspaces --if-present"
   }
 }

@@ -1,0 +1,145 @@
+---
+import BaseLayout          from '@shared/layouts/BaseLayout.astro';
+import Navbar              from '@shared/components/Navbar.astro';
+import Hero                from '@shared/components/Hero.astro';
+import StatsBar            from '@shared/components/StatsBar.astro';
+import HowItWorks          from '@shared/components/HowItWorks.astro';
+import ContentGrid         from '@shared/components/ContentGrid.astro';
+import Plans               from '@shared/components/Plans.astro';
+import Comparison          from '@shared/components/Comparison.astro';
+import Testimonials        from '@shared/components/Testimonials.astro';
+import Devices             from '@shared/components/Devices.astro';
+import FAQ                 from '@shared/components/FAQ.astro';
+import CTAFinal            from '@shared/components/CTAFinal.astro';
+import Footer              from '@shared/components/Footer.astro';
+import WhatsAppFloat       from '@shared/components/WhatsAppFloat.astro';
+import StickyMobileCTA     from '@shared/components/StickyMobileCTA.astro';
+
+const COUNTRY = {
+  brand:           'Oleada TV',
+  whatsapp:        '51940405911',
+  currency:        'S/',
+  monthlyOriginal: '15',
+  monthlyOffer:    '11.99',
+  annualOriginal:  '130',
+  annualOffer:     '119.99',
+  annualSaving:    '23.89',
+  paymentMethods:  ['Yape', 'Plin'],
+};
+
+const faqItems = [
+  {
+    q: '¿Qué necesito para activar mi servicio?',
+    a: 'Solo necesitas un dispositivo Android (TV Box, celular, tablet o Fire Stick) y conexión a internet. Tras confirmar tu pago por Yape o Plin te enviamos tus credenciales de acceso en minutos.',
+  },
+  {
+    q: '¿Cuánto tiempo tarda la activación?',
+    a: 'La activación es prácticamente inmediata. En promedio, nuestros clientes reciben sus credenciales en menos de 5 minutos tras confirmar el pago.',
+  },
+  {
+    q: '¿Puedo usar el servicio en más de un dispositivo?',
+    a: 'Cada cuenta permite 1 dispositivo activo simultáneo. Puedes cambiar de dispositivo cuando lo necesites; solo puede reproducir contenido uno a la vez.',
+  },
+  {
+    q: '¿Cómo pago? ¿Aceptan Yape y Plin?',
+    a: 'Sí, aceptamos Yape y Plin como métodos de pago principales. Es rápido, seguro y sin necesidad de tarjeta de crédito.',
+  },
+  {
+    q: '¿Hay contratos o permanencia?',
+    a: 'No. Puedes elegir el plan mensual o anual sin ningún compromiso de permanencia. Renuevas cuando tú decides.',
+  },
+  {
+    q: '¿Qué tipo de contenido está disponible?',
+    a: 'Deportes en vivo, cine de estreno, series internacionales y canales de TV en directo las 24 horas. Todo en alta definición.',
+  },
+  {
+    q: '¿Cómo instalo la app en Amazon Fire Stick usando Downloader?',
+    a: 'En tu Fire Stick ve a Configuración → Mi Fire TV → Opciones de desarrollador y activa "Apps de orígenes desconocidos". Luego abre la app Downloader, ingresa el código de instalación de Oleada TV que te enviamos por WhatsApp y sigue los pasos. Nuestro equipo te guía en menos de 10 minutos.',
+  },
+  {
+    q: '¿Cómo instalo Oleada TV en Android TV o TV Box?',
+    a: 'Abre el instalador que te indicamos o usa el código que te enviamos por WhatsApp. Si tu dispositivo no tiene acceso directo a la tienda, nuestro soporte te guía paso a paso con el método alternativo de instalación.',
+  },
+  {
+    q: '¿Cuál es la última versión de Oleada TV y cómo la actualizo?',
+    a: 'Siempre te indicamos la versión más reciente al momento de tu activación. Si ya eres cliente y necesitas actualizar Oleada TV a la última versión, escríbenos por WhatsApp y te enviamos el enlace de descarga actualizado al instante.',
+  },
+  {
+    q: '¿Qué pasa si tengo problemas técnicos?',
+    a: 'Contamos con soporte técnico por WhatsApp disponible todos los días. Respondemos en menos de 5 minutos en horario extendido.',
+  },
+  {
+    q: '¿Funciona con internet lento?',
+    a: 'Recomendamos mínimo 10 Mbps para SD, 25 Mbps para HD y 50 Mbps para 4K. En redes más lentas el servicio se adapta automáticamente para reducir cortes.',
+  },
+  {
+    q: '¿Hay alguna prueba gratuita?',
+    a: 'Por el momento no ofrecemos período de prueba gratuito. Sin embargo, nuestro precio de lanzamiento es el más accesible del mercado y puedes empezar con el plan mensual sin compromiso.',
+  },
+];
+---
+<BaseLayout
+  title="Oleada TV Perú — Streaming HD · Deportes, Cine y Series desde S/ 11.99"
+  description="Oleada TV: streaming premium en HD y 4K desde S/ 11.99/mes. Deportes en vivo, cine de estreno y series internacionales. Actívate hoy por WhatsApp en menos de 5 minutos. Paga con Yape o Plin."
+  keywords="oleada tv, oleada tv perú, oleada tv precio, oleada tv soles, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, oleada tv yape, streaming perú barato, tv streaming perú, canales en vivo perú, deportes en vivo perú, series hd perú, cine hd perú, streaming hd perú, tv online perú, oleada tv soporte whatsapp"
+  canonical="https://oleadatvplus.com/"
+  lang="es-PE"
+  locale="es_PE"
+  geoRegion="PE"
+  faqSchema={faqItems}
+/>
+
+<Navbar brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+
+<main>
+  <Hero
+    brand={COUNTRY.brand}
+    whatsapp={COUNTRY.whatsapp}
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+  />
+
+  <StatsBar />
+
+  <HowItWorks whatsapp={COUNTRY.whatsapp} />
+
+  <ContentGrid />
+
+  <Plans
+    currency={COUNTRY.currency}
+    monthlyOriginal={COUNTRY.monthlyOriginal}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    annualOriginal={COUNTRY.annualOriginal}
+    annualOffer={COUNTRY.annualOffer}
+    annualSaving={COUNTRY.annualSaving}
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <Comparison
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+  />
+
+  <Testimonials />
+
+  <Devices />
+
+  <FAQ items={faqItems} />
+
+  <CTAFinal
+    whatsapp={COUNTRY.whatsapp}
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+  />
+</main>
+
+<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+
+<WhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+
+<StickyMobileCTA
+  whatsapp={COUNTRY.whatsapp}
+  currency={COUNTRY.currency}
+  monthlyOffer={COUNTRY.monthlyOffer}
+/>
