@@ -30,7 +30,7 @@ oleada-tv/
 │   └── styles/
 │       └── global.css        ← Estilos globales (design system)
 └── apps/
-    └── pe/                   ← Landing de Perú (oleadatv.pe)
+    └── pe/                   ← Landing de Perú (oleadatvplus.com)
         ├── astro.config.mjs  ← Config Astro + alias @shared
         ├── tsconfig.json
         ├── package.json
@@ -83,6 +83,8 @@ npm run preview:pe
 ```
 
 El output se genera en `apps/pe/dist/`.
+
+> **Importante:** Los archivos SEO y de publicación (robots.txt, sitemap.xml, _redirects e imágenes) se mantienen en `apps/pe/public/`. No editar la carpeta `public/` de la raíz para cambios de la landing de Perú.
 
 ---
 
