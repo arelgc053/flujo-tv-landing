@@ -14,18 +14,9 @@ import CTAFinal            from '@shared/components/CTAFinal.astro';
 import Footer              from '@shared/components/Footer.astro';
 import WhatsAppFloat       from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA     from '@shared/components/StickyMobileCTA.astro';
+import { COUNTRY } from '../config/country';
 
-const COUNTRY = {
-  brand:           'Oleada TV',
-  whatsapp:        '51940405911',
-  currency:        'S/',
-  monthlyOriginal: '15',
-  monthlyOffer:    '11.99',
-  annualOriginal:  '130',
-  annualOffer:     '119.99',
-  annualSaving:    '23.89',
-  paymentMethods:  ['Yape', 'Plin'],
-};
+
 
 const faqItems = [
   {
@@ -79,13 +70,13 @@ const faqItems = [
 ];
 ---
 <BaseLayout
-  title="Oleada TV Perú — Streaming HD · Deportes, Cine y Series desde S/ 11.99"
+  title="Oleada TV Ecuador — Streaming HD · Deportes, Cine y Series desde $11.99"
   description="Oleada TV: streaming premium en HD y 4K desde S/ 11.99/mes. Deportes en vivo, cine de estreno y series internacionales. Actívate hoy por WhatsApp en menos de 5 minutos. Paga con Yape o Plin."
   keywords="oleada tv, oleada tv perú, oleada tv precio, oleada tv soles, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, oleada tv yape, streaming perú barato, tv streaming perú, canales en vivo perú, deportes en vivo perú, series hd perú, cine hd perú, streaming hd perú, tv online perú, oleada tv soporte whatsapp"
   canonical="https://oleadatvplus.com/"
-  lang="es-PE"
-  locale="es_PE"
-  geoRegion="PE"
+  lang="es-EC"
+  locale="es_EC"
+  geoRegion="EC"
   faqSchema={faqItems}
 />
 
