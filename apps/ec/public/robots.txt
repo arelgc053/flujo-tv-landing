@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /dist/
+Disallow: /node_modules/
+
+# Googlebot específico — crawl intensivo
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+Sitemap: https://oleadatvplus.com/sitemap.xml

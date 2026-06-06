@@ -1,0 +1,15 @@
+# www y http → https sin www (canonical de dominio)
+http://www.oleadatvplus.com/* https://oleadatvplus.com/:splat 301!
+https://www.oleadatvplus.com/* https://oleadatvplus.com/:splat 301!
+http://oleadatvplus.com/* https://oleadatvplus.com/:splat 301!
+
+# Trailing slash → sin trailing slash (canonical de URL)
+/tv-por-internet-peru/ /tv-por-internet-peru 301!
+/ver-deportes-por-internet/ /ver-deportes-por-internet 301!
+/tv-online-lima/ /tv-online-lima 301!
+/paga-con-yape/ /paga-con-yape 301!
+/tv-sin-cortes-peru/ /tv-sin-cortes-peru 301!
+
+# Redirección de la antigua landing de Magis TV por si alguien la guardó
+/alternativa-magis-tv /tv-sin-cortes-peru 301!
+/alternativa-magis-tv/ /tv-sin-cortes-peru 301!

@@ -1,12 +1,12 @@
 ---
-import BaseLayout          from '@shared/layouts/BaseLayout.astro';
+import                          '../global.css';
+import BaseLayout          from '../layouts/BaseLayout.astro';
 import Navbar              from '@shared/components/Navbar.astro';
 import Hero                from '@shared/components/Hero.astro';
 import StatsBar            from '@shared/components/StatsBar.astro';
 import HowItWorks          from '@shared/components/HowItWorks.astro';
 import ContentGrid         from '@shared/components/ContentGrid.astro';
 import Plans               from '@shared/components/Plans.astro';
-import Comparison          from '@shared/components/Comparison.astro';
 import Testimonials        from '@shared/components/Testimonials.astro';
 import Devices             from '@shared/components/Devices.astro';
 import FAQ                 from '@shared/components/FAQ.astro';
@@ -14,26 +14,35 @@ import CTAFinal            from '@shared/components/CTAFinal.astro';
 import Footer              from '@shared/components/Footer.astro';
 import WhatsAppFloat       from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA     from '@shared/components/StickyMobileCTA.astro';
-import { COUNTRY } from '../config/country';
 
-
+const COUNTRY = {
+  brand:           'Oleada TV',
+  whatsapp:        '5940405911',
+  currency:        '$',
+  monthlyOriginal: '15',
+  monthlyOffer:    '11.99',
+  annualOriginal:  '130',
+  annualOffer:     '119.99',
+  annualSaving:    '23.89',
+  paymentMethods:  ['Transferencia', 'Depósito'],
+};
 
 const faqItems = [
   {
     q: '¿Qué necesito para activar mi servicio?',
-    a: 'Solo necesitas un dispositivo Android (TV Box, celular, tablet o Fire Stick) y conexión a internet. Tras confirmar tu pago por Yape o Plin te enviamos tus credenciales de acceso en minutos.',
+    a: 'Solo necesitas un dispositivo Android (TV Box, celular, tablet o Fire Stick) y conexión a internet. Tras confirmar tu pago te enviamos tus credenciales de acceso en minutos por WhatsApp.',
   },
   {
     q: '¿Cuánto tiempo tarda la activación?',
-    a: 'La activación es prácticamente inmediata. En promedio, nuestros clientes reciben sus credenciales en menos de 5 minutos tras confirmar el pago.',
+    a: 'La activación es prácticamente inmediata. En promedio, nuestros clientes en Ecuador reciben sus credenciales en menos de 5 minutos tras confirmar el pago.',
   },
   {
     q: '¿Puedo usar el servicio en más de un dispositivo?',
     a: 'Cada cuenta permite 1 dispositivo activo simultáneo. Puedes cambiar de dispositivo cuando lo necesites; solo puede reproducir contenido uno a la vez.',
   },
   {
-    q: '¿Cómo pago? ¿Aceptan Yape y Plin?',
-    a: 'Sí, aceptamos Yape y Plin como métodos de pago principales. Es rápido, seguro y sin necesidad de tarjeta de crédito.',
+    q: '¿Cómo realizo mi pago desde Ecuador?',
+    a: 'Aceptamos transferencias bancarias y depósitos. Una vez que nos confirmes el pago por WhatsApp, activamos tu cuenta de inmediato. No necesitas tarjeta de crédito.',
   },
   {
     q: '¿Hay contratos o permanencia?',
@@ -41,7 +50,7 @@ const faqItems = [
   },
   {
     q: '¿Qué tipo de contenido está disponible?',
-    a: 'Deportes en vivo, cine de estreno, series internacionales y canales de TV en directo las 24 horas. Todo en alta definición.',
+    a: 'Deportes en vivo, cine de estreno, series internacionales y canales de TV en directo las 24 horas. Todo en alta definición desde Ecuador.',
   },
   {
     q: '¿Cómo instalo la app en Amazon Fire Stick usando Downloader?',
@@ -53,11 +62,11 @@ const faqItems = [
   },
   {
     q: '¿Cuál es la última versión de Oleada TV y cómo la actualizo?',
-    a: 'Siempre te indicamos la versión más reciente al momento de tu activación. Si ya eres cliente y necesitas actualizar Oleada TV a la última versión, escríbenos por WhatsApp y te enviamos el enlace de descarga actualizado al instante.',
+    a: 'Siempre te indicamos la versión más reciente al momento de tu activación. Si ya eres cliente y necesitas actualizar Oleada TV, escríbenos por WhatsApp y te enviamos el enlace de descarga actualizado al instante.',
   },
   {
     q: '¿Qué pasa si tengo problemas técnicos?',
-    a: 'Contamos con soporte técnico por WhatsApp disponible todos los días. Respondemos en menos de 5 minutos en horario extendido.',
+    a: 'Contamos con soporte técnico por WhatsApp disponible todos los días. Respondemos en menos de 5 minutos en horario extendido, sin importar tu ciudad.',
   },
   {
     q: '¿Funciona con internet lento?',
@@ -65,36 +74,64 @@ const faqItems = [
   },
   {
     q: '¿Hay alguna prueba gratuita?',
-    a: 'Por el momento no ofrecemos período de prueba gratuito. Sin embargo, nuestro precio de lanzamiento es el más accesible del mercado y puedes empezar con el plan mensual sin compromiso.',
+    a: 'Por el momento no ofrecemos período de prueba gratuito. Sin embargo, nuestro precio de lanzamiento es el más accesible del mercado en Ecuador y puedes empezar con el plan mensual sin compromiso.',
   },
+];
+
+const productSchema = {
+  name: 'Plan Mensual Oleada TV Ecuador',
+  description: 'Plan mensual de streaming con acceso ilimitado a deportes en vivo, cine de estreno y series en HD y 4K para Ecuador. Actívate en minutos.',
+  price: COUNTRY.monthlyOffer,
+  priceCurrency: 'USD',
+  availability: 'https://schema.org/InStock',
+};
+
+const localBusiness = {
+  siteName: 'Oleada TV',
+  telephone: '+5940405911',
+  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
+  currenciesAccepted: 'USD',
+  paymentAccepted: 'Transferencia Bancaria, Depósito',
+  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
+};
+
+const breadcrumb = [
+  { name: 'Inicio', url: 'https://oleadatvec.com/' },
+  { name: 'Planes', url: 'https://oleadatvec.com/#planes' },
 ];
 ---
 <BaseLayout
-  title="Oleada TV Ecuador — Streaming HD · Deportes, Cine y Series desde $11.99"
-  description="Oleada TV: streaming premium en HD y 4K desde S/ 11.99/mes. Deportes en vivo, cine de estreno y series internacionales. Actívate hoy por WhatsApp en menos de 5 minutos. Paga con Yape o Plin."
-  keywords="oleada tv, oleada tv perú, oleada tv precio, oleada tv soles, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, oleada tv yape, streaming perú barato, tv streaming perú, canales en vivo perú, deportes en vivo perú, series hd perú, cine hd perú, streaming hd perú, tv online perú, oleada tv soporte whatsapp"
-  canonical="https://oleadatvplus.com/"
+  title="Oleada TV Ecuador — TV por Internet en HD · Deportes, Cine y Series desde $ 11.99"
+  description="TV por internet en HD y 4K desde $ 11.99 al mes. Deportes en vivo, cine y series. Activa por WhatsApp en minutos. Disponible en todo Ecuador."
+  keywords="oleada tv, oleada tv ecuador, oleada tv precio, oleada tv dolares, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, tv por internet ecuador, tv online ecuador, canales por internet ecuador, ver tv online ecuador, deportes en vivo ecuador, fútbol en vivo ecuador, series hd ecuador, cine hd ecuador, tv sin cable ecuador, canales online ecuador, oleada tv soporte whatsapp, alternativa cable tv ecuador"
+  canonical="https://oleadatvec.com/"
+  author="Oleada TV Ecuador"
+  twitterCreator="@oleadatvec"
+  themeColor="#00C853"
   lang="es-EC"
   locale="es_EC"
   geoRegion="EC"
+  geoPlacename="Quito, Ecuador"
+  geoPosition="-0.1807;-78.4678"
   faqSchema={faqItems}
+  productSchema={productSchema}
+  localBusiness={localBusiness}
+  breadcrumb={breadcrumb}
 />
 
 <Navbar brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
 
 <main>
-  <Hero
-    brand={COUNTRY.brand}
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
-  />
-
-  <StatsBar />
-
-  <HowItWorks whatsapp={COUNTRY.whatsapp} />
+<Hero
+  whatsapp={COUNTRY.whatsapp}
+  country="Ecuador"
+  currency={COUNTRY.currency}
+  monthlyOffer={COUNTRY.monthlyOffer}
+/>
 
   <ContentGrid />
+
+  <StatsBar />
 
   <Plans
     currency={COUNTRY.currency}
@@ -107,14 +144,11 @@ const faqItems = [
     paymentMethods={COUNTRY.paymentMethods}
   />
 
-  <Comparison
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
-  />
-
   <Testimonials />
 
   <Devices />
+
+  <HowItWorks whatsapp={COUNTRY.whatsapp} />
 
   <FAQ items={faqItems} />
 
