@@ -1,0 +1,59 @@
+---
+const items = [
+  {
+    className: 'showcase-card showcase-card-main',
+    img: '/img/deportes.webp',
+    alt: 'TV en vivo en casa',
+    eyebrow: 'Pantalla principal',
+    title: 'TV para acompañar la casa',
+    desc: 'Canales en vivo para dejar de fondo, seguir noticias o ver algo mientras compartes en familia.',
+  },
+  {
+    className: 'showcase-card',
+    img: '/img/peliculas.webp',
+    alt: 'Peliculas en HD',
+    eyebrow: 'Cine',
+    title: 'Películas para quedarse en casa',
+    desc: 'Opciones para la noche, el fin de semana o cuando quieres ver algo sin salir.',
+  },
+  {
+    className: 'showcase-card',
+    img: '/img/series.webp',
+    alt: 'Series internacionales',
+    eyebrow: 'Series',
+    title: 'Series para seguir a tu ritmo',
+    desc: 'Capítulos pendientes, historias familiares y contenido para ver sin apuro.',
+  },
+  {
+    className: 'showcase-card',
+    img: '/img/tv.webp',
+    alt: 'Deportes en vivo',
+    eyebrow: 'Eventos',
+    title: 'El partido sin complicarte',
+    desc: 'Eventos en vivo con acceso desde tu pantalla principal y soporte cuando lo necesitas.',
+  },
+];
+---
+<section class="ec-showcase" id="contenido" aria-labelledby="showcase-title">
+  <div class="inner">
+    <div class="showcase-heading reveal">
+      <span class="activation-kicker">Parrilla en casa</span>
+      <h2 id="showcase-title" class="section-title">Una selección pensada <em>para ver en familia</em></h2>
+      <p class="section-sub">Para la película de la noche, la serie pendiente, el partido o simplemente dejar la TV encendida.</p>
+    </div>
+
+    <div class="showcase-layout">
+      {items.map(item => (
+        <article class={item.className + ' reveal'}>
+          <img src={item.img} alt={item.alt} width="900" height="506" loading="lazy" />
+          <div class="showcase-overlay" aria-hidden="true"></div>
+          <div class="showcase-copy">
+            <span>{item.eyebrow}</span>
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

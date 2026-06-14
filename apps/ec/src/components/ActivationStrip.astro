@@ -1,0 +1,61 @@
+---
+interface Props {
+  whatsapp: string;
+  paymentMethods: string[];
+}
+
+const { whatsapp, paymentMethods } = Astro.props;
+const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quiero que me guíen con Oleada TV en Ecuador')}`;
+
+const steps = [
+  {
+    num: '01',
+    title: 'Cuéntanos tu dispositivo',
+    desc: 'Dinos si usarás TV Box, Fire Stick, Android TV, celular o tablet.',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+  },
+  {
+    num: '02',
+    title: 'Define el plan',
+    desc: 'Empieza mensual o toma el anual si quieres pagar menos durante el año.',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+  },
+  {
+    num: '03',
+    title: 'Envía comprobante',
+    desc: `Usa ${paymentMethods.join(' o ')} y comparte la confirmación por WhatsApp.`,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>`,
+  },
+  {
+    num: '04',
+    title: 'Déjalo listo',
+    desc: 'Recibes tu acceso y te acompañamos hasta verlo funcionando.',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+  },
+];
+---
+<section class="activation-strip" id="activacion" aria-labelledby="activation-title">
+  <div class="inner activation-inner">
+    <div class="activation-head reveal">
+      <span class="activation-kicker">Guía para Ecuador</span>
+      <h2 id="activation-title">Lo resolvemos por WhatsApp, de principio a fin</h2>
+      <a href={waLink} target="_blank" rel="noopener noreferrer" class="activation-link">
+        Pedir guía por WhatsApp
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="activation-steps">
+      {steps.map(step => (
+        <article class="activation-step reveal">
+          <div class="activation-icon" aria-hidden="true">
+            <Fragment set:html={step.icon} />
+          </div>
+          <span class="activation-num">{step.num}</span>
+          <h3>{step.title}</h3>
+          <p>{step.desc}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+const testimonials = [
+  { initials:'RT', gradient:'linear-gradient(135deg,#2563eb,#1d4ed8)', name:'Ricardo Tapia', city:'Quito Norte', plan:'Plan Anual', text:'Lo dejé instalado en el TV Box de la sala. Me guiaron por WhatsApp sin vueltas y esa misma noche ya lo estaba usando.' },
+  { initials:'MV', gradient:'linear-gradient(135deg,#7B2FBE,#5B21B6)', name:'Mónica Villacís', city:'Guayaquil', plan:'Plan Mensual', text:'Pagué por transferencia, envié el comprobante y por el mismo chat me mandaron el acceso. Me gustó que no tuve que esperar técnico.' },
+  { initials:'JQ', gradient:'linear-gradient(135deg,#0ea5e9,#0284c7)', name:'Javier Quiroz', city:'Cuenca', plan:'Plan Anual', text:'Lo uso sobre todo de noche. La guía para instalar en Fire Stick fue clara y cuando tuve una duda me respondieron rápido.' },
+  { initials:'PM', gradient:'linear-gradient(135deg,#10b981,#059669)', name:'Paola Morales', city:'Ambato', plan:'Plan Mensual', text:'Quería probar primero un mes y me explicaron todo antes de pagar. En casa quedó funcionando en la tablet y en el TV Box.' },
+  { initials:'LH', gradient:'linear-gradient(135deg,#f59e0b,#d97706)', name:'Luis Herrera', city:'Manta', plan:'Plan Anual', text:'Me sirvió que revisaran qué equipo tenía antes de activar. No sabía si mi tele necesitaba TV Box y me orientaron bien.' },
+  { initials:'SR', gradient:'linear-gradient(135deg,#8b5cf6,#7c3aed)', name:'Sandra Romero', city:'Loja', plan:'Plan Anual', text:'En mi casa cada quien tiene algo distinto que ver. Lo importante fue que el soporte no desaparece después del pago.' },
+];
+---
+<section class="testimonials" id="testimonios">
+  <div class="inner">
+    <h2 class="section-title reveal">Clientes que ya <em>lo usan en casa</em></h2>
+    <p class="section-sub reveal">Experiencias desde Quito, Guayaquil, Cuenca, Ambato, Manta y Loja</p>
+
+    <div class="testi-grid">
+      {testimonials.map(t => (
+        <article class="testi-card reveal">
+          <div class="testi-header">
+            <div class="testi-avatar" style={`background:${t.gradient};`} aria-hidden="true">{t.initials}</div>
+            <div>
+              <p class="testi-name">{t.name}</p>
+              <p class="testi-city">{t.city}</p>
+            </div>
+          </div>
+          <div class="testi-stars" aria-label="5 estrellas">
+            {Array.from({length:5}).map(() => (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            ))}
+          </div>
+          <span class="testi-plan">{t.plan}</span>
+          <p class="testi-text">"{t.text}"</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

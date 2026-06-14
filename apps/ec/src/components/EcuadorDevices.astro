@@ -1,0 +1,47 @@
+---
+const devices = [
+  {
+    icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+    title:'Android TV / TV Box',
+    desc:'Ideal para dejar Oleada TV en la pantalla principal de casa. Te guiamos con la instalación.',
+  },
+  {
+    icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+    title:'Celulares Android',
+    desc:'Úsalo cuando quieras ver algo desde otra habitación o revisar contenido fuera de casa.',
+  },
+  {
+    icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+    title:'Tablets Android',
+    desc:'Una opción cómoda para cocina, dormitorio o viajes dentro de Ecuador.',
+  },
+  {
+    icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>`,
+    title:'Amazon Fire Stick',
+    desc:'Con Downloader lo dejamos funcionando paso a paso, sin que tengas que buscar tutoriales.',
+  },
+];
+---
+<section class="devices" id="dispositivos">
+  <div class="inner">
+    <h2 class="section-title reveal">Lo ves con <em>el equipo que ya tienes</em></h2>
+    <p class="section-sub reveal">Te ayudamos a configurarlo según tu pantalla, no según un manual eterno</p>
+
+    <div class="devices-grid">
+      {devices.map(d => (
+        <div class="device-card reveal">
+          <div class="device-icon" aria-hidden="true">
+            <Fragment set:html={d.icon} />
+          </div>
+          <h4>{d.title}</h4>
+          <p>{d.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="plans-note reveal" style="margin-top:2rem;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Si tu tele no usa Android, te orientamos con TV Box o Fire Stick antes de activar.
+    </p>
+  </div>
+</section>
