@@ -4,10 +4,25 @@ interface Props {
   country: string;
   currency: string;
   monthlyOffer: string;
+  badge?: string;
+  headlineTop?: string;
+  headlineEm?: string;
+  sub?: string;
+  waText?: string;
 }
 
-const { whatsapp, country, currency, monthlyOffer } = Astro.props;
-const waHero = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quiero pedir mi acceso de Oleada TV en Ecuador')}`;
+const {
+  whatsapp,
+  country,
+  currency,
+  monthlyOffer,
+  badge = 'Atención para Quito, Guayaquil, Cuenca y más',
+  headlineTop = 'Tu TV lista para la noche',
+  headlineEm = 'sin esperar instalaciones',
+  sub = `Escríbenos por WhatsApp, confirma tu pago en dólares y recibe el acceso guiado para ver desde tu TV Box, Fire Stick o Android. Atención directa para ${country}.`,
+  waText = 'Hola, quiero pedir mi acceso de Oleada TV en Ecuador',
+} = Astro.props;
+const waHero = `https://wa.me/${whatsapp}?text=${encodeURIComponent(waText)}`;
 ---
 <header class="hero" id="inicio">
   <div class="hero-overlay" aria-hidden="true"></div>
@@ -16,15 +31,15 @@ const waHero = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quier
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
       </svg>
-      Atención para Quito, Guayaquil, Cuenca y más
+      {badge}
     </div>
 
     <h1>
-      Tu TV lista para la noche<br />
-      <em>sin esperar instalaciones</em>
+      {headlineTop}<br />
+      <em>{headlineEm}</em>
     </h1>
 
-    <p>Escríbenos por WhatsApp, confirma tu pago en dólares y recibe el acceso guiado para ver desde tu TV Box, Fire Stick o Android. Atención directa para {country}.</p>
+    <p>{sub}</p>
 
     <div class="hero-buttons">
       <a href={waHero} target="_blank" rel="noopener noreferrer" class="btn-wa pulse">

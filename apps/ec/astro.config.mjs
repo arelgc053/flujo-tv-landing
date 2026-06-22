@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
-  site: 'https://oleadatvplus.com',
+  site: 'https://ec.oleadatvplus.com',
   trailingSlash: 'never',
   compressHTML: true,
   vite: {

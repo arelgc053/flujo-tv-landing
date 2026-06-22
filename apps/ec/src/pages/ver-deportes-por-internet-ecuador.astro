@@ -1,0 +1,165 @@
+---
+import                          '../global.css';
+import BaseLayout          from '../layouts/BaseLayout.astro';
+import FAQ                 from '@shared/components/FAQ.astro';
+import Footer              from '@shared/components/Footer.astro';
+import EcuadorNavbar       from '../components/EcuadorNavbar.astro';
+import EcuadorHero         from '../components/EcuadorHero.astro';
+import EcuadorPlans        from '../components/EcuadorPlans.astro';
+import ActivationStrip     from '../components/ActivationStrip.astro';
+import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
+import EcuadorDevices      from '../components/EcuadorDevices.astro';
+import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
+import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
+import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
+import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
+import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
+import { internalSeoLinks } from '../internalLinks';
+
+const COUNTRY = {
+  brand:           'Oleada TV',
+  whatsapp:        '51940405911',
+  currency:        '$',
+  monthlyOriginal: '15',
+  monthlyOffer:    '11.99',
+  annualOriginal:  '130',
+  annualOffer:     '119.99',
+  annualSaving:    '23.89',
+  paymentMethods:  ['Transferencia', 'Depósito'],
+};
+
+const faqItems = [
+  {
+    q: '¿Qué deportes puedo ver por internet con Oleada TV en Ecuador?',
+    a: 'Fútbol ecuatoriano e internacional, el Mundial 2026 y otros eventos deportivos en vivo, directamente desde tu TV Box, Fire Stick, celular o tablet. Sin cable ni antena, solo conexión a internet.',
+  },
+  {
+    q: '¿Puedo ver los partidos de la Selección de Ecuador y el Mundial 2026?',
+    a: 'Sí. Con Oleada TV sigues en vivo los partidos de la Selección de Ecuador, incluyendo el Mundial 2026, además de fútbol nacional e internacional durante todo el año.',
+  },
+  {
+    q: '¿La señal aguanta bien en partidos importantes?',
+    a: 'Con una conexión de al menos 10 Mbps la señal se mantiene estable. La mayoría de usuarios en Ecuador tienen buena experiencia viendo deportes en vivo; si hay algún problema, soporte responde por WhatsApp en minutos.',
+  },
+  {
+    q: '¿Qué internet necesito para ver deportes en HD o 4K?',
+    a: 'Recomendamos mínimo 10 Mbps para HD y 25 Mbps para 4K. Funciona con cualquier proveedor de internet de Ecuador. Si tu señal es inestable, el servicio se adapta para reducir cortes.',
+  },
+  {
+    q: '¿Puedo ver deportes desde mi celular si estoy fuera de casa?',
+    a: 'Sí. Oleada TV es compatible con celulares y tablets Android, así que puedes seguir tus partidos favoritos con datos móviles o WiFi estés donde estés.',
+  },
+  {
+    q: '¿Cuánto cuesta ver deportes por internet en Ecuador?',
+    a: `Desde $${COUNTRY.monthlyOffer} al mes con el plan mensual, o desde $${COUNTRY.annualOffer} al año si prefieres ahorrar viendo deportes todo el año.`,
+  },
+  {
+    q: '¿Debo activar algo especial antes de un partido importante?',
+    a: 'No, pero te recomendamos probar tu dispositivo con anticipación. Si tienes dudas, escríbenos por WhatsApp antes del partido y revisamos contigo la señal y la instalación.',
+  },
+  {
+    q: '¿Funciona en TV Box, Fire Stick y Android TV?',
+    a: 'Sí. Oleada TV es compatible con TV Box Android, Amazon Fire Stick y Android TV. Te guiamos por WhatsApp para dejarlo listo antes del próximo partido.',
+  },
+];
+
+const productSchema = {
+  name: 'Oleada TV — Deportes y Fútbol por Internet en Ecuador',
+  description: 'Ve fútbol ecuatoriano, el Mundial 2026 y otros deportes en vivo por internet en Ecuador, sin cable, desde $11.99 al mes. Pago en USD, activación por WhatsApp.',
+  price: COUNTRY.monthlyOffer,
+  priceCurrency: 'USD',
+};
+
+const localBusiness = {
+  siteName: 'Oleada TV',
+  telephone: '+51940405911',
+  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
+  currenciesAccepted: 'USD',
+  paymentAccepted: 'Transferencia Bancaria, Depósito',
+  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
+};
+
+const breadcrumb = [
+  { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
+  { name: 'Deportes por Internet', url: 'https://ec.oleadatvplus.com/ver-deportes-por-internet-ecuador' },
+];
+---
+<BaseLayout
+  title="Ver Deportes por Internet en Ecuador — Oleada TV | Fútbol y Mundial 2026 en Vivo"
+  description="Ve fútbol, el Mundial 2026 y otros deportes en vivo por internet en Ecuador, sin cable. Desde $11.99 al mes, pago en USD y activación guiada por WhatsApp."
+  keywords="ver deportes por internet ecuador, futbol en vivo ecuador, deportes en vivo ecuador, ver futbol ecuatoriano online, ver mundial 2026 ecuador en vivo, partidos de ecuador mundial 2026, deportes online quito, deportes online guayaquil, tv deportiva por internet ecuador, ver liga pro ecuador online"
+  canonical="https://ec.oleadatvplus.com/ver-deportes-por-internet-ecuador"
+  author="Oleada TV Ecuador"
+  twitterCreator="@oleadatvplus"
+  themeColor="#00C853"
+  lang="es-EC"
+  locale="es_EC"
+  geoRegion="EC"
+  geoPlacename="Ecuador"
+  geoPosition="-1.8312;-78.1834"
+  faqSchema={faqItems}
+  productSchema={productSchema}
+  localBusiness={localBusiness}
+  breadcrumb={breadcrumb}
+/>
+
+<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+
+<main>
+  <EcuadorHero
+    whatsapp={COUNTRY.whatsapp}
+    country="Ecuador"
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    badge="Fútbol, deportes y Mundial 2026 en un solo lugar"
+    headlineTop="Tus deportes en vivo,"
+    headlineEm="sin cable ni antena"
+    sub="Fútbol ecuatoriano, el Mundial 2026 y otros eventos deportivos en vivo desde tu TV Box, Fire Stick, celular o tablet. Activación guiada por WhatsApp y pago en dólares."
+    waText="Hola, quiero ver deportes y fútbol en vivo con Oleada TV en Ecuador"
+  />
+
+  <ActivationStrip
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorPlans
+    currency={COUNTRY.currency}
+    monthlyOriginal={COUNTRY.monthlyOriginal}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    annualOriginal={COUNTRY.annualOriginal}
+    annualOffer={COUNTRY.annualOffer}
+    annualSaving={COUNTRY.annualSaving}
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorShowcase />
+
+  <EcuadorDevices />
+
+  <EcuadorTestimonials />
+
+  <EcuadorHowItWorks />
+
+  <FAQ items={faqItems} />
+
+  <EcuadorCTAFinal
+    whatsapp={COUNTRY.whatsapp}
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+  />
+
+  <EcuadorInternalSeoLinks links={internalSeoLinks.verDeportesPorInternetEcuador} />
+</main>
+
+<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorStickyMobileCTA
+  whatsapp={COUNTRY.whatsapp}
+  currency={COUNTRY.currency}
+  monthlyOffer={COUNTRY.monthlyOffer}
+/>

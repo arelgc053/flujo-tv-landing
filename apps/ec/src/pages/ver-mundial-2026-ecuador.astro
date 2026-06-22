@@ -1,0 +1,169 @@
+---
+import                          '../global.css';
+import BaseLayout          from '../layouts/BaseLayout.astro';
+import FAQ                 from '@shared/components/FAQ.astro';
+import Footer              from '@shared/components/Footer.astro';
+import EcuadorNavbar       from '../components/EcuadorNavbar.astro';
+import EcuadorHero         from '../components/EcuadorHero.astro';
+import EcuadorPlans        from '../components/EcuadorPlans.astro';
+import ActivationStrip     from '../components/ActivationStrip.astro';
+import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
+import EcuadorDevices      from '../components/EcuadorDevices.astro';
+import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
+import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
+import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
+import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
+import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
+import { internalSeoLinks } from '../internalLinks';
+
+const COUNTRY = {
+  brand:           'Oleada TV',
+  whatsapp:        '51940405911',
+  currency:        '$',
+  monthlyOriginal: '15',
+  monthlyOffer:    '11.99',
+  annualOriginal:  '130',
+  annualOffer:     '119.99',
+  annualSaving:    '23.89',
+  paymentMethods:  ['Transferencia', 'Depósito'],
+};
+
+const faqItems = [
+  {
+    q: '¿Puedo ver todos los partidos de Ecuador en el Mundial 2026 con Oleada TV?',
+    a: 'Sí. Con tu acceso a Oleada TV puedes seguir en vivo todos los partidos de la Selección de Ecuador (La Tri) en el Mundial 2026, además del resto del torneo, desde tu TV Box, Fire Stick, Android TV o celular.',
+  },
+  {
+    q: '¿Necesito cable o algún paquete deportivo especial para ver el Mundial 2026?',
+    a: 'No. Con conexión a internet y tu dispositivo Android, Fire Stick o TV Box ya puedes ver el Mundial 2026 en vivo. No necesitas contratar cable ni paquetes adicionales.',
+  },
+  {
+    q: '¿Qué plan me conviene para ver todo el Mundial 2026?',
+    a: `El plan mensual te alcanza para seguir el torneo completo desde $${COUNTRY.monthlyOffer}. Si prefieres asegurarte cobertura para todo el año (incluyendo otros torneos), el plan anual te conviene más.`,
+  },
+  {
+    q: '¿Qué pasa si mi señal se corta justo en un partido de Ecuador?',
+    a: 'Monitoreamos nuestros servidores para mantener la mayor estabilidad posible. Si notas algún corte, escríbenos por WhatsApp y nuestro soporte revisa la incidencia de inmediato, sobre todo en fechas de partidos importantes.',
+  },
+  {
+    q: '¿Puedo ver el Mundial 2026 en mi celular si no estoy en casa?',
+    a: 'Sí. Oleada TV funciona en celulares y tablets Android, así que puedes seguir los partidos de Ecuador con datos móviles o WiFi estés donde estés.',
+  },
+  {
+    q: '¿Cuánto internet necesito para ver los partidos en HD sin cortes?',
+    a: 'Recomendamos mínimo 10 Mbps para HD y 25 Mbps para 4K. Si tu conexión cumple eso, la señal del Mundial 2026 se mantiene estable durante todo el partido.',
+  },
+  {
+    q: '¿Tengo que activar algo especial antes de que empiece el Mundial 2026?',
+    a: 'No, tu cuenta de Oleada TV ya incluye acceso al torneo. Solo te recomendamos activar con anticipación y probar tu dispositivo antes del primer partido para evitar imprevistos de último momento.',
+  },
+  {
+    q: '¿El Mundial 2026 se ve en TV Box, Fire Stick y Android TV?',
+    a: 'Sí. Oleada TV es compatible con TV Box Android, Amazon Fire Stick y Android TV. Te guiamos por WhatsApp para dejar todo listo antes del primer partido de Ecuador.',
+  },
+  {
+    q: '¿Cómo pago desde Ecuador para ver el Mundial 2026?',
+    a: 'Aceptamos transferencia bancaria y depósito en dólares. Nos escribes por WhatsApp, te damos los datos, envías el comprobante y activamos tu acceso para que no te pierdas el torneo.',
+  },
+];
+
+const productSchema = {
+  name: 'Oleada TV — Ver el Mundial 2026 en Ecuador',
+  description: 'Accede al Mundial 2026 y a todos los partidos de la Selección de Ecuador en vivo por internet, sin cable, desde $11.99 al mes. Pago en USD, activación guiada por WhatsApp.',
+  price: COUNTRY.monthlyOffer,
+  priceCurrency: 'USD',
+};
+
+const localBusiness = {
+  siteName: 'Oleada TV',
+  telephone: '+51940405911',
+  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
+  currenciesAccepted: 'USD',
+  paymentAccepted: 'Transferencia Bancaria, Depósito',
+  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
+};
+
+const breadcrumb = [
+  { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
+  { name: 'Ver el Mundial 2026 en Ecuador', url: 'https://ec.oleadatvplus.com/ver-mundial-2026-ecuador' },
+];
+---
+<BaseLayout
+  title="Ver el Mundial 2026 en Ecuador — Oleada TV | La Tri en Vivo sin Cable"
+  description="Mira el Mundial 2026 y todos los partidos de la Selección de Ecuador en vivo, sin cable, desde $11.99 al mes. Pago en USD y activación guiada por WhatsApp en minutos."
+  keywords="ver mundial 2026 ecuador en vivo, donde ver el mundial 2026 ecuador, partidos de ecuador mundial 2026, la tri mundial 2026, transmision mundial 2026 ecuador, ver mundial 2026 por internet, mundial 2026 tv en vivo ecuador, ver seleccion de ecuador en vivo, mundial 2026 sin cable ecuador, fase de grupos ecuador mundial 2026, mundial 2026 online quito, mundial 2026 online guayaquil"
+  canonical="https://ec.oleadatvplus.com/ver-mundial-2026-ecuador"
+  author="Oleada TV Ecuador"
+  twitterCreator="@oleadatvplus"
+  themeColor="#00C853"
+  lang="es-EC"
+  locale="es_EC"
+  geoRegion="EC"
+  geoPlacename="Ecuador"
+  geoPosition="-1.8312;-78.1834"
+  faqSchema={faqItems}
+  productSchema={productSchema}
+  localBusiness={localBusiness}
+  breadcrumb={breadcrumb}
+/>
+
+<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+
+<main>
+  <EcuadorHero
+    whatsapp={COUNTRY.whatsapp}
+    country="Ecuador"
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    badge="Mundial 2026 — sigue a La Tri en cada partido"
+    headlineTop="No te pierdas ningún partido"
+    headlineEm="de Ecuador en el Mundial 2026"
+    sub="Sigue el Mundial 2026 en vivo desde tu TV Box, Fire Stick, Android TV o celular. Sin cable, sin contrato, con activación guiada por WhatsApp y pago en dólares."
+    waText="Hola, quiero activar Oleada TV para ver el Mundial 2026 en Ecuador"
+  />
+
+  <ActivationStrip
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorPlans
+    currency={COUNTRY.currency}
+    monthlyOriginal={COUNTRY.monthlyOriginal}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    annualOriginal={COUNTRY.annualOriginal}
+    annualOffer={COUNTRY.annualOffer}
+    annualSaving={COUNTRY.annualSaving}
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorShowcase />
+
+  <EcuadorDevices />
+
+  <EcuadorTestimonials />
+
+  <EcuadorHowItWorks />
+
+  <FAQ items={faqItems} />
+
+  <EcuadorCTAFinal
+    whatsapp={COUNTRY.whatsapp}
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+  />
+
+  <EcuadorInternalSeoLinks links={internalSeoLinks.verMundial2026Ecuador} />
+</main>
+
+<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorStickyMobileCTA
+  whatsapp={COUNTRY.whatsapp}
+  currency={COUNTRY.currency}
+  monthlyOffer={COUNTRY.monthlyOffer}
+/>

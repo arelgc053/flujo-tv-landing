@@ -1,0 +1,165 @@
+---
+import                          '../global.css';
+import BaseLayout          from '../layouts/BaseLayout.astro';
+import FAQ                 from '@shared/components/FAQ.astro';
+import Footer              from '@shared/components/Footer.astro';
+import EcuadorNavbar       from '../components/EcuadorNavbar.astro';
+import EcuadorHero         from '../components/EcuadorHero.astro';
+import EcuadorPlans        from '../components/EcuadorPlans.astro';
+import ActivationStrip     from '../components/ActivationStrip.astro';
+import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
+import EcuadorDevices      from '../components/EcuadorDevices.astro';
+import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
+import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
+import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
+import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
+import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
+import { internalSeoLinks } from '../internalLinks';
+
+const COUNTRY = {
+  brand:           'Oleada TV',
+  whatsapp:        '51940405911',
+  currency:        '$',
+  monthlyOriginal: '15',
+  monthlyOffer:    '11.99',
+  annualOriginal:  '130',
+  annualOffer:     '119.99',
+  annualSaving:    '23.89',
+  paymentMethods:  ['Transferencia', 'Depósito'],
+};
+
+const faqItems = [
+  {
+    q: '¿Oleada TV funciona bien en Quito y Guayaquil?',
+    a: 'Sí. Quito y Guayaquil son nuestras zonas con más usuarios activos. Con cualquier proveedor de internet — WiFi o datos móviles — el servicio funciona sin problemas desde el primer día.',
+  },
+  {
+    q: '¿Funciona también en Cuenca, Ambato o Manta?',
+    a: 'Sí. Oleada TV funciona en Cuenca, Ambato, Manta, Portoviejo, Loja, Esmeraldas y cualquier ciudad de Ecuador con internet estable. No hay zonas excluidas.',
+  },
+  {
+    q: '¿Cómo activo Oleada TV en Quito o Guayaquil hoy mismo?',
+    a: 'Escríbenos por WhatsApp, elige tu plan, paga con transferencia o depósito en dólares, y en minutos tienes tus credenciales. Te guiamos en la instalación paso a paso.',
+  },
+  {
+    q: '¿Tienen soporte local en Quito o Guayaquil?',
+    a: 'Nuestro soporte es 100% por WhatsApp — eso nos permite atenderte rápido sin importar tu distrito o sector. Respondemos en minutos durante el día.',
+  },
+  {
+    q: '¿Cuánto internet necesito en mi casa de Quito o Guayaquil?',
+    a: 'Funciona con cualquier WiFi doméstico. Recomendamos mínimo 10 Mbps para HD. Si no sabes cuántos Mbps tienes, te ayudamos a revisarlo por WhatsApp.',
+  },
+  {
+    q: '¿Puedo ver canales ecuatorianos en vivo desde Quito o Guayaquil?',
+    a: 'Sí. Oleada TV incluye canales nacionales en vivo para que veas noticias, programas locales y eventos deportivos sin perderte nada.',
+  },
+  {
+    q: '¿Puedo ver el Mundial 2026 desde Quito o Guayaquil con Oleada TV?',
+    a: 'Sí. Cualquier usuario en Quito, Guayaquil o el resto de Ecuador puede seguir el Mundial 2026 y los partidos de la Selección en vivo con su cuenta de Oleada TV.',
+  },
+  {
+    q: '¿Qué dispositivo necesito para usar Oleada TV en mi ciudad?',
+    a: 'Un TV Box Android, Amazon Fire Stick, celular Android o tablet. Si no tienes ninguno, te asesoramos cuál comprar según tu presupuesto.',
+  },
+];
+
+const productSchema = {
+  name: 'Oleada TV Quito y Guayaquil — TV Online sin Cable',
+  description: 'TV online en Quito, Guayaquil y el resto de Ecuador, sin cable ni contratos, desde $11.99. Pago en USD, activación guiada por WhatsApp.',
+  price: COUNTRY.monthlyOffer,
+  priceCurrency: 'USD',
+};
+
+const localBusiness = {
+  siteName: 'Oleada TV',
+  telephone: '+51940405911',
+  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
+  currenciesAccepted: 'USD',
+  paymentAccepted: 'Transferencia Bancaria, Depósito',
+  areaServed: ['Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas', 'Ecuador'],
+};
+
+const breadcrumb = [
+  { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
+  { name: 'TV Online en Quito y Guayaquil', url: 'https://ec.oleadatvplus.com/tv-online-quito-guayaquil' },
+];
+---
+<BaseLayout
+  title="TV Online en Quito y Guayaquil — Oleada TV | Actívate sin Cable en Minutos"
+  description="TV online en Quito, Guayaquil y todo Ecuador, sin cable ni contratos, desde $11.99. El servicio favorito para ver canales, series y el Mundial 2026. Pago en USD."
+  keywords="tv online quito, tv online guayaquil, tv por internet quito, tv por internet guayaquil, canales en vivo quito, canales en vivo guayaquil, tv online cuenca, tv online ambato, tv online manta, ver mundial 2026 quito, ver mundial 2026 guayaquil, alternativa cable tv quito, alternativa cable tv guayaquil"
+  canonical="https://ec.oleadatvplus.com/tv-online-quito-guayaquil"
+  author="Oleada TV Ecuador"
+  twitterCreator="@oleadatvplus"
+  themeColor="#00C853"
+  lang="es-EC"
+  locale="es_EC"
+  geoRegion="EC"
+  geoPlacename="Quito y Guayaquil, Ecuador"
+  geoPosition="-0.1807;-78.4678"
+  faqSchema={faqItems}
+  productSchema={productSchema}
+  localBusiness={localBusiness}
+  breadcrumb={breadcrumb}
+/>
+
+<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+
+<main>
+  <EcuadorHero
+    whatsapp={COUNTRY.whatsapp}
+    country="Quito y Guayaquil"
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    badge="Cobertura confirmada en Quito, Guayaquil y más"
+    headlineTop="TV online en Quito y Guayaquil,"
+    headlineEm="activación el mismo día"
+    sub="Escríbenos por WhatsApp, confirma tu pago en dólares y recibe el acceso guiado para ver desde tu TV Box, Fire Stick o Android, sin visitas técnicas en tu sector."
+    waText="Hola, quiero activar Oleada TV en Quito/Guayaquil"
+  />
+
+  <ActivationStrip
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorPlans
+    currency={COUNTRY.currency}
+    monthlyOriginal={COUNTRY.monthlyOriginal}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    annualOriginal={COUNTRY.annualOriginal}
+    annualOffer={COUNTRY.annualOffer}
+    annualSaving={COUNTRY.annualSaving}
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorShowcase />
+
+  <EcuadorDevices />
+
+  <EcuadorTestimonials />
+
+  <EcuadorHowItWorks />
+
+  <FAQ items={faqItems} />
+
+  <EcuadorCTAFinal
+    whatsapp={COUNTRY.whatsapp}
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+  />
+
+  <EcuadorInternalSeoLinks links={internalSeoLinks.tvOnlineQuitoGuayaquil} />
+</main>
+
+<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorStickyMobileCTA
+  whatsapp={COUNTRY.whatsapp}
+  currency={COUNTRY.currency}
+  monthlyOffer={COUNTRY.monthlyOffer}
+/>

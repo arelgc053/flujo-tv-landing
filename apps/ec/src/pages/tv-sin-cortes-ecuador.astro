@@ -1,0 +1,169 @@
+---
+import                          '../global.css';
+import BaseLayout          from '../layouts/BaseLayout.astro';
+import FAQ                 from '@shared/components/FAQ.astro';
+import Footer              from '@shared/components/Footer.astro';
+import EcuadorNavbar       from '../components/EcuadorNavbar.astro';
+import EcuadorHero         from '../components/EcuadorHero.astro';
+import EcuadorPlans        from '../components/EcuadorPlans.astro';
+import ActivationStrip     from '../components/ActivationStrip.astro';
+import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
+import EcuadorDevices      from '../components/EcuadorDevices.astro';
+import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
+import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
+import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
+import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
+import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
+import { internalSeoLinks } from '../internalLinks';
+
+const COUNTRY = {
+  brand:           'Oleada TV',
+  whatsapp:        '51940405911',
+  currency:        '$',
+  monthlyOriginal: '15',
+  monthlyOffer:    '11.99',
+  annualOriginal:  '130',
+  annualOffer:     '119.99',
+  annualSaving:    '23.89',
+  paymentMethods:  ['Transferencia', 'Depósito'],
+};
+
+const faqItems = [
+  {
+    q: '¿Por qué mi TV por internet se corta constantemente?',
+    a: 'Los cortes suelen venir de servidores inestables o sobrecargados del proveedor que usas. Con Oleada TV monitoreamos nuestros servidores para resolver cualquier incidencia antes de que la notes.',
+  },
+  {
+    q: '¿Cuánto internet necesito para que no se corte la señal?',
+    a: 'Recomendamos mínimo 10 Mbps para HD y 25 Mbps para 4K. Si tu internet cumple eso y el servicio sigue cortándose, el problema es el proveedor de TV, no tu internet.',
+  },
+  {
+    q: '¿Oleada TV realmente no tiene cortes en Ecuador?',
+    a: 'Buscamos la mayor disponibilidad posible. Ningún servicio puede garantizar cero incidencias, pero si algo falla nuestro soporte responde rápido por WhatsApp y lo resuelve al momento.',
+  },
+  {
+    q: '¿Qué pasa si hay un corte justo en un partido del Mundial 2026?',
+    a: 'Nuestro equipo de soporte está activo todos los días, especialmente en fechas de partidos importantes como los del Mundial 2026. Si hay algún problema, escríbenos por WhatsApp y lo resolvemos cuanto antes.',
+  },
+  {
+    q: '¿Puedo cambiar de mi servicio actual a Oleada TV sin complicaciones?',
+    a: 'Sí. Solo escríbenos por WhatsApp y en minutos tienes tus nuevas credenciales. No necesitas desinstalar nada antes — te guiamos paso a paso en tu mismo dispositivo.',
+  },
+  {
+    q: '¿Funciona en el mismo TV Box o Fire Stick que ya tengo?',
+    a: 'Sí. Oleada TV es compatible con TV Box Android, Amazon Fire Stick, celulares y tablets Android. Usas el dispositivo que ya tienes, sin comprar nada nuevo.',
+  },
+  {
+    q: '¿Cuánto cuesta cambiarse a Oleada TV en Ecuador?',
+    a: `Desde $${COUNTRY.monthlyOffer} al mes. Sin permanencia ni contratos — si decides que no es lo que buscas, simplemente no renuevas.`,
+  },
+  {
+    q: '¿Cómo pago desde Ecuador?',
+    a: 'Aceptamos transferencia bancaria y depósito en dólares. Te damos los datos por WhatsApp, envías el comprobante y en minutos tienes tu acceso activado.',
+  },
+  {
+    q: '¿Funciona bien en provincia o solo en Quito y Guayaquil?',
+    a: 'En todo Ecuador. Quito, Guayaquil, Cuenca, Ambato, Manta — donde tengas internet de al menos 10 Mbps, Oleada TV funciona.',
+  },
+];
+
+const productSchema = {
+  name: 'Oleada TV — TV por Internet Estable sin Cortes en Ecuador',
+  description: 'Servicio de TV por internet estable y sin cortes para Ecuador. Soporte por WhatsApp. Pago en USD. Desde $11.99 al mes.',
+  price: COUNTRY.monthlyOffer,
+  priceCurrency: 'USD',
+};
+
+const localBusiness = {
+  siteName: 'Oleada TV',
+  telephone: '+51940405911',
+  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
+  currenciesAccepted: 'USD',
+  paymentAccepted: 'Transferencia Bancaria, Depósito',
+  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
+};
+
+const breadcrumb = [
+  { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
+  { name: 'TV por Internet sin Cortes', url: 'https://ec.oleadatvplus.com/tv-sin-cortes-ecuador' },
+];
+---
+<BaseLayout
+  title="TV por Internet sin Cortes en Ecuador — Oleada TV | Señal Estable"
+  description="¿Tu TV por internet se corta todo el tiempo? Oleada TV ofrece señal estable, soporte por WhatsApp y activación rápida en Ecuador. Desde $11.99, pago en USD."
+  keywords="tv por internet sin cortes ecuador, tv online estable ecuador, servicio tv internet que no falla ecuador, tv por internet confiable ecuador, por que se corta mi tv por internet, tv sin interrupciones ecuador, mejor servicio tv online ecuador, no perder señal mundial 2026 ecuador, tv estable mundial 2026"
+  canonical="https://ec.oleadatvplus.com/tv-sin-cortes-ecuador"
+  author="Oleada TV Ecuador"
+  twitterCreator="@oleadatvplus"
+  themeColor="#00C853"
+  lang="es-EC"
+  locale="es_EC"
+  geoRegion="EC"
+  geoPlacename="Ecuador"
+  geoPosition="-1.8312;-78.1834"
+  faqSchema={faqItems}
+  productSchema={productSchema}
+  localBusiness={localBusiness}
+  breadcrumb={breadcrumb}
+/>
+
+<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+
+<main>
+  <EcuadorHero
+    whatsapp={COUNTRY.whatsapp}
+    country="Ecuador"
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    badge="Señal estable, incluso en los partidos importantes"
+    headlineTop="¿Tu TV por internet se corta"
+    headlineEm="todo el tiempo? Prueba Oleada TV"
+    sub="Señal estable y soporte por WhatsApp en minutos. No te quedes sin imagen justo cuando juega Ecuador o en un partido del Mundial 2026."
+    waText="Hola, quiero un servicio de TV por internet sin cortes con Oleada TV en Ecuador"
+  />
+
+  <ActivationStrip
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorPlans
+    currency={COUNTRY.currency}
+    monthlyOriginal={COUNTRY.monthlyOriginal}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    annualOriginal={COUNTRY.annualOriginal}
+    annualOffer={COUNTRY.annualOffer}
+    annualSaving={COUNTRY.annualSaving}
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorShowcase />
+
+  <EcuadorDevices />
+
+  <EcuadorTestimonials />
+
+  <EcuadorHowItWorks />
+
+  <FAQ items={faqItems} />
+
+  <EcuadorCTAFinal
+    whatsapp={COUNTRY.whatsapp}
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+  />
+
+  <EcuadorInternalSeoLinks links={internalSeoLinks.tvSinCortesEcuador} />
+</main>
+
+<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorStickyMobileCTA
+  whatsapp={COUNTRY.whatsapp}
+  currency={COUNTRY.currency}
+  monthlyOffer={COUNTRY.monthlyOffer}
+/>

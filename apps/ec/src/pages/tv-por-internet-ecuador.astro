@@ -1,0 +1,169 @@
+---
+import                          '../global.css';
+import BaseLayout          from '../layouts/BaseLayout.astro';
+import FAQ                 from '@shared/components/FAQ.astro';
+import Footer              from '@shared/components/Footer.astro';
+import EcuadorNavbar       from '../components/EcuadorNavbar.astro';
+import EcuadorHero         from '../components/EcuadorHero.astro';
+import EcuadorPlans        from '../components/EcuadorPlans.astro';
+import ActivationStrip     from '../components/ActivationStrip.astro';
+import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
+import EcuadorDevices      from '../components/EcuadorDevices.astro';
+import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
+import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
+import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
+import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
+import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
+import { internalSeoLinks } from '../internalLinks';
+
+const COUNTRY = {
+  brand:           'Oleada TV',
+  whatsapp:        '51940405911',
+  currency:        '$',
+  monthlyOriginal: '15',
+  monthlyOffer:    '11.99',
+  annualOriginal:  '130',
+  annualOffer:     '119.99',
+  annualSaving:    '23.89',
+  paymentMethods:  ['Transferencia', 'Depósito'],
+};
+
+const faqItems = [
+  {
+    q: '¿En qué se diferencia la TV por internet del cable tradicional en Ecuador?',
+    a: 'Cuesta mucho menos, no tiene contrato mínimo, se activa el mismo día y funciona en cualquier dispositivo Android. El cable tradicional en Ecuador cobra desde $25-30 al mes y suele exigir un contrato de uno o más años.',
+  },
+  {
+    q: '¿Cuánto se ahorra al cambiar a Oleada TV en Ecuador?',
+    a: `Con Oleada TV pagas desde $${COUNTRY.monthlyOffer} al mes. El cable tradicional en Ecuador cuesta entre $25 y $40 mensuales. El ahorro anual puede superar los $200.`,
+  },
+  {
+    q: '¿TV por internet funciona en todo Ecuador?',
+    a: 'Sí. Oleada TV funciona en Quito, Guayaquil, Cuenca, Ambato, Manta, Portoviejo, Loja, Esmeraldas y cualquier ciudad de Ecuador que tenga internet. Solo necesitas una conexión estable.',
+  },
+  {
+    q: '¿Puedo ver el Mundial 2026 con este servicio?',
+    a: 'Sí. Oleada TV te permite seguir el Mundial 2026 y todos los partidos de la Selección de Ecuador en vivo desde tu TV Box, Fire Stick o celular, sin contratar cable.',
+  },
+  {
+    q: '¿Incluye contenido para toda la familia?',
+    a: 'Sí. Oleada TV incluye canales de entretenimiento infantil, series, películas y deportes. Toda la familia encuentra algo que ver en una sola cuenta.',
+  },
+  {
+    q: '¿Cómo pago desde Ecuador?',
+    a: 'Aceptamos transferencia bancaria y depósito en dólares. Te indicamos los datos por WhatsApp, envías el comprobante y continuamos con la activación por el mismo chat.',
+  },
+  {
+    q: '¿Necesito contratar un técnico para instalarlo?',
+    a: 'No. La activación es 100% remota por WhatsApp. Te guiamos paso a paso para instalarlo en tu TV Box, Fire Stick, Android TV o celular sin visitas técnicas.',
+  },
+  {
+    q: '¿Qué pasa si quiero dejar de usarlo?',
+    a: 'No hay contrato ni permanencia. Simplemente no renuevas el mes siguiente. Puedes volver a activarlo cuando quieras.',
+  },
+  {
+    q: '¿Funciona bien fuera de Quito o Guayaquil?',
+    a: 'Sí. En cualquier ciudad o cantón de Ecuador con internet de al menos 10 Mbps, Oleada TV funciona sin problema.',
+  },
+];
+
+const productSchema = {
+  name: 'Oleada TV — Alternativa al Cable en Ecuador',
+  description: 'TV por internet en Ecuador como alternativa al cable tradicional, con activación guiada por WhatsApp y pagos en USD. Desde $11.99 al mes.',
+  price: COUNTRY.monthlyOffer,
+  priceCurrency: 'USD',
+};
+
+const localBusiness = {
+  siteName: 'Oleada TV',
+  telephone: '+51940405911',
+  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
+  currenciesAccepted: 'USD',
+  paymentAccepted: 'Transferencia Bancaria, Depósito',
+  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
+};
+
+const breadcrumb = [
+  { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
+  { name: 'TV por Internet en Ecuador', url: 'https://ec.oleadatvplus.com/tv-por-internet-ecuador' },
+];
+---
+<BaseLayout
+  title="TV por Internet en Ecuador — Oleada TV | Alternativa al Cable desde $11.99"
+  description="Cambia el cable por TV por internet en Ecuador. Canales, cine, series, deportes y el Mundial 2026 en vivo desde $11.99 al mes. Pago en USD, activación por WhatsApp."
+  keywords="tv por internet ecuador, alternativa cable tv ecuador, tv online ecuador, canales por internet ecuador, tv sin cable ecuador, dejar el cable ecuador, tv internet quito, tv internet guayaquil, tv internet cuenca, oleada tv ecuador precio, ver mundial 2026 ecuador, partidos de ecuador mundial 2026 en vivo"
+  canonical="https://ec.oleadatvplus.com/tv-por-internet-ecuador"
+  author="Oleada TV Ecuador"
+  twitterCreator="@oleadatvplus"
+  themeColor="#00C853"
+  lang="es-EC"
+  locale="es_EC"
+  geoRegion="EC"
+  geoPlacename="Ecuador"
+  geoPosition="-1.8312;-78.1834"
+  faqSchema={faqItems}
+  productSchema={productSchema}
+  localBusiness={localBusiness}
+  breadcrumb={breadcrumb}
+/>
+
+<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+
+<main>
+  <EcuadorHero
+    whatsapp={COUNTRY.whatsapp}
+    country="Ecuador"
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    badge="La alternativa al cable en todo Ecuador"
+    headlineTop="Deja el cable y paga"
+    headlineEm="menos por más entretenimiento"
+    sub="TV por internet en Ecuador sin contrato ni visitas técnicas: canales, cine, series, deportes y el Mundial 2026 en vivo desde tu TV Box, Fire Stick o Android."
+    waText="Hola, quiero cambiar el cable por Oleada TV en Ecuador"
+  />
+
+  <ActivationStrip
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorPlans
+    currency={COUNTRY.currency}
+    monthlyOriginal={COUNTRY.monthlyOriginal}
+    monthlyOffer={COUNTRY.monthlyOffer}
+    annualOriginal={COUNTRY.annualOriginal}
+    annualOffer={COUNTRY.annualOffer}
+    annualSaving={COUNTRY.annualSaving}
+    whatsapp={COUNTRY.whatsapp}
+    paymentMethods={COUNTRY.paymentMethods}
+  />
+
+  <EcuadorShowcase />
+
+  <EcuadorDevices />
+
+  <EcuadorTestimonials />
+
+  <EcuadorHowItWorks />
+
+  <FAQ items={faqItems} />
+
+  <EcuadorCTAFinal
+    whatsapp={COUNTRY.whatsapp}
+    currency={COUNTRY.currency}
+    monthlyOffer={COUNTRY.monthlyOffer}
+  />
+
+  <EcuadorInternalSeoLinks links={internalSeoLinks.tvPorInternetEcuador} />
+</main>
+
+<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+
+<EcuadorStickyMobileCTA
+  whatsapp={COUNTRY.whatsapp}
+  currency={COUNTRY.currency}
+  monthlyOffer={COUNTRY.monthlyOffer}
+/>

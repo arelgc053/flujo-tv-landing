@@ -1,15 +1,22 @@
 # www y http → https sin www (canonical de dominio)
-http://www.oleadatvplus.com/* https://oleadatvplus.com/:splat 301!
-https://www.oleadatvplus.com/* https://oleadatvplus.com/:splat 301!
-http://oleadatvplus.com/* https://oleadatvplus.com/:splat 301!
+http://www.ec.oleadatvplus.com/* https://ec.oleadatvplus.com/:splat 301!
+https://www.ec.oleadatvplus.com/* https://ec.oleadatvplus.com/:splat 301!
+http://ec.oleadatvplus.com/* https://ec.oleadatvplus.com/:splat 301!
 
 # Trailing slash → sin trailing slash (canonical de URL)
-/tv-por-internet-peru/ /tv-por-internet-peru 301!
-/ver-deportes-por-internet/ /ver-deportes-por-internet 301!
-/tv-online-lima/ /tv-online-lima 301!
-/paga-con-yape/ /paga-con-yape 301!
-/tv-sin-cortes-peru/ /tv-sin-cortes-peru 301!
+/tv-por-internet-ecuador/ /tv-por-internet-ecuador 301!
+/ver-deportes-por-internet-ecuador/ /ver-deportes-por-internet-ecuador 301!
+/tv-online-quito-guayaquil/ /tv-online-quito-guayaquil 301!
+/ver-mundial-2026-ecuador/ /ver-mundial-2026-ecuador 301!
+/tv-sin-cortes-ecuador/ /tv-sin-cortes-ecuador 301!
+
+# Rutas heredadas de la plantilla de Perú → reemplazo correcto para Ecuador
+/tv-por-internet-peru /tv-por-internet-ecuador 301!
+/tv-online-lima /tv-online-quito-guayaquil 301!
+/paga-con-yape /ver-mundial-2026-ecuador 301!
+/tv-sin-cortes-peru /tv-sin-cortes-ecuador 301!
+/ver-deportes-por-internet /ver-deportes-por-internet-ecuador 301!
 
 # Redirección de la antigua landing de Magis TV por si alguien la guardó
-/alternativa-magis-tv /tv-sin-cortes-peru 301!
-/alternativa-magis-tv/ /tv-sin-cortes-peru 301!
+/alternativa-magis-tv /tv-sin-cortes-ecuador 301!
+/alternativa-magis-tv/ /tv-sin-cortes-ecuador 301!

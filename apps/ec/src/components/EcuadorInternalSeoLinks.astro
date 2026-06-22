@@ -1,0 +1,57 @@
+---
+interface LinkItem {
+  href: string;
+  text: string;
+}
+
+interface Props {
+  links: LinkItem[];
+}
+
+const { links } = Astro.props;
+---
+{links.length > 0 && (
+  <section class="seo-links" aria-label="Enlaces relacionados">
+    <div class="inner seo-links-inner reveal">
+      <p>
+        {links.map((link, index) => (
+          <>
+            <a href={link.href}>{link.text}</a>{index < links.length - 1 ? ' · ' : ''}
+          </>
+        ))}
+      </p>
+    </div>
+  </section>
+)}
+
+<style>
+  .seo-links {
+    background: #040404;
+    padding: 22px 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .seo-links-inner {
+    max-width: 980px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .seo-links p {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 0.84rem;
+    line-height: 1.75;
+  }
+
+  .seo-links a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--t-base);
+  }
+
+  .seo-links a:hover {
+    color: var(--orange);
+  }
+</style>
