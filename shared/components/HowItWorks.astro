@@ -1,4 +1,17 @@
 ---
+interface Step {
+  step: string;
+  icon?: string;
+  title: string;
+  desc: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  steps?: Step[];
+}
+
 const steps = [
   {
     step: '01',
@@ -19,17 +32,23 @@ const steps = [
     desc: 'Recibe tu acceso al instante. Nuestro equipo te guía paso a paso en la instalación en menos de 5 minutos.',
   },
 ];
+
+const {
+  title = 'Así de <em>simple</em> funciona',
+  subtitle = 'Tres pasos y estás disfrutando hoy mismo',
+  steps: customSteps = steps,
+} = Astro.props;
 ---
 <section class="how" id="ventajas">
   <div class="inner">
-    <h2 class="section-title reveal">Así de <em>simple</em> funciona</h2>
-    <p class="section-sub reveal">Tres pasos y estás disfrutando hoy mismo</p>
+    <h2 class="section-title reveal" set:html={title}></h2>
+    <p class="section-sub reveal">{subtitle}</p>
 
     <div class="how-grid">
-      {steps.map(s => (
+      {customSteps.map(s => (
         <div class="how-card reveal" data-step={s.step}>
           <div class="how-icon" aria-hidden="true">
-            <Fragment set:html={s.icon} />
+            <Fragment set:html={s.icon ?? steps[Number(s.step) - 1]?.icon ?? steps[0].icon} />
           </div>
           <h4>{s.title}</h4>
           <p>{s.desc}</p>

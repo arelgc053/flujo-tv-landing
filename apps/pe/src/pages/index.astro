@@ -14,6 +14,8 @@ import CTAFinal            from '@shared/components/CTAFinal.astro';
 import Footer              from '@shared/components/Footer.astro';
 import WhatsAppFloat       from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA     from '@shared/components/StickyMobileCTA.astro';
+import InternalSeoLinks    from '../components/InternalSeoLinks.astro';
+import { internalSeoLinks, seoContent } from '../seoContent';
 
 const COUNTRY = {
   brand:           'Oleada TV',
@@ -26,6 +28,8 @@ const COUNTRY = {
   annualSaving:    '23.89',
   paymentMethods:  ['Yape', 'Plin'],
 };
+
+const pageSeo = seoContent.home;
 
 const faqItems = [
   {
@@ -101,9 +105,9 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title="Oleada TV Perú — TV por Internet en HD · Deportes, Cine y Series desde S/ 11.99"
-  description="TV por internet en HD y 4K desde S/ 11.99 al mes. Deportes en vivo, cine y series. Activa por WhatsApp en minutos y paga con Yape o Plin. Disponible en todo el Perú."
-  keywords="oleada tv, oleada tv perú, oleada tv precio, oleada tv soles, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, oleada tv yape, tv por internet perú, tv online perú, canales por internet perú, ver tv online perú, deportes en vivo perú, fútbol en vivo perú, series hd perú, cine hd perú, tv sin cable perú, canales online perú, oleada tv soporte whatsapp, alternativa cable tv perú, pagar tv con yape"
+  title="Oleada TV Perú — Activación rápida, soporte por WhatsApp y entretenimiento desde S/ 11.99"
+  description="Oleada TV Perú con activación por WhatsApp, soporte cercano, cine, series, deportes y entretenimiento en HD. Paga con Yape o Plin y empieza en minutos."
+  keywords="oleada tv, oleada tv perú, oleada tv precio, oleada tv soles, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, oleada tv yape, oleada tv soporte whatsapp, oleada tv entretenimiento, oleada tv activación"
   canonical="https://oleadatvplus.com/"
   author="Oleada TV Perú"
   twitterCreator="@oleadatvplus"
@@ -127,11 +131,16 @@ const breadcrumb = [
     whatsapp={COUNTRY.whatsapp}
     currency={COUNTRY.currency}
     monthlyOffer={COUNTRY.monthlyOffer}
+    headlineTop="Oleada TV para tu hogar"
+    headlineEm="activación simple y soporte real"
+    sub="Entretenimiento digital en HD y 4K con guía por WhatsApp. Activa Oleada TV en minutos, paga con Yape o Plin y recibe soporte cuando lo necesites."
+    badge="Oleada TV Perú"
+    waText="Hola, quiero activar Oleada TV"
   />
 
   <StatsBar />
 
-  <HowItWorks whatsapp={COUNTRY.whatsapp} />
+  <HowItWorks whatsapp={COUNTRY.whatsapp} {...pageSeo.howItWorks} />
 
   <ContentGrid />
 
@@ -144,6 +153,7 @@ const breadcrumb = [
     annualSaving={COUNTRY.annualSaving}
     whatsapp={COUNTRY.whatsapp}
     paymentMethods={COUNTRY.paymentMethods}
+    {...pageSeo.plans}
   />
 
   <Comparison
@@ -151,9 +161,9 @@ const breadcrumb = [
     monthlyOffer={COUNTRY.monthlyOffer}
   />
 
-  <Testimonials />
+  <Testimonials {...pageSeo.testimonials} />
 
-  <Devices />
+  <Devices {...pageSeo.devices} />
 
   <FAQ items={faqItems} />
 
@@ -162,6 +172,8 @@ const breadcrumb = [
     currency={COUNTRY.currency}
     monthlyOffer={COUNTRY.monthlyOffer}
   />
+
+  <InternalSeoLinks links={internalSeoLinks.home} />
 </main>
 
 <Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />

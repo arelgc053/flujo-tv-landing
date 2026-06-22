@@ -1,4 +1,17 @@
 ---
+interface Device {
+  icon?: string;
+  title: string;
+  desc: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  devices?: Device[];
+  note?: string;
+}
+
 const devices = [
   {
     icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
@@ -21,17 +34,24 @@ const devices = [
     desc:'Instala con el código Downloader de Oleada TV en segundos. Transforma tu TV al instante.',
   },
 ];
+
+const {
+  title = 'Compatible con <em>tus dispositivos</em>',
+  subtitle = 'Una cuenta, el dispositivo que tú elijas',
+  devices: customDevices = devices,
+  note = 'Para Smart TV Samsung o LG antiguo se requiere TV Box externo. Nuestro equipo te asesora.',
+} = Astro.props;
 ---
 <section class="devices" id="dispositivos">
   <div class="inner">
-    <h2 class="section-title reveal">Compatible con <em>tus dispositivos</em></h2>
-    <p class="section-sub reveal">Una cuenta, el dispositivo que tú elijas</p>
+    <h2 class="section-title reveal" set:html={title}></h2>
+    <p class="section-sub reveal">{subtitle}</p>
 
     <div class="devices-grid">
-      {devices.map(d => (
+      {customDevices.map((d, i) => (
         <div class="device-card reveal">
           <div class="device-icon" aria-hidden="true">
-            <Fragment set:html={d.icon} />
+            <Fragment set:html={d.icon ?? devices[i]?.icon ?? devices[0].icon} />
           </div>
           <h4>{d.title}</h4>
           <p>{d.desc}</p>
@@ -41,7 +61,7 @@ const devices = [
 
     <p class="plans-note reveal" style="margin-top:2rem;">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      Para Smart TV Samsung o LG antiguo se requiere TV Box externo. Nuestro equipo te asesora.
+      {note}
     </p>
   </div>
 </section>

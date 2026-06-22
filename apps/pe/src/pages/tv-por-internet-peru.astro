@@ -13,6 +13,8 @@ import CTAFinal       from '@shared/components/CTAFinal.astro';
 import Footer         from '@shared/components/Footer.astro';
 import WhatsAppFloat  from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA from '@shared/components/StickyMobileCTA.astro';
+import InternalSeoLinks from '../components/InternalSeoLinks.astro';
+import { internalSeoLinks, seoContent } from '../seoContent';
 
 const COUNTRY = {
   brand:           'Oleada TV',
@@ -25,6 +27,8 @@ const COUNTRY = {
   annualSaving:    '23.89',
   paymentMethods:  ['Yape', 'Plin'],
 };
+
+const pageSeo = seoContent.tvPorInternetPeru;
 
 const faqItems = [
   {
@@ -122,7 +126,7 @@ const breadcrumb = [
   />
 
   <StatsBar />
-  <HowItWorks whatsapp={COUNTRY.whatsapp} />
+  <HowItWorks whatsapp={COUNTRY.whatsapp} {...pageSeo.howItWorks} />
 
   <Plans
     currency={COUNTRY.currency}
@@ -133,12 +137,13 @@ const breadcrumb = [
     annualSaving={COUNTRY.annualSaving}
     whatsapp={COUNTRY.whatsapp}
     paymentMethods={COUNTRY.paymentMethods}
+    {...pageSeo.plans}
   />
 
   <Comparison currency={COUNTRY.currency} monthlyOffer={COUNTRY.monthlyOffer} />
 
-  <Testimonials />
-  <Devices />
+  <Testimonials {...pageSeo.testimonials} />
+  <Devices {...pageSeo.devices} />
   <FAQ items={faqItems} />
 
   <CTAFinal
@@ -146,6 +151,8 @@ const breadcrumb = [
     currency={COUNTRY.currency}
     monthlyOffer={COUNTRY.monthlyOffer}
   />
+
+  <InternalSeoLinks links={internalSeoLinks.tvPorInternetPeru} />
 </main>
 
 <Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />

@@ -1,5 +1,7 @@
 ---
 interface Props {
+  title?: string;
+  subtitle?: string;
   testimonials?: {
     initials: string;
     gradient: string;
@@ -21,12 +23,16 @@ const defaultTestimonials = [
   { initials:'SR', gradient:'linear-gradient(135deg,#8b5cf6,#7c3aed)', name:'Sandra Romero',   city:'Loja',           plan:'Plan Anual',   text:'Mis hijos ven sus series y yo los partidos sin discutir por el precio. El soporte siempre está cuando uno lo necesita. De lo mejor que he contratado para el hogar, muy recomendado.' },
 ];
 
-const { testimonials = defaultTestimonials } = Astro.props;
+const {
+  title = 'Lo que dicen <em>nuestros clientes</em>',
+  subtitle = 'Más de 5,000 usuarios activos en todo el Ecuador',
+  testimonials = defaultTestimonials,
+} = Astro.props;
 ---
 <section class="testimonials" id="testimonios">
   <div class="inner">
-    <h2 class="section-title reveal">Lo que dicen <em>nuestros clientes</em></h2>
-    <p class="section-sub reveal">Más de 5,000 usuarios activos en todo el Ecuador</p>
+    <h2 class="section-title reveal" set:html={title}></h2>
+    <p class="section-sub reveal">{subtitle}</p>
 
     <div class="testi-grid">
       {testimonials.map(t => (
