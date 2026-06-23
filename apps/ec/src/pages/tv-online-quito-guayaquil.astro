@@ -21,12 +21,12 @@ const COUNTRY = {
   brand:           'Oleada TV',
   whatsapp:        '51940405911',
   currency:        '$',
-  monthlyOriginal: '15',
-  monthlyOffer:    '11.99',
-  annualOriginal:  '130',
-  annualOffer:     '119.99',
-  annualSaving:    '23.89',
-  paymentMethods:  ['Transferencia', 'Depósito'],
+  monthlyOriginal: '6',
+  monthlyOffer:    '4.99',
+  annualOriginal:  '65',
+  annualOffer:     '49.99',
+  annualSaving:    '9.89',
+  paymentMethods:  ['PayPal', 'Tarjeta de crédito/débito'],
 };
 
 const faqItems = [
@@ -40,7 +40,7 @@ const faqItems = [
   },
   {
     q: '¿Cómo activo Oleada TV en Quito o Guayaquil hoy mismo?',
-    a: 'Escríbenos por WhatsApp, elige tu plan, paga con transferencia o depósito en dólares, y en minutos tienes tus credenciales. Te guiamos en la instalación paso a paso.',
+    a: 'Escríbenos por WhatsApp, elige tu plan, paga con PayPal o tarjeta de crédito/débito, y en minutos tienes tus credenciales. Te guiamos en la instalación paso a paso.',
   },
   {
     q: '¿Tienen soporte local en Quito o Guayaquil?',
@@ -66,7 +66,7 @@ const faqItems = [
 
 const productSchema = {
   name: 'Oleada TV Quito y Guayaquil — TV Online sin Cable',
-  description: 'TV online en Quito, Guayaquil y el resto de Ecuador, sin cable ni contratos, desde $11.99. Pago en USD, activación guiada por WhatsApp.',
+  description: 'TV online en Quito, Guayaquil y el resto de Ecuador, sin cable ni contratos, desde $4.99. Pago en USD, activación guiada por WhatsApp.',
   price: COUNTRY.monthlyOffer,
   priceCurrency: 'USD',
 };
@@ -76,7 +76,7 @@ const localBusiness = {
   telephone: '+51940405911',
   priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
   currenciesAccepted: 'USD',
-  paymentAccepted: 'Transferencia Bancaria, Depósito',
+  paymentAccepted: 'PayPal, Tarjeta de Crédito, Tarjeta de Débito',
   areaServed: ['Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas', 'Ecuador'],
 };
 
@@ -87,7 +87,7 @@ const breadcrumb = [
 ---
 <BaseLayout
   title="TV Online en Quito y Guayaquil — Oleada TV | Actívate sin Cable en Minutos"
-  description="TV online en Quito, Guayaquil y todo Ecuador, sin cable ni contratos, desde $11.99. El servicio favorito para ver canales, series y el Mundial 2026. Pago en USD."
+  description="TV online en Quito, Guayaquil y todo Ecuador, sin cable ni contratos, desde $4.99. El servicio favorito para ver canales, series y el Mundial 2026. Pago en USD."
   keywords="tv online quito, tv online guayaquil, tv por internet quito, tv por internet guayaquil, canales en vivo quito, canales en vivo guayaquil, tv online cuenca, tv online ambato, tv online manta, ver mundial 2026 quito, ver mundial 2026 guayaquil, alternativa cable tv quito, alternativa cable tv guayaquil"
   canonical="https://ec.oleadatvplus.com/tv-online-quito-guayaquil"
   author="Oleada TV Ecuador"

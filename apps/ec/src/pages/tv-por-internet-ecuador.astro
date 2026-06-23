@@ -21,12 +21,12 @@ const COUNTRY = {
   brand:           'Oleada TV',
   whatsapp:        '51940405911',
   currency:        '$',
-  monthlyOriginal: '15',
-  monthlyOffer:    '11.99',
-  annualOriginal:  '130',
-  annualOffer:     '119.99',
-  annualSaving:    '23.89',
-  paymentMethods:  ['Transferencia', 'Depósito'],
+  monthlyOriginal: '6',
+  monthlyOffer:    '4.99',
+  annualOriginal:  '65',
+  annualOffer:     '49.99',
+  annualSaving:    '9.89',
+  paymentMethods:  ['PayPal', 'Tarjeta de crédito/débito'],
 };
 
 const faqItems = [
@@ -52,7 +52,7 @@ const faqItems = [
   },
   {
     q: '¿Cómo pago desde Ecuador?',
-    a: 'Aceptamos transferencia bancaria y depósito en dólares. Te indicamos los datos por WhatsApp, envías el comprobante y continuamos con la activación por el mismo chat.',
+    a: 'Aceptamos PayPal y tarjeta de crédito o débito. Te enviamos el enlace de pago seguro por WhatsApp y, en cuanto se confirma, continuamos con la activación por el mismo chat.',
   },
   {
     q: '¿Necesito contratar un técnico para instalarlo?',
@@ -70,7 +70,7 @@ const faqItems = [
 
 const productSchema = {
   name: 'Oleada TV — Alternativa al Cable en Ecuador',
-  description: 'TV por internet en Ecuador como alternativa al cable tradicional, con activación guiada por WhatsApp y pagos en USD. Desde $11.99 al mes.',
+  description: 'TV por internet en Ecuador como alternativa al cable tradicional, con activación guiada por WhatsApp y pagos en USD. Desde $4.99 al mes.',
   price: COUNTRY.monthlyOffer,
   priceCurrency: 'USD',
 };
@@ -80,7 +80,7 @@ const localBusiness = {
   telephone: '+51940405911',
   priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
   currenciesAccepted: 'USD',
-  paymentAccepted: 'Transferencia Bancaria, Depósito',
+  paymentAccepted: 'PayPal, Tarjeta de Crédito, Tarjeta de Débito',
   areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
 };
 
@@ -90,8 +90,8 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title="TV por Internet en Ecuador — Oleada TV | Alternativa al Cable desde $11.99"
-  description="Cambia el cable por TV por internet en Ecuador. Canales, cine, series, deportes y el Mundial 2026 en vivo desde $11.99 al mes. Pago en USD, activación por WhatsApp."
+  title="TV por Internet en Ecuador — Oleada TV | Alternativa al Cable desde $4.99"
+  description="Cambia el cable por TV por internet en Ecuador. Canales, cine, series, deportes y el Mundial 2026 en vivo desde $4.99 al mes. Pago en USD, activación por WhatsApp."
   keywords="tv por internet ecuador, alternativa cable tv ecuador, tv online ecuador, canales por internet ecuador, tv sin cable ecuador, dejar el cable ecuador, tv internet quito, tv internet guayaquil, tv internet cuenca, oleada tv ecuador precio, ver mundial 2026 ecuador, partidos de ecuador mundial 2026 en vivo"
   canonical="https://ec.oleadatvplus.com/tv-por-internet-ecuador"
   author="Oleada TV Ecuador"
