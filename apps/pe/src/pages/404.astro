@@ -1,0 +1,82 @@
+---
+import BaseLayout    from '@shared/layouts/BaseLayout.astro';
+import Navbar         from '@shared/components/Navbar.astro';
+import Footer          from '@shared/components/Footer.astro';
+import WhatsAppFloat   from '@shared/components/WhatsAppFloat.astro';
+
+const COUNTRY = {
+  brand:    'Oleada TV',
+  whatsapp: '51940405911',
+};
+
+const waLink = `https://wa.me/${COUNTRY.whatsapp}?text=${encodeURIComponent('Hola, quiero información sobre Oleada TV')}`;
+---
+<BaseLayout
+  title="Página no encontrada — Oleada TV"
+  description="La página que buscas no existe o fue movida. Vuelve al inicio de Oleada TV o escríbenos por WhatsApp."
+  keywords="oleada tv"
+  canonical="https://oleadatvplus.com/404/"
+  lang="es-PE"
+  locale="es_PE"
+  geoRegion="PE"
+  geoPlacename="Lima, Perú"
+  noindex
+/>
+
+<Navbar brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+
+<main>
+  <section class="not-found">
+    <div class="inner">
+      <p class="not-found-code">404</p>
+      <h1>Esta página no existe</h1>
+      <p class="not-found-sub">
+        Puede que el enlace esté roto o que la página se haya movido. Vuelve al inicio o escríbenos por WhatsApp y te ayudamos directamente.
+      </p>
+      <div class="not-found-actions">
+        <a href="/" class="btn-wa">Volver al inicio</a>
+        <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-ghost">Escribir por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+<WhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+
+<style>
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 20px 80px;
+  }
+  .not-found .inner {
+    max-width: 560px;
+  }
+  .not-found-code {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0 0 8px;
+    color: var(--orange, #FF4500);
+  }
+  .not-found h1 {
+    font-size: 1.75rem;
+    margin: 0 0 12px;
+  }
+  .not-found-sub {
+    color: var(--text-muted, #9aa0a6);
+    line-height: 1.6;
+    margin: 0 0 28px;
+  }
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+  }
+</style>

@@ -35,6 +35,7 @@ interface Props {
   productSchema?: ProductSchema | null;
   localBusiness?: LocalBusinessSchema | null;
   breadcrumb?: { name: string; url: string }[];
+  noindex?: boolean;
 }
 
 const {
@@ -54,6 +55,7 @@ const {
   productSchema = null,
   localBusiness = null,
   breadcrumb = [],
+  noindex = false,
 } = Astro.props;
 
 const ogImage = new URL('/img/hero.webp', Astro.site).href;
@@ -165,7 +167,7 @@ const breadcrumbSchema = breadcrumb.length > 0
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
   <meta name="author" content={author} />
   <meta name="theme-color" content={themeColor} />
   <title>{title}</title>
