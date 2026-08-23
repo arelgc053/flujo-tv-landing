@@ -7,9 +7,12 @@
 // conversión desde USD: el negocio fija el precio en pesos directamente, que es
 // justamente la promesa de copy "pagás en pesos, sin sorpresas por el dólar".
 //
-// WhatsApp confirmado por el cliente (23 ago 2026): 940405911. Mismo patrón de
-// construcción que EC/PE (código de país + número, sin "+" ni espacios) —
-// código de país 54 (Argentina) en vez del 51 (Perú) que se usaba de fallback.
+// WhatsApp: número 940405911, con código de país +51 (Perú) — NO +54
+// (Argentina). Es el mismo número físico/WhatsApp Business que ya usan EC y
+// PE: el prefijo lo define dónde está registrada la línea, no el país de la
+// landing que lo muestra. Usar +54 acá generaría un número que no existe y
+// el link de WhatsApp no abriría ninguna conversación real. Corregido el
+// 23 ago 2026 tras detectar el error.
 
 export interface StellaPlan {
   id: string;
@@ -24,7 +27,7 @@ export interface StellaPlan {
 export const STELLA_AR = {
   brand: 'Stella TV',
 
-  whatsapp: '54940405911',
+  whatsapp: '51940405911',
   currency: '$',
 
   plans: [
