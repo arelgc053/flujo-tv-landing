@@ -8,14 +8,17 @@
 
     "dev:pe": "npm run dev --workspace=apps/pe",
     "dev:ec": "npm run dev --workspace=apps/ec",
+    "dev:ar": "npm run dev --workspace=apps/ar",
 
     "build": "npm run build --workspace=apps/pe",
 
     "build:pe": "npm run build --workspace=apps/pe",
     "build:ec": "npm run build --workspace=apps/ec",
+    "build:ar": "npm run build --workspace=apps/ar",
 
     "preview:pe": "npm run preview --workspace=apps/pe",
     "preview:ec": "npm run preview --workspace=apps/ec",
+    "preview:ar": "npm run preview --workspace=apps/ar",
 
     "build:all": "npm run build --workspaces --if-present"
   }

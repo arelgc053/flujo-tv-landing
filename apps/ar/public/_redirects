@@ -1,0 +1,4 @@
+# www y http → https sin www (canonical de dominio)
+http://www.ar.oleadatvplus.com/* https://ar.oleadatvplus.com/:splat 301!
+https://www.ar.oleadatvplus.com/* https://ar.oleadatvplus.com/:splat 301!
+http://ar.oleadatvplus.com/* https://ar.oleadatvplus.com/:splat 301!

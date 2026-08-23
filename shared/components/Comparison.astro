@@ -1,16 +1,20 @@
 ---
-interface Props { currency: string; monthlyOffer: string; brand?: string; }
+interface CompareRow { label: string; service: string; cable: string; }
+interface Props { currency: string; monthlyOffer: string; brand?: string; rows?: CompareRow[]; }
 const { currency, monthlyOffer, brand = 'Nosotros' } = Astro.props;
 
-const rows = [
-  { label: 'Precio mensual',     service: `${currency} ${monthlyOffer}`, cable: 'Desde S/ 80', ok: true },
-  { label: 'Contrato mínimo',    service: 'Sin permanencia',  cable: '12 a 24 meses',       ok: true },
-  { label: 'Instalación',        service: 'Online, inmediata', cable: 'Técnico en casa',    ok: true },
-  { label: 'Dispositivos',       service: 'TV, celular, tablet', cable: 'Solo TV principal', ok: true },
-  { label: 'Método de pago',     service: 'Yape / Plin',      cable: 'Factura mensual fija', ok: true },
-  { label: 'Activación',         service: 'En 5 minutos',     cable: '3 a 5 días hábiles',  ok: true },
-  { label: 'Soporte',            service: 'WhatsApp 24/7',    cable: 'Call center limitado', ok: true },
+// Default sin cambios — si una landing no pasa `rows`, el resultado es idéntico
+// al que ya tenían PE (único que usa este componente hoy).
+const defaultRows: CompareRow[] = [
+  { label: 'Precio mensual',     service: `${currency} ${monthlyOffer}`, cable: 'Desde S/ 80' },
+  { label: 'Contrato mínimo',    service: 'Sin permanencia',  cable: '12 a 24 meses' },
+  { label: 'Instalación',        service: 'Online, inmediata', cable: 'Técnico en casa' },
+  { label: 'Dispositivos',       service: 'TV, celular, tablet', cable: 'Solo TV principal' },
+  { label: 'Método de pago',     service: 'Yape / Plin',      cable: 'Factura mensual fija' },
+  { label: 'Activación',         service: 'En 5 minutos',     cable: '3 a 5 días hábiles' },
+  { label: 'Soporte',            service: 'WhatsApp 24/7',    cable: 'Call center limitado' },
 ];
+const rows = Astro.props.rows ?? defaultRows;
 
 const yes = `<svg class="icon-yes" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 const no  = `<svg class="icon-no"  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;

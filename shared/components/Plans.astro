@@ -10,13 +10,20 @@ interface Plan {
   featured?: boolean;
 }
 
+// Un método de pago puede ser solo texto (comportamiento original) o traer un
+// ícono propio — string[] sigue funcionando exactamente igual que antes.
+interface PaymentMethodWithIcon {
+  label: string;
+  icon?: string;
+}
+
 interface Props {
   currency: string;
   plans: Plan[];
   whatsapp: string;
   brand: string;
   features?: string[];
-  paymentMethods: string[];
+  paymentMethods: (string | PaymentMethodWithIcon)[];
   title?: string;
   subtitle?: string;
   note?: string;
@@ -90,7 +97,12 @@ const badgeIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="current
     </p>
     <div class="plans-payment reveal">
       <span style="font-size:0.78rem;color:var(--text-muted);">Métodos de pago:</span>
-      {paymentMethods.map(m => <span class="payment-badge">{m}</span>)}
+      {paymentMethods.map(m => {
+        const isIconMethod = typeof m !== 'string';
+        const label = isIconMethod ? m.label : m;
+        const icon = isIconMethod ? m.icon : null;
+        return <span class="payment-badge">{icon && <Fragment set:html={icon} />}{label}</span>;
+      })}
     </div>
   </div>
 </section>

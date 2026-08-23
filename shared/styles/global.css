@@ -497,7 +497,8 @@ a:focus-visible, button:focus-visible {
 .plan-card.featured .plan-btn:hover { background: var(--orange-dark); }
 .plans-note { margin-top:1.8rem; font-size:0.8rem; color:var(--text-dim); display:flex; align-items:center; justify-content:center; gap:6px; }
 .plans-payment { margin-top:1rem; display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
-.payment-badge { background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:0.78rem; font-weight:600; color:var(--text-muted); letter-spacing:0.06em; }
+.payment-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:0.78rem; font-weight:600; color:var(--text-muted); letter-spacing:0.06em; }
+.payment-badge svg { color:var(--orange); flex-shrink:0; }
 @media (max-width:600px) { .plans-grid, .plans-grid-4 { grid-template-columns:1fr; } .plan-card.featured { padding-top:54px; } }
 
 /* ─── Comparison ─────────────────────────────────────────── */

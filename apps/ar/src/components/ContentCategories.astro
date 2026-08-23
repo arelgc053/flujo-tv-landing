@@ -1,0 +1,47 @@
+---
+// Versión sin fotos de stock del "grid de contenido" — mismo criterio ya
+// aplicado en la limpieza de Ecuador (EcuadorShowcase no usa fotos genéricas
+// de banco de imágenes). Íconos + texto en vez de <img>, reutilizando las
+// clases de Devices (.devices, .devices-grid, .device-card — grilla de 4
+// columnas) para no sumar CSS nuevo al sistema compartido.
+const categories = [
+  {
+    title: 'Fútbol y Deportes en Vivo',
+    desc: 'Los principales torneos y partidos en directo, incluyendo la Selección Argentina, sin depender del cable.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 4.24 4.24m5.72 5.72 4.24 4.24M4.9 19.1l4.24-4.24m5.72-5.72 4.24-4.24"/></svg>`,
+  },
+  {
+    title: 'Cine de Estreno',
+    desc: 'Miles de películas en HD y 4K, desde clásicos hasta los últimos estrenos.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>`,
+  },
+  {
+    title: 'Series Internacionales',
+    desc: 'Las series más vistas del mundo, listas para maratonear cuando quieras.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  },
+  {
+    title: 'TV en Vivo',
+    desc: 'Canales nacionales e internacionales en transmisión continua, las 24 horas.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>`,
+  },
+];
+---
+<section class="devices" id="contenido">
+  <div class="inner">
+    <h2 class="section-title reveal">Todo el contenido <em>que querés</em></h2>
+    <p class="section-sub reveal">Una plataforma completa para toda la familia</p>
+
+    <div class="devices-grid">
+      {categories.map(c => (
+        <div class="device-card reveal">
+          <div class="device-icon" aria-hidden="true">
+            <Fragment set:html={c.icon} />
+          </div>
+          <h4>{c.title}</h4>
+          <p>{c.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

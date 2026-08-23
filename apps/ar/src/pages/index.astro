@@ -1,0 +1,224 @@
+---
+import '../styles/tokens.css';
+import BaseLayout        from '@shared/layouts/BaseLayout.astro';
+import Navbar             from '@shared/components/Navbar.astro';
+import Hero                from '@shared/components/Hero.astro';
+import StatsBar              from '@shared/components/StatsBar.astro';
+import HowItWorks              from '@shared/components/HowItWorks.astro';
+import Plans                     from '@shared/components/Plans.astro';
+import Comparison                 from '@shared/components/Comparison.astro';
+import Devices                      from '@shared/components/Devices.astro';
+import Installation                  from '@shared/components/Installation.astro';
+import FAQ                            from '@shared/components/FAQ.astro';
+import CTAFinal                        from '@shared/components/CTAFinal.astro';
+import Footer                           from '@shared/components/Footer.astro';
+import WhatsAppFloat                     from '@shared/components/WhatsAppFloat.astro';
+import StickyMobileCTA                    from '@shared/components/StickyMobileCTA.astro';
+import PendingTestimonials from '../components/PendingTestimonials.astro';
+import ContentCategories   from '../components/ContentCategories.astro';
+import { STELLA_AR } from '../stella.config';
+
+const monthly = STELLA_AR.plans[0];
+const longest = STELLA_AR.plans[STELLA_AR.plans.length - 1];
+
+// Íconos de método de pago — genéricos (billetera / banco / tarjeta), no el
+// isotipo real de Mercado Pago ni de ninguna marca de tarjeta, para no
+// reproducir logos de terceros sin autorización. El reconocimiento viene del
+// texto + ícono, no de copiar la marca gráfica ajena.
+const PAYMENT_ICONS: Record<string, string> = {
+  'Mercado Pago': `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>`,
+  'Transferencia (CVU/CBU)': `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="21" x2="21" y2="21"/><line x1="5" y1="21" x2="5" y2="10"/><line x1="9" y1="21" x2="9" y2="10"/><line x1="15" y1="21" x2="15" y2="10"/><line x1="19" y1="21" x2="19" y2="10"/><polygon points="12 2 21 8 3 8"/></svg>`,
+  'Tarjetas de crédito/débito': `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`,
+};
+const paymentMethodsWithIcons = STELLA_AR.paymentMethods.map(label => ({
+  label,
+  icon: PAYMENT_ICONS[label],
+}));
+
+const comparisonRows = [
+  { label: 'Precio mensual',   service: `${STELLA_AR.currency}${monthly.price}`, cable: 'Sube todos los meses' },
+  { label: 'Moneda',           service: 'Pesos argentinos fijos', cable: 'Atado al dólar o ajustable' },
+  { label: 'Contrato mínimo',  service: 'Sin permanencia', cable: '12 a 24 meses' },
+  { label: 'Instalación',      service: 'Online, inmediata', cable: 'Técnico en casa' },
+  { label: 'Dispositivos',     service: 'TV, celular, tablet', cable: 'Solo TV principal' },
+  { label: 'Método de pago',   service: 'Mercado Pago / Transferencia', cable: 'Factura mensual fija' },
+  { label: 'Activación',       service: 'En minutos', cable: '3 a 5 días hábiles' },
+  { label: 'Soporte',          service: 'WhatsApp 24/7', cable: 'Call center limitado' },
+];
+
+const howItWorksSteps = [
+  { step: '01', title: 'Elegí tu plan', desc: 'Escribinos por WhatsApp, contanos qué dispositivo usás y te asesoramos sin compromiso.' },
+  { step: '02', title: 'Pagá en pesos', desc: 'Pagá con Mercado Pago, transferencia (CVU/CBU) o tarjeta. Pagás en pesos argentinos, sin sorpresas por el dólar.' },
+  { step: '03', title: 'Empezá a disfrutar', desc: 'Recibís tu acceso al instante y te acompañamos paso a paso hasta dejarlo funcionando en tu dispositivo.' },
+];
+
+const faqItems = [
+  {
+    q: '¿Qué es Stella TV?',
+    a: 'Un servicio de streaming por internet con más de 1,000 canales, deportes en vivo, cine de estreno y series en Full HD. Se activa por WhatsApp, sin instalación técnica ni contratos de permanencia.',
+  },
+  {
+    q: '¿Qué necesito para activar Stella TV en Argentina?',
+    a: 'Necesitás conexión a internet estable y un dispositivo Android: TV Box, Android TV, Google TV, Fire Stick, celular o tablet. Primero revisamos tu caso por WhatsApp y después te guiamos con la instalación.',
+  },
+  {
+    q: '¿Los precios están en pesos o en dólares?',
+    a: 'En pesos argentinos. Pagás el precio publicado en ARS, sin conversión ni sorpresas si el dólar sube — es un precio fijo en pesos, no atado al tipo de cambio.',
+  },
+  {
+    q: '¿Cómo pago desde Argentina?',
+    a: 'Aceptamos Mercado Pago, transferencia bancaria (CVU/CBU) y tarjetas de crédito o débito. Te pasamos los datos de pago por WhatsApp y, apenas se confirma, seguimos con la activación por el mismo chat.',
+  },
+  {
+    q: '¿Funciona en Smart TV Samsung o LG?',
+    a: 'Los Smart TV Samsung (Tizen) y LG (webOS) no permiten instalar la app de forma nativa. Necesitás conectar un TV Box, Fire Stick o dispositivo con Google TV por HDMI — te asesoramos por WhatsApp cuál te conviene.',
+  },
+  {
+    q: '¿Funciona en Android TV o Google TV?',
+    a: 'Sí, de forma nativa. Es el entorno para el que está pensado Stella TV, junto con Chromecast con Google TV y Smart TV con Google TV integrado (Sony BRAVIA, TCL, Hisense).',
+  },
+  {
+    q: '¿Cuánto tarda la activación?',
+    a: 'Después de confirmar el pago, te mandamos tus datos de acceso por WhatsApp en pocos minutos. Si es tu primera vez, te acompañamos hasta dejar la app andando.',
+  },
+  {
+    q: '¿Hay contrato o permanencia?',
+    a: 'No. Elegís el plan que prefieras sin compromiso de permanencia y renovás solo cuando vos quieras.',
+  },
+  {
+    q: '¿Qué incluyen los planes?',
+    a: 'Los 4 planes (1, 3, 6 y 12 meses) incluyen exactamente lo mismo: +1,000 canales, 3 pantallas, cine y series VOD, calidad Full HD y soporte por WhatsApp. Solo cambia la duración y el ahorro.',
+  },
+  {
+    q: '¿Cuántas pantallas puedo usar a la vez?',
+    a: 'Cada cuenta incluye 3 pantallas simultáneas, en todos los planes.',
+  },
+  {
+    q: '¿Cómo recibo soporte?',
+    a: 'Por WhatsApp. Te ayudamos con la instalación, cambios de dispositivo o cualquier duda que tengas.',
+  },
+];
+
+const cleanPrice = (price: string) => price.replace(/\./g, '');
+
+const productSchema = {
+  name: `Plan Mensual ${STELLA_AR.brand} Argentina`,
+  description: `Plan de streaming ${STELLA_AR.brand} con más de 1,000 canales, deportes en vivo, cine de estreno y series en Full HD para Argentina. Activación inmediata por WhatsApp, pagás en pesos argentinos.`,
+  price: cleanPrice(monthly.price),
+  priceCurrency: 'ARS',
+  availability: 'https://schema.org/InStock',
+};
+
+const localBusiness = {
+  siteName: STELLA_AR.brand,
+  telephone: `+${STELLA_AR.whatsapp}`,
+  priceRange: `${STELLA_AR.currency}${monthly.price} - ${STELLA_AR.currency}${longest.price}`,
+  currenciesAccepted: 'ARS',
+  paymentAccepted: 'Mercado Pago, Transferencia bancaria, Tarjeta de crédito, Tarjeta de débito',
+  areaServed: STELLA_AR.areaServed,
+};
+
+const breadcrumb = [
+  { name: 'Inicio', url: 'https://ar.oleadatvplus.com/' },
+  { name: 'Planes', url: 'https://ar.oleadatvplus.com/#planes' },
+];
+---
+<BaseLayout
+  title={`${STELLA_AR.brand} Argentina | Fútbol y Deportes en Vivo, Cine y Series HD — Activación Inmediata desde $${monthly.price}`}
+  description={`${STELLA_AR.brand} en Argentina: +1,000 canales, fútbol y deportes en vivo, cine y series en Full HD. Activación inmediata por WhatsApp, pagás en pesos argentinos desde $${monthly.price} por mes.`}
+  keywords="stella tv, stella tv argentina, stella tv precio, stella tv pesos argentinos, stella tv instalacion, stella tv apk android, stella tv descarga, instalar stella tv fire stick, stella tv tv box, stella tv android tv, stella tv google tv, stella tv mercado pago, stella tv soporte whatsapp, stella tv planes, stella tv activacion, tv por internet argentina, tv online argentina, futbol en vivo argentina, deportes en vivo por internet, ver tv sin cable argentina"
+  canonical="https://ar.oleadatvplus.com/"
+  brand={STELLA_AR.brand}
+  whatsapp={STELLA_AR.whatsapp}
+  lang="es-AR"
+  locale="es_AR"
+  geoRegion="AR"
+  geoPlacename="Buenos Aires, Argentina"
+  geoPosition="-34.6037;-58.3816"
+  alternates={[
+    { hreflang: 'es-AR', href: 'https://ar.oleadatvplus.com/' },
+    { hreflang: 'es-PE', href: 'https://oleadatvplus.com/' },
+    { hreflang: 'es-EC', href: 'https://ec.oleadatvplus.com/' },
+    { hreflang: 'x-default', href: 'https://oleadatvplus.com/' },
+  ]}
+  faqSchema={faqItems}
+  productSchema={productSchema}
+  localBusiness={localBusiness}
+  breadcrumb={breadcrumb}
+/>
+
+<Navbar brand={STELLA_AR.brand} whatsapp={STELLA_AR.whatsapp} />
+
+<main>
+  <Hero
+    brand={STELLA_AR.brand}
+    whatsapp={STELLA_AR.whatsapp}
+    currency={STELLA_AR.currency}
+    monthlyOffer={monthly.price}
+    headlineTop={`${STELLA_AR.brand} para tu hogar`}
+    headlineEm="activación simple, todo en pesos"
+    sub={`Más de 1,000 canales, cine, series y deportes en vivo en Full HD. Activá ${STELLA_AR.brand} en minutos, pagá en pesos con Mercado Pago o transferencia y recibí soporte real cuando lo necesités.`}
+    badge="Distribuidor Autorizado · Argentina"
+    waText={`Hola, quiero activar ${STELLA_AR.brand} en Argentina`}
+    trustBadges={['Mercado Pago', 'Acceso en minutos', 'Soporte 24/7', `Desde ${STELLA_AR.currency}${monthly.price}/mes`]}
+  />
+
+  <StatsBar />
+
+  <HowItWorks
+    subtitle="Tres pasos y arrancás hoy mismo"
+    steps={howItWorksSteps}
+  />
+
+  <ContentCategories />
+
+  <Plans
+    currency={STELLA_AR.currency}
+    plans={STELLA_AR.plans}
+    whatsapp={STELLA_AR.whatsapp}
+    brand={STELLA_AR.brand}
+    features={STELLA_AR.planFeatures}
+    paymentMethods={paymentMethodsWithIcons}
+    title="Elegí tu <em>plan</em>"
+    subtitle="Sin contratos · Sin permanencia · Activate hoy"
+    note="Todos los planes incluyen el mismo contenido — solo cambia la duración. Precios en pesos argentinos (ARS)."
+  />
+
+  <Comparison
+    currency={STELLA_AR.currency}
+    monthlyOffer={monthly.price}
+    brand={STELLA_AR.brand}
+    rows={comparisonRows}
+  />
+
+  <PendingTestimonials whatsapp={STELLA_AR.whatsapp} brand={STELLA_AR.brand} />
+
+  <Devices />
+
+  <Installation
+    whatsapp={STELLA_AR.whatsapp}
+    brand={STELLA_AR.brand}
+    downloaderCode={STELLA_AR.downloaderCode}
+    subtitle="Elegí tu dispositivo y seguí los pasos"
+  />
+
+  <FAQ items={faqItems} />
+
+  <CTAFinal
+    whatsapp={STELLA_AR.whatsapp}
+    currency={STELLA_AR.currency}
+    monthlyOffer={monthly.price}
+    brand={STELLA_AR.brand}
+  />
+</main>
+
+<Footer brand={STELLA_AR.brand} whatsapp={STELLA_AR.whatsapp} />
+
+<WhatsAppFloat whatsapp={STELLA_AR.whatsapp} brand={STELLA_AR.brand} />
+
+<StickyMobileCTA
+  whatsapp={STELLA_AR.whatsapp}
+  currency={STELLA_AR.currency}
+  monthlyOffer={monthly.price}
+  brand={STELLA_AR.brand}
+/>

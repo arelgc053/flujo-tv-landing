@@ -1,0 +1,81 @@
+---
+import '../styles/tokens.css';
+import BaseLayout    from '@shared/layouts/BaseLayout.astro';
+import Navbar         from '@shared/components/Navbar.astro';
+import Footer          from '@shared/components/Footer.astro';
+import WhatsAppFloat   from '@shared/components/WhatsAppFloat.astro';
+import { STELLA_AR } from '../stella.config';
+
+const waLink = `https://wa.me/${STELLA_AR.whatsapp}?text=${encodeURIComponent(`Hola, quiero información sobre ${STELLA_AR.brand}`)}`;
+---
+<BaseLayout
+  title={`Página no encontrada — ${STELLA_AR.brand}`}
+  description={`La página que buscás no existe o fue movida. Volvé al inicio de ${STELLA_AR.brand} o escribinos por WhatsApp.`}
+  keywords="stella tv argentina"
+  canonical="https://ar.oleadatvplus.com/404"
+  brand={STELLA_AR.brand}
+  whatsapp={STELLA_AR.whatsapp}
+  lang="es-AR"
+  locale="es_AR"
+  geoRegion="AR"
+  geoPlacename="Buenos Aires, Argentina"
+  noindex
+/>
+
+<Navbar brand={STELLA_AR.brand} whatsapp={STELLA_AR.whatsapp} />
+
+<main>
+  <section class="not-found">
+    <div class="inner">
+      <p class="not-found-code">404</p>
+      <h1>Esta página no existe</h1>
+      <p class="not-found-sub">
+        Puede que el enlace esté roto o que la página se haya movido. Volvé al inicio o escribinos por WhatsApp y te ayudamos directamente.
+      </p>
+      <div class="not-found-actions">
+        <a href="/" class="btn-wa">Volver al inicio</a>
+        <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-ghost">Escribir por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<Footer brand={STELLA_AR.brand} whatsapp={STELLA_AR.whatsapp} />
+<WhatsAppFloat whatsapp={STELLA_AR.whatsapp} brand={STELLA_AR.brand} />
+
+<style>
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 20px 80px;
+  }
+  .not-found .inner {
+    max-width: 560px;
+  }
+  .not-found-code {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0 0 8px;
+    color: var(--orange, #FF4500);
+  }
+  .not-found h1 {
+    font-size: 1.75rem;
+    margin: 0 0 12px;
+  }
+  .not-found-sub {
+    color: var(--text-muted, #9aa0a6);
+    line-height: 1.6;
+    margin: 0 0 28px;
+  }
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+  }
+</style>
