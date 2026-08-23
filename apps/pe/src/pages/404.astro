@@ -3,19 +3,17 @@ import BaseLayout    from '@shared/layouts/BaseLayout.astro';
 import Navbar         from '@shared/components/Navbar.astro';
 import Footer          from '@shared/components/Footer.astro';
 import WhatsAppFloat   from '@shared/components/WhatsAppFloat.astro';
+import { STELLA } from '../stella.config';
 
-const COUNTRY = {
-  brand:    'Oleada TV',
-  whatsapp: '51940405911',
-};
-
-const waLink = `https://wa.me/${COUNTRY.whatsapp}?text=${encodeURIComponent('Hola, quiero información sobre Oleada TV')}`;
+const waLink = `https://wa.me/${STELLA.whatsapp}?text=${encodeURIComponent(`Hola, quiero información sobre ${STELLA.brand}`)}`;
 ---
 <BaseLayout
-  title="Página no encontrada — Oleada TV"
-  description="La página que buscas no existe o fue movida. Vuelve al inicio de Oleada TV o escríbenos por WhatsApp."
-  keywords="oleada tv"
+  title={`Página no encontrada — ${STELLA.brand}`}
+  description={`La página que buscas no existe o fue movida. Vuelve al inicio de ${STELLA.brand} o escríbenos por WhatsApp.`}
+  keywords="stella tv"
   canonical="https://oleadatvplus.com/404/"
+  brand={STELLA.brand}
+  whatsapp={STELLA.whatsapp}
   lang="es-PE"
   locale="es_PE"
   geoRegion="PE"
@@ -23,7 +21,7 @@ const waLink = `https://wa.me/${COUNTRY.whatsapp}?text=${encodeURIComponent('Hol
   noindex
 />
 
-<Navbar brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+<Navbar brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
 
 <main>
   <section class="not-found">
@@ -41,8 +39,8 @@ const waLink = `https://wa.me/${COUNTRY.whatsapp}?text=${encodeURIComponent('Hol
   </section>
 </main>
 
-<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
-<WhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+<Footer brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<WhatsAppFloat whatsapp={STELLA.whatsapp} brand={STELLA.brand} />
 
 <style>
   .not-found {

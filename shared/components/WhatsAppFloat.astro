@@ -1,7 +1,7 @@
 ---
-interface Props { whatsapp: string; }
-const { whatsapp } = Astro.props;
-const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quiero información sobre Oleada TV')}`;
+interface Props { whatsapp: string; brand?: string; }
+const { whatsapp, brand = 'nosotros' } = Astro.props;
+const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(`Hola, quiero información sobre ${brand}`)}`;
 ---
 <a
   href={waLink}

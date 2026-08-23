@@ -412,6 +412,8 @@ a:focus-visible, button:focus-visible {
 /* ─── Plans ───────────────────────────────────────────────── */
 .plans { background: var(--bg3); padding: var(--section-pad) 20px; text-align:center; }
 .plans-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; max-width:860px; margin:0 auto; align-items:start; }
+.plans-grid-4 { grid-template-columns:repeat(4,1fr); max-width:1260px; gap:18px; }
+@media (max-width:1080px) { .plans-grid-4 { grid-template-columns:repeat(2,1fr); max-width:640px; } }
 
 .plan-card {
   background: var(--glass-bg);
@@ -499,7 +501,7 @@ a:focus-visible, button:focus-visible {
 .plans-note { margin-top:1.8rem; font-size:0.8rem; color:var(--text-dim); display:flex; align-items:center; justify-content:center; gap:6px; }
 .plans-payment { margin-top:1rem; display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
 .payment-badge { background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:0.78rem; font-weight:600; color:var(--text-muted); letter-spacing:0.06em; }
-@media (max-width:600px) { .plans-grid { grid-template-columns:1fr; } .plan-card.featured { padding-top:54px; } }
+@media (max-width:600px) { .plans-grid, .plans-grid-4 { grid-template-columns:1fr; } .plan-card.featured { padding-top:54px; } }
 
 /* ─── Comparison ─────────────────────────────────────────── */
 .comparison { background: var(--bg2); padding: var(--section-pad) 20px; text-align:center; }
@@ -660,8 +662,8 @@ details[open] .faq-chevron { transform:rotate(180deg); color:var(--orange); }
   pointer-events: none;
   transition: opacity var(--t-base), transform var(--t-base);
 }
-.wa-float.show { opacity:1; transform:scale(1); pointer-events:auto; }
-.wa-float:hover { transform:scale(1.12) !important; box-shadow:0 8px 40px var(--green-glow); }
+.wa-float.show { opacity:1; transform:scale(1); pointer-events:auto; animation: waPulse 2.8s ease-in-out infinite; }
+.wa-float:hover { transform:scale(1.12) !important; box-shadow:0 8px 40px var(--green-glow); animation:none; }
 .wa-float-tooltip {
   position: absolute;
   right: 74px;

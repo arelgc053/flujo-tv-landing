@@ -16,6 +16,7 @@ import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
 import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
 import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
 import { internalSeoLinks } from '../internalLinks';
+import { STELLA_EC } from '../stella.config';
 
 const COUNTRY = {
   brand:           'Oleada TV',
@@ -104,6 +105,7 @@ const breadcrumb = [
   geoPosition="-1.8312;-78.1834"
   faqSchema={faqItems}
   productSchema={productSchema}
+  aggregateRating={{ ratingValue: STELLA_EC.rating.value, reviewCount: STELLA_EC.rating.count }}
   localBusiness={localBusiness}
   breadcrumb={breadcrumb}
 />
@@ -129,14 +131,12 @@ const breadcrumb = [
   />
 
   <EcuadorPlans
-    currency={COUNTRY.currency}
-    monthlyOriginal={COUNTRY.monthlyOriginal}
-    monthlyOffer={COUNTRY.monthlyOffer}
-    annualOriginal={COUNTRY.annualOriginal}
-    annualOffer={COUNTRY.annualOffer}
-    annualSaving={COUNTRY.annualSaving}
-    whatsapp={COUNTRY.whatsapp}
-    paymentMethods={COUNTRY.paymentMethods}
+    currency={STELLA_EC.currency}
+    plans={STELLA_EC.plans}
+    whatsapp={STELLA_EC.whatsapp}
+    brand={STELLA_EC.brand}
+    features={STELLA_EC.planFeatures}
+    paymentMethods={STELLA_EC.paymentMethods}
   />
 
   <EcuadorShowcase />

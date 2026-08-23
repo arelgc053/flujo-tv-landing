@@ -7,52 +7,45 @@ import HowItWorks     from '@shared/components/HowItWorks.astro';
 import Plans          from '@shared/components/Plans.astro';
 import Testimonials   from '@shared/components/Testimonials.astro';
 import Devices        from '@shared/components/Devices.astro';
+import Installation   from '@shared/components/Installation.astro';
 import FAQ            from '@shared/components/FAQ.astro';
 import CTAFinal       from '@shared/components/CTAFinal.astro';
 import Footer         from '@shared/components/Footer.astro';
 import WhatsAppFloat  from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA from '@shared/components/StickyMobileCTA.astro';
+import BrandTransitionStrip from '../components/BrandTransitionStrip.astro';
 import InternalSeoLinks from '../components/InternalSeoLinks.astro';
-import { internalSeoLinks, seoContent } from '../seoContent';
-
-const COUNTRY = {
-  brand:           'Oleada TV',
-  whatsapp:        '51940405911',
-  currency:        'S/',
-  monthlyOriginal: '15',
-  monthlyOffer:    '11.99',
-  annualOriginal:  '130',
-  annualOffer:     '119.99',
-  annualSaving:    '23.89',
-  paymentMethods:  ['Yape', 'Plin'],
-};
+import { internalSeoLinks, seoContent, stellaTestimonials } from '../seoContent';
+import { STELLA } from '../stella.config';
 
 const pageSeo = seoContent.tvOnlineLima;
+const monthly = STELLA.plans[0];
+const longest = STELLA.plans[STELLA.plans.length - 1];
 
 const faqItems = [
   {
-    q: '¿Oleada TV funciona bien en Lima?',
-    a: 'Sí. Lima es nuestra zona con más usuarios activos. Con cualquier proveedor de internet en Lima — WiFi o datos móviles — el servicio funciona sin problemas desde el primer día.',
+    q: '¿Stella TV funciona bien en Lima?',
+    a: 'Sí. Lima es una de nuestras zonas con más usuarios activos. Con cualquier proveedor de internet en Lima — WiFi o datos móviles — el servicio funciona sin problemas desde el primer día.',
   },
   {
     q: '¿Funciona en todos los distritos de Lima?',
-    a: 'Sí. Lima Norte, Lima Sur, Lima Este, Lima Centro, Callao — Oleada TV funciona en todos los distritos. No hay zonas excluidas dentro de Lima.',
+    a: 'Sí. Lima Norte, Lima Sur, Lima Este, Lima Centro, Callao — Stella TV funciona en todos los distritos. No hay zonas excluidas dentro de Lima.',
   },
   {
-    q: '¿Cómo activo Oleada TV en Lima hoy mismo?',
-    a: 'Escríbenos por WhatsApp, elige tu plan, paga con Yape o Plin, y en menos de 5 minutos tienes tus credenciales. Nuestro soporte te guía en la instalación en tu dispositivo paso a paso.',
+    q: '¿Cómo activo Stella TV en Lima hoy mismo?',
+    a: 'Escríbenos por WhatsApp, elige tu plan, paga con Yape o Plin, y en menos de 5 minutos tienes tus credenciales. Nuestro soporte te guía en la instalación paso a paso.',
   },
   {
     q: '¿Puedo pagar con Yape desde cualquier banco en Lima?',
-    a: 'Sí. Yape funciona con BCP, Interbank, BBVA, Scotiabank y más. También aceptamos Plin (BBVA, Interbank, Scotiabank, BanBif). Solo necesitas tu celular.',
+    a: 'Sí. Yape funciona con BCP, Interbank, BBVA, Scotiabank y más. También aceptamos Plin. Solo necesitas tu celular.',
   },
   {
     q: '¿Tienen soporte en Lima o es solo por internet?',
-    a: 'Nuestro soporte es 100% por WhatsApp — eso nos permite atenderte más rápido que cualquier call center. Respondemos en menos de 5 minutos en horario extendido, desde cualquier distrito de Lima.',
+    a: 'Nuestro soporte es 100% por WhatsApp — eso nos permite atenderte más rápido que cualquier call center. Respondemos en minutos, desde cualquier distrito de Lima.',
   },
   {
     q: '¿Cuánto tiempo tarda la activación en Lima?',
-    a: 'En menos de 5 minutos tras confirmar tu pago. No hay demoras, no hay visitas técnicas, no hay esperas. Todo se hace por WhatsApp desde tu celular.',
+    a: 'En minutos tras confirmar tu pago. No hay demoras, no hay visitas técnicas, no hay esperas. Todo se hace por WhatsApp desde tu celular.',
   },
   {
     q: '¿Funciona con WiFi de casa o necesito internet especial?',
@@ -60,29 +53,29 @@ const faqItems = [
   },
   {
     q: '¿Puedo ver canales peruanos en vivo desde Lima?',
-    a: 'Sí. Oleada TV incluye canales nacionales en vivo para que veas noticias, programas locales y eventos peruanos sin perderte nada.',
+    a: 'Sí. Stella TV incluye canales nacionales en vivo para que veas noticias, programas locales y eventos peruanos sin perderte nada.',
   },
   {
-    q: '¿Qué dispositivo necesito en Lima para usar Oleada TV?',
-    a: 'Un TV Box Android, Amazon Fire Stick, celular Android o tablet. Si no tienes ninguno, te asesoramos cuál comprar según tu presupuesto — hay opciones desde S/ 80 en Lima.',
+    q: '¿Qué dispositivo necesito en Lima para usar Stella TV?',
+    a: 'Un TV Box, Fire Stick, celular o tablet Android. Si tu Smart TV es Samsung o LG, necesitas uno de estos externos por HDMI — te asesoramos cuál comprar según tu presupuesto.',
   },
   {
     q: '¿Hay contrato o puedo cancelar cuando quiera?',
-    a: 'Sin contrato, sin permanencia. Pagas el mes que quieres y listo. Si decides no continuar, simplemente no renuevas — sin penalidades ni trámites.',
+    a: 'Sin contrato, sin permanencia. Pagas el plan que quieres y listo. Si decides no continuar, simplemente no renuevas — sin penalidades ni trámites.',
   },
 ];
 
 const productSchema = {
-  name: 'Oleada TV Lima — TV Online sin Cable',
-  description: 'TV online en Lima sin cable ni contratos desde S/ 11.99. Actívate hoy mismo pagando con Yape o Plin. Disponible en todos los distritos de Lima.',
-  price: COUNTRY.monthlyOffer,
+  name: `${STELLA.brand} Lima — TV Online sin Cable`,
+  description: `TV online en Lima sin cable ni contratos desde S/ ${monthly.price}. Actívate hoy mismo pagando con Yape o Plin. Disponible en todos los distritos de Lima.`,
+  price: monthly.price,
   priceCurrency: 'PEN',
 };
 
 const localBusiness = {
-  siteName: 'Oleada TV',
-  telephone: '+51940405911',
-  priceRange: `S/ ${COUNTRY.monthlyOffer} - S/ ${COUNTRY.annualOffer}`,
+  siteName: STELLA.brand,
+  telephone: `+${STELLA.whatsapp}`,
+  priceRange: `S/ ${monthly.price} - S/ ${longest.price}`,
   currenciesAccepted: 'PEN',
   paymentAccepted: 'Yape, Plin',
   areaServed: ['Lima', 'Lima Norte', 'Lima Sur', 'Lima Este', 'Callao', 'Miraflores', 'San Isidro', 'Surco', 'San Juan de Lurigancho'],
@@ -94,10 +87,12 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title="TV Online en Lima sin Cable — Oleada TV | Actívate con Yape en 5 minutos"
-  description="TV online en Lima sin cable ni contratos desde S/ 11.99. El servicio favorito de los limeños. Paga con Yape y actívate en 5 minutos. Sin técnicos ni esperas."
-  keywords="tv online lima, tv por internet lima, canales online lima, ver tv lima peru, television online lima, canales por internet lima, tv sin cable lima, ver tv en vivo lima, tv digital lima, activar tv yape lima, canales lima peru"
+  title={`TV Online en Lima sin Cable — ${STELLA.brand} | Actívate con Yape en minutos`}
+  description={`TV online en Lima sin cable ni contratos desde S/ ${monthly.price}. Paga con Yape y actívate en minutos. Sin técnicos ni esperas.`}
+  keywords="tv online lima, tv por internet lima, canales online lima, ver tv lima peru, television online lima, canales por internet lima, tv sin cable lima, ver tv en vivo lima, tv digital lima, activar tv yape lima, canales lima peru, stella tv lima"
   canonical="https://oleadatvplus.com/tv-online-lima/"
+  brand={STELLA.brand}
+  whatsapp={STELLA.whatsapp}
   lang="es-PE"
   locale="es_PE"
   geoRegion="PE-LIM"
@@ -105,57 +100,59 @@ const breadcrumb = [
   geoPosition="-12.0464;-77.0428"
   faqSchema={faqItems}
   productSchema={productSchema}
+  aggregateRating={{ ratingValue: STELLA.rating.value, reviewCount: STELLA.rating.count }}
   localBusiness={localBusiness}
   breadcrumb={breadcrumb}
 />
 
-<Navbar brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+<BrandTransitionStrip previousBrand={STELLA.previousBrand} brand={STELLA.brand} />
+<Navbar brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
 
 <main>
   <Hero
-    brand={COUNTRY.brand}
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    brand={STELLA.brand}
+    whatsapp={STELLA.whatsapp}
+    currency={STELLA.currency}
+    monthlyOffer={monthly.price}
     headlineTop="TV online en Lima"
     headlineEm="actívate hoy, paga con Yape"
-    sub="El servicio de TV por internet favorito de los limeños. Sin técnicos, sin visitas, sin esperar. Yapeas y en 5 minutos estás viendo."
-    badge="El más popular en Lima"
-    waText="Hola, quiero activar Oleada TV en Lima"
+    sub="El servicio de TV por internet favorito de los limeños. Sin técnicos, sin visitas, sin esperar. Yapeas y en minutos estás viendo."
+    badge="Cobertura en todo Lima y Callao"
+    waText={`Hola, quiero activar ${STELLA.brand} en Lima`}
   />
 
   <StatsBar />
-  <HowItWorks whatsapp={COUNTRY.whatsapp} {...pageSeo.howItWorks} />
+  <HowItWorks whatsapp={STELLA.whatsapp} {...pageSeo.howItWorks} />
 
   <Plans
-    currency={COUNTRY.currency}
-    monthlyOriginal={COUNTRY.monthlyOriginal}
-    monthlyOffer={COUNTRY.monthlyOffer}
-    annualOriginal={COUNTRY.annualOriginal}
-    annualOffer={COUNTRY.annualOffer}
-    annualSaving={COUNTRY.annualSaving}
-    whatsapp={COUNTRY.whatsapp}
-    paymentMethods={COUNTRY.paymentMethods}
-    {...pageSeo.plans}
+    currency={STELLA.currency}
+    plans={STELLA.plans}
+    whatsapp={STELLA.whatsapp}
+    brand={STELLA.brand}
+    features={STELLA.planFeatures}
+    paymentMethods={STELLA.paymentMethods}
   />
 
-  <Testimonials {...pageSeo.testimonials} />
-  <Devices {...pageSeo.devices} />
+  <Testimonials testimonials={stellaTestimonials} />
+  <Devices />
+  <Installation whatsapp={STELLA.whatsapp} brand={STELLA.brand} downloaderCode={STELLA.downloaderCode} />
   <FAQ items={faqItems} />
 
   <CTAFinal
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    whatsapp={STELLA.whatsapp}
+    currency={STELLA.currency}
+    monthlyOffer={monthly.price}
+    brand={STELLA.brand}
   />
 
   <InternalSeoLinks links={internalSeoLinks.tvOnlineLima} />
 </main>
 
-<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
-<WhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+<Footer brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<WhatsAppFloat whatsapp={STELLA.whatsapp} brand={STELLA.brand} />
 <StickyMobileCTA
-  whatsapp={COUNTRY.whatsapp}
-  currency={COUNTRY.currency}
-  monthlyOffer={COUNTRY.monthlyOffer}
+  whatsapp={STELLA.whatsapp}
+  currency={STELLA.currency}
+  monthlyOffer={monthly.price}
+  brand={STELLA.brand}
 />

@@ -23,6 +23,8 @@ interface Props {
   description: string;
   keywords: string;
   canonical: string;
+  brand: string;
+  whatsapp?: string;
   author?: string;
   twitterCreator?: string;
   themeColor?: string;
@@ -31,8 +33,10 @@ interface Props {
   geoRegion?: string;
   geoPlacename?: string;
   geoPosition?: string;
+  alternates?: { hreflang: string; href: string }[];
   faqSchema?: { q: string; a: string }[];
   productSchema?: ProductSchema | null;
+  aggregateRating?: { ratingValue: string; reviewCount: string } | null;
   localBusiness?: LocalBusinessSchema | null;
   breadcrumb?: { name: string; url: string }[];
   noindex?: boolean;
@@ -43,28 +47,35 @@ const {
   description,
   keywords,
   canonical,
-  author = 'Oleada TV',
-  twitterCreator = '@oleadatvplus',
-  themeColor = '#00E5FF',
+  brand,
+  whatsapp,
+  author = brand,
+  twitterCreator,
+  themeColor = '#FF4500',
   lang = 'es',
   locale = 'es_PE',
   geoRegion = 'PE',
   geoPlacename,
   geoPosition,
+  alternates = [],
   faqSchema = [],
   productSchema = null,
+  aggregateRating = null,
   localBusiness = null,
   breadcrumb = [],
   noindex = false,
 } = Astro.props;
 
-const ogImage = new URL('/img/hero.webp', Astro.site).href;
-const logoUrl  = new URL('/img/logo.png', Astro.site).href;
+const ogImage = new URL('/img/og-image.png', Astro.site).href;
+const logoUrl  = new URL('/img/icon.png', Astro.site).href;
+// Dimensiones reales de public/img/og-image.png — no asumir el estándar 1200x630.
+const OG_IMAGE_WIDTH = 1424;
+const OG_IMAGE_HEIGHT = 752;
 
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: localBusiness?.siteName ?? 'Oleada TV',
+  name: localBusiness?.siteName ?? brand,
   url: canonical,
   description,
   inLanguage: lang,
@@ -79,8 +90,8 @@ const orgSchema = localBusiness
       logo: {
         '@type': 'ImageObject',
         url: logoUrl,
-        width: 260,
-        height: 68,
+        width: 1024,
+        height: 1024,
       },
       image: ogImage,
       description,
@@ -106,16 +117,18 @@ const orgSchema = localBusiness
   : {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: 'Oleada TV',
+      name: brand,
       url: canonical,
       logo: logoUrl,
       description,
-      contactPoint: {
-        '@type': 'ContactPoint',
-        telephone: '+51940405911',
-        contactType: 'customer service',
-        availableLanguage: 'Spanish',
-      },
+      ...(whatsapp && {
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: `+${whatsapp}`,
+          contactType: 'customer service',
+          availableLanguage: 'Spanish',
+        },
+      }),
     };
 
 const faqSchemaFull = faqSchema.length > 0
@@ -136,7 +149,15 @@ const productSchemaFull = productSchema
       '@type': 'Product',
       name: productSchema.name,
       description: productSchema.description,
-      brand: { '@type': 'Brand', name: 'Oleada TV' },
+      brand: { '@type': 'Brand', name: brand },
+      ...(aggregateRating && {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: aggregateRating.ratingValue,
+          reviewCount: aggregateRating.reviewCount,
+          bestRating: '5',
+        },
+      }),
       offers: {
         '@type': 'Offer',
         url: canonical,
@@ -144,7 +165,7 @@ const productSchemaFull = productSchema
         price: productSchema.price,
         availability: productSchema.availability ?? 'https://schema.org/InStock',
         itemCondition: 'https://schema.org/NewCondition',
-        seller: { '@type': 'Organization', name: 'Oleada TV' },
+        seller: { '@type': 'Organization', name: brand },
       },
     }
   : null;
@@ -168,12 +189,13 @@ const breadcrumbSchema = breadcrumb.length > 0
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
-  <meta name="author" content={author} />
+  {author && <meta name="author" content={author} />}
   <meta name="theme-color" content={themeColor} />
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="keywords" content={keywords} />
   <link rel="canonical" href={canonical} />
+  {alternates.map(a => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
 
   <!-- Geo -->
   <meta name="geo.region" content={geoRegion} />
@@ -188,22 +210,22 @@ const breadcrumbSchema = breadcrumb.length > 0
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+  <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
   <meta property="og:image:alt" content={title} />
   <meta property="og:locale" content={locale} />
-  <meta property="og:site_name" content="Oleada TV" />
+  <meta property="og:site_name" content={brand} />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
-  <meta name="twitter:creator" content={twitterCreator} />
+  {twitterCreator && <meta name="twitter:creator" content={twitterCreator} />}
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/icon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/icon-180.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

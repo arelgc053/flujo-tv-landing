@@ -1,19 +1,22 @@
 ---
-interface Props { whatsapp: string; }
-const { whatsapp } = Astro.props;
-const wa = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quiero información sobre Oleada TV')}`;
+interface Props { whatsapp: string; brand?: string; }
+const { whatsapp, brand = 'nosotros' } = Astro.props;
+const wa = `https://wa.me/${whatsapp}?text=${encodeURIComponent(`Hola, quiero información sobre ${brand}`)}`;
 ---
 <nav class="navbar" id="navbar">
   <div class="navbar-inner">
-    <a href="#inicio" class="navbar-logo" aria-label="Oleada TV — inicio">
-      <img src="/img/logo.png" alt="Oleada TV" width="140" height="34" />
+    <a href="#inicio" class="navbar-logo" aria-label={`${brand} — inicio`}>
+      <img src="/img/icon-180.png" alt="" width="30" height="30" />
+      <span>{brand}</span>
     </a>
     <ul class="navbar-menu" id="navMenu">
       <li><a href="#inicio">Inicio</a></li>
       <li><a href="#ventajas">Ventajas</a></li>
       <li><a href="#planes">Planes</a></li>
+      <li><a href="#dispositivos">Dispositivos</a></li>
       <li><a href="#testimonios">Testimonios</a></li>
       <li><a href="#faq">FAQ</a></li>
+      <li><a href="#descargas">Descargas</a></li>
     </ul>
     <a href={wa} target="_blank" rel="noopener noreferrer" class="navbar-cta">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

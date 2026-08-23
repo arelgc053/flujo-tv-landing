@@ -3,9 +3,10 @@ interface Props {
   whatsapp: string;
   currency: string;
   monthlyOffer: string;
+  brand?: string;
 }
-const { whatsapp, currency, monthlyOffer } = Astro.props;
-const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quiero activar Oleada TV ahora mismo')}`;
+const { whatsapp, currency, monthlyOffer, brand = 'mi plan' } = Astro.props;
+const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(`Hola, quiero activar ${brand} ahora mismo`)}`;
 ---
 <section class="cta-final">
   <div class="cta-final-glow" aria-hidden="true"></div>

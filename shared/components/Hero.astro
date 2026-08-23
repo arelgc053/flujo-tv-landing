@@ -1,7 +1,8 @@
 ---
 interface Props {
   whatsapp: string;
-  country: string;
+  country?: string;
+  brand?: string;
   currency: string;
   monthlyOffer: string;
   headlineTop?: string;
@@ -13,13 +14,14 @@ interface Props {
 const {
   whatsapp,
   country,
+  brand = 'nosotros',
   currency,
   monthlyOffer,
   headlineTop = 'Deportes, cine y series',
   headlineEm = 'sin pagar cable',
   sub = 'Entretenimiento digital en HD y 4K. Sin contratos, sin instalación complicada. Actívate hoy y empieza en minutos.',
   badge,
-  waText = 'Hola, quiero contratar Oleada TV',
+  waText = `Hola, quiero contratar ${brand}`,
 } = Astro.props;
 const resolvedBadge = badge ?? `Disponible en todo ${country}`;
 const waHero = `https://wa.me/${whatsapp}?text=${encodeURIComponent(waText)}`;

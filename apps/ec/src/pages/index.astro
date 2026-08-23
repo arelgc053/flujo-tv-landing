@@ -16,6 +16,7 @@ import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
 import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
 import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
 import { internalSeoLinks } from '../internalLinks';
+import { STELLA_EC } from '../stella.config';
 
 const COUNTRY = {
   brand:           'Oleada TV',
@@ -111,20 +112,25 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title="Oleada TV Ecuador — TV por internet guiada por WhatsApp desde $ 4.99"
-  description="Oleada TV Ecuador desde $ 4.99 al mes. Te indicamos el pago en USD, enviamos tu acceso y te guiamos para verlo en TV Box, Fire Stick o Android."
-  keywords="oleada tv, oleada tv ecuador, oleada tv precio, oleada tv dolares, oleada tv instalación, oleada tv descarga, oleada tv apk android, oleada tv última versión, oleada tv actualizar, instalar oleada tv con downloader, instalar oleada tv fire stick, oleada tv tv box, oleada tv android, tv por internet ecuador, tv online ecuador, canales por internet ecuador, ver tv online ecuador, deportes en vivo ecuador, fútbol en vivo ecuador, series hd ecuador, cine hd ecuador, tv sin cable ecuador, canales online ecuador, oleada tv soporte whatsapp, alternativa cable tv ecuador, ver mundial 2026 ecuador en vivo, partidos de ecuador mundial 2026, donde ver el mundial 2026 ecuador, la tri mundial 2026, transmision mundial 2026 ecuador, ver mundial 2026 por internet, mundial 2026 tv en vivo ecuador, tv online quito mundial 2026, tv online guayaquil mundial 2026"
+  title={`${STELLA_EC.brand} Ecuador | Fútbol y Deportes en Vivo, Series y Cine 4K — Activación Inmediata desde $${STELLA_EC.plans[0].price}`}
+  description={`${STELLA_EC.brand} en Ecuador: +1,000 canales, fútbol y deportes en vivo, cine y series. Activación inmediata por WhatsApp, pago en USD desde $${STELLA_EC.plans[0].price} al mes.`}
+  keywords="stella tv, stella tv ecuador, stella tv precio, stella tv dolares, stella tv instalación, stella tv descarga, stella tv apk android, instalar stella tv con downloader, instalar stella tv fire stick, stella tv tv box, stella tv android, tv por internet ecuador, tv online ecuador, canales por internet ecuador, ver tv online ecuador, deportes en vivo ecuador, fútbol en vivo ecuador, series hd ecuador, cine hd ecuador, tv sin cable ecuador, canales online ecuador, stella tv soporte whatsapp, alternativa cable tv ecuador, ver mundial 2026 ecuador en vivo, partidos de ecuador mundial 2026, donde ver el mundial 2026 ecuador, la tri mundial 2026, transmision mundial 2026 ecuador, ver mundial 2026 por internet, mundial 2026 tv en vivo ecuador, tv online quito mundial 2026, tv online guayaquil mundial 2026"
   canonical="https://ec.oleadatvplus.com/"
-  author="Oleada TV Ecuador"
-  twitterCreator="@oleadatvplus"
+  author={STELLA_EC.brand}
   themeColor="#00C853"
   lang="es-EC"
   locale="es_EC"
   geoRegion="EC"
   geoPlacename="Quito, Ecuador"
   geoPosition="-0.1807;-78.4678"
+  alternates={[
+    { hreflang: 'es-EC', href: 'https://ec.oleadatvplus.com/' },
+    { hreflang: 'es-PE', href: 'https://oleadatvplus.com/' },
+    { hreflang: 'x-default', href: 'https://oleadatvplus.com/' },
+  ]}
   faqSchema={faqItems}
   productSchema={productSchema}
+  aggregateRating={{ ratingValue: STELLA_EC.rating.value, reviewCount: STELLA_EC.rating.count }}
   localBusiness={localBusiness}
   breadcrumb={breadcrumb}
 />
@@ -145,14 +151,12 @@ const breadcrumb = [
   />
 
   <EcuadorPlans
-    currency={COUNTRY.currency}
-    monthlyOriginal={COUNTRY.monthlyOriginal}
-    monthlyOffer={COUNTRY.monthlyOffer}
-    annualOriginal={COUNTRY.annualOriginal}
-    annualOffer={COUNTRY.annualOffer}
-    annualSaving={COUNTRY.annualSaving}
-    whatsapp={COUNTRY.whatsapp}
-    paymentMethods={COUNTRY.paymentMethods}
+    currency={STELLA_EC.currency}
+    plans={STELLA_EC.plans}
+    whatsapp={STELLA_EC.whatsapp}
+    brand={STELLA_EC.brand}
+    features={STELLA_EC.planFeatures}
+    paymentMethods={STELLA_EC.paymentMethods}
   />
 
   <EcuadorShowcase />

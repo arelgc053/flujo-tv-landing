@@ -12,34 +12,29 @@ interface Props {
   note?: string;
 }
 
-const devices = [
-  {
-    icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
-    title:'Android TV / TV Box',
-    desc:'Compatible con cualquier dispositivo Android TV o TV Box. Instalación asistida por WhatsApp.',
-  },
-  {
-    icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
-    title:'Celulares Android',
-    desc:'Lleva todo el contenido en tu bolsillo. Compatible con todos los smartphones Android.',
-  },
-  {
-    icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
-    title:'Tablets Android',
-    desc:'Disfruta en pantalla grande. Ideal para el hogar, la cocina o los viajes.',
-  },
-  {
-    icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>`,
-    title:'Amazon Fire Stick',
-    desc:'Instala con el código Downloader de Oleada TV en segundos. Transforma tu TV al instante.',
-  },
+const icons = {
+  phone: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+  tablet: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+  box: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  googleTv: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><polygon points="10 8.3 15 10.5 10 12.7 10 8.3" fill="currentColor" stroke="none"/></svg>`,
+  fireStick: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>`,
+  stick: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="10" height="13" rx="2.5"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>`,
+};
+
+const devices: Device[] = [
+  { icon: icons.phone, title: 'Android Móvil', desc: 'APK directo — instala en minutos en cualquier celular Android.' },
+  { icon: icons.tablet, title: 'Tablet Android', desc: 'Misma app, pantalla más grande. Ideal para el hogar o de viaje.' },
+  { icon: icons.box, title: 'TV Box', desc: 'Instalación con Downloader — convierte cualquier televisor.' },
+  { icon: icons.googleTv, title: 'Google TV / Android TV', desc: 'Incluye Chromecast con Google TV y Smart TV Sony BRAVIA, TCL o Hisense con Google TV — mismo método de instalación.' },
+  { icon: icons.fireStick, title: 'Fire Stick', desc: 'Amazon Fire Stick y Fire TV Cube, vía Amazon Appstore.' },
+  { icon: icons.stick, title: 'Xiaomi Stick', desc: 'Instalación con Downloader, igual que en TV Box.' },
 ];
 
 const {
   title = 'Compatible con <em>tus dispositivos</em>',
-  subtitle = 'Una cuenta, el dispositivo que tú elijas',
+  subtitle = 'Exclusivo para el ecosistema Android — una cuenta, el dispositivo que tú elijas',
   devices: customDevices = devices,
-  note = 'Para Smart TV Samsung o LG antiguo se requiere TV Box externo. Nuestro equipo te asesora.',
+  note = 'Los Smart TV Samsung (Tizen) y LG (webOS) no permiten instalación nativa. Necesitas un TV Box, Fire Stick o dispositivo con Google TV conectado por HDMI — te asesoramos por WhatsApp.',
 } = Astro.props;
 ---
 <section class="devices" id="dispositivos">
@@ -47,7 +42,7 @@ const {
     <h2 class="section-title reveal" set:html={title}></h2>
     <p class="section-sub reveal">{subtitle}</p>
 
-    <div class="devices-grid">
+    <div class="devices-grid devices-grid-6">
       {customDevices.map((d, i) => (
         <div class="device-card reveal">
           <div class="device-icon" aria-hidden="true">

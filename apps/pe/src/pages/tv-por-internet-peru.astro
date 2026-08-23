@@ -8,27 +8,20 @@ import Plans          from '@shared/components/Plans.astro';
 import Comparison     from '@shared/components/Comparison.astro';
 import Testimonials   from '@shared/components/Testimonials.astro';
 import Devices        from '@shared/components/Devices.astro';
+import Installation   from '@shared/components/Installation.astro';
 import FAQ            from '@shared/components/FAQ.astro';
 import CTAFinal       from '@shared/components/CTAFinal.astro';
 import Footer         from '@shared/components/Footer.astro';
 import WhatsAppFloat  from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA from '@shared/components/StickyMobileCTA.astro';
+import BrandTransitionStrip from '../components/BrandTransitionStrip.astro';
 import InternalSeoLinks from '../components/InternalSeoLinks.astro';
-import { internalSeoLinks, seoContent } from '../seoContent';
-
-const COUNTRY = {
-  brand:           'Oleada TV',
-  whatsapp:        '51940405911',
-  currency:        'S/',
-  monthlyOriginal: '15',
-  monthlyOffer:    '11.99',
-  annualOriginal:  '130',
-  annualOffer:     '119.99',
-  annualSaving:    '23.89',
-  paymentMethods:  ['Yape', 'Plin'],
-};
+import { internalSeoLinks, seoContent, stellaTestimonials } from '../seoContent';
+import { STELLA } from '../stella.config';
 
 const pageSeo = seoContent.tvPorInternetPeru;
+const monthly = STELLA.plans[0];
+const longest = STELLA.plans[STELLA.plans.length - 1];
 
 const faqItems = [
   {
@@ -40,28 +33,28 @@ const faqItems = [
     a: 'En casi todos los aspectos sí: cuesta mucho menos, no tiene contrato mínimo, se activa el mismo día y funciona en cualquier dispositivo. El cable cobra desde S/ 80 al mes y te amarra a un contrato de un año o más.',
   },
   {
-    q: '¿Cuánto ahorro al cambiar de cable a TV por internet?',
-    a: `Con Oleada TV pagas desde S/ ${COUNTRY.monthlyOffer} al mes. El cable tradicional en Perú cuesta desde S/ 80 hasta S/ 200 mensuales. El ahorro anual puede superar los S/ 800.`,
+    q: '¿Cuánto ahorro al cambiar de cable a Stella TV?',
+    a: `Con Stella TV pagas desde S/ ${monthly.price} al mes. El cable tradicional en Perú cuesta desde S/ 80 hasta S/ 200 mensuales. El ahorro anual puede superar los S/ 800.`,
   },
   {
     q: '¿TV por internet funciona en todo el Perú?',
-    a: 'Sí. Oleada TV funciona en Lima, Arequipa, Trujillo, Cusco, Piura, Iquitos, Huancayo y cualquier ciudad del Perú que tenga internet. Solo necesitas una conexión estable.',
+    a: 'Sí. Stella TV funciona en Lima, Arequipa, Trujillo, Cusco, Piura, Iquitos, Huancayo y cualquier ciudad del Perú que tenga internet. Solo necesitas una conexión estable.',
   },
   {
     q: '¿Mis hijos pueden ver sus canales favoritos?',
-    a: 'Sí. Oleada TV incluye canales de entretenimiento infantil, series, películas y más. Toda la familia encuentra algo que ver en una sola cuenta.',
+    a: 'Sí. Stella TV incluye canales de entretenimiento, series, películas y más — con 3 pantallas simultáneas, toda la familia encuentra algo que ver a la vez.',
   },
   {
     q: '¿Funciona en mi Smart TV?',
-    a: 'Si tu Smart TV tiene Android TV integrado, sí. Si tiene un sistema propio (Samsung Tizen, LG webOS), necesitas conectarle un TV Box Android o un Fire Stick — te asesoramos por WhatsApp sobre qué comprar.',
+    a: 'Si tu Smart TV tiene Android TV o Google TV integrado, sí. Si tiene un sistema propio (Samsung Tizen, LG webOS), necesitas conectarle un TV Box Android o un Fire Stick — te asesoramos por WhatsApp sobre qué comprar.',
   },
   {
     q: '¿Hay contrato mínimo o permanencia?',
-    a: 'No. Puedes elegir el plan mensual sin ningún compromiso. Renuevas cuando quieres o cancelas sin penalidades. Sin letras pequeñas.',
+    a: 'No. Puedes elegir el plan de 1, 3, 6 o 12 meses sin ningún compromiso. Renuevas cuando quieres o cancelas sin penalidades. Sin letras pequeñas.',
   },
   {
     q: '¿Puedo ver canales de señal abierta peruana por internet?',
-    a: 'Sí. Oleada TV incluye canales nacionales en vivo para que no te pierdas noticias, entretenimiento local ni eventos importantes del país.',
+    a: 'Sí. Stella TV incluye canales nacionales en vivo para que no te pierdas noticias, entretenimiento local ni eventos importantes del país.',
   },
   {
     q: '¿Cómo pago la TV por internet?',
@@ -74,16 +67,16 @@ const faqItems = [
 ];
 
 const productSchema = {
-  name: 'Oleada TV — TV por Internet en Perú sin Cable',
-  description: 'TV por internet en todo el Perú desde S/ 11.99 al mes. Sin cable, sin contratos. Actívate el mismo día pagando con Yape o Plin.',
-  price: COUNTRY.monthlyOffer,
+  name: `${STELLA.brand} — TV por Internet en Perú sin Cable`,
+  description: `TV por internet en todo el Perú desde S/ ${monthly.price} al mes. Sin cable, sin contratos. Actívate el mismo día pagando con Yape o Plin.`,
+  price: monthly.price,
   priceCurrency: 'PEN',
 };
 
 const localBusiness = {
-  siteName: 'Oleada TV',
-  telephone: '+51940405911',
-  priceRange: `S/ ${COUNTRY.monthlyOffer} - S/ ${COUNTRY.annualOffer}`,
+  siteName: STELLA.brand,
+  telephone: `+${STELLA.whatsapp}`,
+  priceRange: `S/ ${monthly.price} - S/ ${longest.price}`,
   currenciesAccepted: 'PEN',
   paymentAccepted: 'Yape, Plin',
   areaServed: ['Perú', 'Lima', 'Arequipa', 'Trujillo', 'Cusco', 'Piura', 'Iquitos', 'Huancayo'],
@@ -95,10 +88,12 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title="TV por Internet en Perú sin Cable — Oleada TV | Desde S/ 11.99 al mes"
-  description="TV por internet en todo el Perú sin cable ni contratos desde S/ 11.99. Más de 5,000 familias ya dejaron el cable. Actívate hoy con Yape o Plin."
-  keywords="tv por internet peru, canales por internet peru, television por internet peru, tv sin cable peru, reemplazar cable peru, canales online peru, tv digital peru, ver tv online peru, tv por internet barata peru, dejar el cable peru, tv por internet yape"
+  title={`TV por Internet en Perú sin Cable — ${STELLA.brand} | Desde S/ ${monthly.price} al mes`}
+  description={`TV por internet en todo el Perú sin cable ni contratos desde S/ ${monthly.price}. Activate hoy con Yape o Plin.`}
+  keywords="tv por internet peru, canales por internet peru, television por internet peru, tv sin cable peru, reemplazar cable peru, canales online peru, tv digital peru, ver tv online peru, tv por internet barata peru, dejar el cable peru, tv por internet yape, stella tv peru"
   canonical="https://oleadatvplus.com/tv-por-internet-peru/"
+  brand={STELLA.brand}
+  whatsapp={STELLA.whatsapp}
   lang="es-PE"
   locale="es_PE"
   geoRegion="PE"
@@ -106,59 +101,61 @@ const breadcrumb = [
   geoPosition="-12.0464;-77.0428"
   faqSchema={faqItems}
   productSchema={productSchema}
+  aggregateRating={{ ratingValue: STELLA.rating.value, reviewCount: STELLA.rating.count }}
   localBusiness={localBusiness}
   breadcrumb={breadcrumb}
 />
 
-<Navbar brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+<BrandTransitionStrip previousBrand={STELLA.previousBrand} brand={STELLA.brand} />
+<Navbar brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
 
 <main>
   <Hero
-    brand={COUNTRY.brand}
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    brand={STELLA.brand}
+    whatsapp={STELLA.whatsapp}
+    currency={STELLA.currency}
+    monthlyOffer={monthly.price}
     headlineTop="TV por internet en todo el Perú"
     headlineEm="sin cable, sin contratos"
-    sub="Más de 5,000 familias ya dejaron el cable. Paga con Yape o Plin y actívate el mismo día — sin técnicos, sin esperas, sin letra pequeña."
-    badge="La alternativa al cable más popular"
-    waText="Hola, quiero cambiar de cable a TV por internet con Oleada TV"
+    sub={`Paga con Yape o Plin y actívate el mismo día — sin técnicos, sin esperas, sin letra pequeña. Con ${STELLA.brand} desde S/ ${monthly.price} al mes.`}
+    badge="La alternativa al cable"
+    waText={`Hola, quiero cambiar de cable a TV por internet con ${STELLA.brand}`}
   />
 
   <StatsBar />
-  <HowItWorks whatsapp={COUNTRY.whatsapp} {...pageSeo.howItWorks} />
+  <HowItWorks whatsapp={STELLA.whatsapp} {...pageSeo.howItWorks} />
 
   <Plans
-    currency={COUNTRY.currency}
-    monthlyOriginal={COUNTRY.monthlyOriginal}
-    monthlyOffer={COUNTRY.monthlyOffer}
-    annualOriginal={COUNTRY.annualOriginal}
-    annualOffer={COUNTRY.annualOffer}
-    annualSaving={COUNTRY.annualSaving}
-    whatsapp={COUNTRY.whatsapp}
-    paymentMethods={COUNTRY.paymentMethods}
-    {...pageSeo.plans}
+    currency={STELLA.currency}
+    plans={STELLA.plans}
+    whatsapp={STELLA.whatsapp}
+    brand={STELLA.brand}
+    features={STELLA.planFeatures}
+    paymentMethods={STELLA.paymentMethods}
   />
 
-  <Comparison currency={COUNTRY.currency} monthlyOffer={COUNTRY.monthlyOffer} />
+  <Comparison currency={STELLA.currency} monthlyOffer={monthly.price} brand={STELLA.brand} />
 
-  <Testimonials {...pageSeo.testimonials} />
-  <Devices {...pageSeo.devices} />
+  <Testimonials testimonials={stellaTestimonials} />
+  <Devices />
+  <Installation whatsapp={STELLA.whatsapp} brand={STELLA.brand} downloaderCode={STELLA.downloaderCode} />
   <FAQ items={faqItems} />
 
   <CTAFinal
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    whatsapp={STELLA.whatsapp}
+    currency={STELLA.currency}
+    monthlyOffer={monthly.price}
+    brand={STELLA.brand}
   />
 
   <InternalSeoLinks links={internalSeoLinks.tvPorInternetPeru} />
 </main>
 
-<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
-<WhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+<Footer brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<WhatsAppFloat whatsapp={STELLA.whatsapp} brand={STELLA.brand} />
 <StickyMobileCTA
-  whatsapp={COUNTRY.whatsapp}
-  currency={COUNTRY.currency}
-  monthlyOffer={COUNTRY.monthlyOffer}
+  whatsapp={STELLA.whatsapp}
+  currency={STELLA.currency}
+  monthlyOffer={monthly.price}
+  brand={STELLA.brand}
 />

@@ -5,13 +5,16 @@ interface Props {
 }
 const { brand, whatsapp } = Astro.props;
 const year = new Date().getFullYear();
-const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, tengo una consulta sobre Oleada TV')}`;
+const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(`Hola, tengo una consulta sobre ${brand}`)}`;
 ---
 <footer class="footer">
   <div class="inner footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="/img/logo.png" alt={`${brand} logo`} class="footer-logo" width="120" height="40" loading="lazy" />
+        <div class="footer-logo-mark">
+          <img src="/img/icon-180.png" alt="" width="32" height="32" loading="lazy" />
+          <span>{brand}</span>
+        </div>
         <p class="footer-tagline">Entretenimiento sin límites, al mejor precio.</p>
       </div>
 

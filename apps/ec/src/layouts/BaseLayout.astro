@@ -31,8 +31,10 @@ interface Props {
   geoRegion?: string;
   geoPlacename?: string;
   geoPosition?: string;
+  alternates?: { hreflang: string; href: string }[];
   faqSchema?: { q: string; a: string }[];
   productSchema?: ProductSchema | null;
+  aggregateRating?: { ratingValue: string; reviewCount: string } | null;
   localBusiness?: LocalBusinessSchema | null;
   breadcrumb?: { name: string; url: string }[];
 }
@@ -50,8 +52,10 @@ const {
   geoRegion = 'PE',
   geoPlacename,
   geoPosition,
+  alternates = [],
   faqSchema = [],
   productSchema = null,
+  aggregateRating = null,
   localBusiness = null,
   breadcrumb = [],
 } = Astro.props;
@@ -135,6 +139,14 @@ const productSchemaFull = productSchema
       name: productSchema.name,
       description: productSchema.description,
       brand: { '@type': 'Brand', name: 'Oleada TV' },
+      ...(aggregateRating && {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: aggregateRating.ratingValue,
+          reviewCount: aggregateRating.reviewCount,
+          bestRating: '5',
+        },
+      }),
       offers: {
         '@type': 'Offer',
         url: canonical,
@@ -172,6 +184,7 @@ const breadcrumbSchema = breadcrumb.length > 0
   <meta name="description" content={description} />
   <meta name="keywords" content={keywords} />
   <link rel="canonical" href={canonical} />
+  {alternates.map(a => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
 
   <!-- Geo -->
   <meta name="geo.region" content={geoRegion} />
