@@ -142,6 +142,7 @@ const productSchemaFull = productSchema
       '@type': 'Product',
       name: productSchema.name,
       description: productSchema.description,
+      image: ogImage,
       brand: { '@type': 'Brand', name: brand },
       ...(aggregateRating && {
         aggregateRating: {
