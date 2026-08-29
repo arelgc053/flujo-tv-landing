@@ -1,0 +1,81 @@
+---
+import '../global.css';
+import BaseLayout          from '../layouts/BaseLayout.astro';
+import EcuadorNavbar       from '../components/EcuadorNavbar.astro';
+import Footer              from '@shared/components/Footer.astro';
+import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
+import { STELLA_EC } from '../stella.config';
+
+const waLink = `https://wa.me/${STELLA_EC.whatsapp}?text=${encodeURIComponent(`Hola, quiero información sobre ${STELLA_EC.brand}`)}`;
+---
+<BaseLayout
+  title={`Página no encontrada — ${STELLA_EC.brand}`}
+  description={`La página que buscas no existe o fue movida. Vuelve al inicio de ${STELLA_EC.brand} o escríbenos por WhatsApp.`}
+  keywords="stella tv ecuador"
+  canonical="https://ec.oleadatvplus.com/404"
+  brand={STELLA_EC.brand}
+  author={STELLA_EC.brand}
+  lang="es-EC"
+  locale="es_EC"
+  geoRegion="EC"
+  geoPlacename="Quito, Ecuador"
+  noindex
+/>
+
+<EcuadorNavbar whatsapp={STELLA_EC.whatsapp} />
+
+<main>
+  <section class="not-found">
+    <div class="inner">
+      <p class="not-found-code">404</p>
+      <h1>Esta página no existe</h1>
+      <p class="not-found-sub">
+        Puede que el enlace esté roto o que la página se haya movido. Vuelve al inicio o escríbenos por WhatsApp y te ayudamos directamente.
+      </p>
+      <div class="not-found-actions">
+        <a href="/" class="btn-wa">Volver al inicio</a>
+        <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-ghost">Escribir por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<Footer brand={STELLA_EC.brand} whatsapp={STELLA_EC.whatsapp} />
+<EcuadorWhatsAppFloat whatsapp={STELLA_EC.whatsapp} />
+
+<style>
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 20px 80px;
+  }
+  .not-found .inner {
+    max-width: 560px;
+  }
+  .not-found-code {
+    font-family: 'Syne', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0 0 8px;
+    color: var(--orange, #00C853);
+  }
+  .not-found h1 {
+    font-size: 1.75rem;
+    margin: 0 0 12px;
+  }
+  .not-found-sub {
+    color: var(--text-muted, #9aa0a6);
+    line-height: 1.6;
+    margin: 0 0 28px;
+  }
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+  }
+</style>
