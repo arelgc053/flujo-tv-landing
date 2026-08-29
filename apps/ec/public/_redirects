@@ -1,3 +1,16 @@
+# === PENDIENTE DE AUTORIZACIÓN EXPLÍCITA PARA DESPLEGAR ===
+# Migración de home EC hacia la marca canónica Stella. Solo el home tiene un
+# destino real de un salto verificado con curl (29-ago-2026): ec.stellatvplus.com/
+# responde 200; las 5 páginas temáticas de EC (tv-online-quito-guayaquil,
+# tv-por-internet-ecuador, tv-sin-cortes-ecuador, ver-deportes-por-internet-ecuador,
+# ver-mundial-2026-ecuador) NO tienen equivalente en ec.stellatvplus.com (404),
+# así que a propósito no se redirigen — seguirían apagando contenido real sin
+# destino. Esta línea usa ruta exacta "/" (sin comodín), por lo que no afecta a
+# esas 5 páginas aunque queden más abajo en este mismo archivo.
+# ADVERTENCIA: en cuanto este archivo se despliegue por cualquier motivo, esta
+# regla queda viva y el home de EC deja de servir su propia landing.
+https://ec.oleadatvplus.com/ https://ec.stellatvplus.com/ 301!
+
 # www y http → https sin www (canonical de dominio)
 http://www.ec.oleadatvplus.com/* https://ec.oleadatvplus.com/:splat 301!
 https://www.ec.oleadatvplus.com/* https://ec.oleadatvplus.com/:splat 301!
