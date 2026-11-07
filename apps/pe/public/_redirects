@@ -1,10 +1,7 @@
-# www y http → https sin www (canonical de dominio)
-# Nota: el fix real para www es una Redirect Rule a nivel de zona en Cloudflare,
-# porque www no está registrado como Custom Domain en este proyecto Pages y
-# el 525 ocurre antes de que la petición llegue a evaluar este archivo.
-# Estas líneas quedan como respaldo por si www se agrega al proyecto Pages.
+# www → apex lo resuelve la regla de Cloudflare "www a apex" (nivel de zona).
+# Cloudflare Pages no admite orígenes con URL absoluta https:// en este archivo:
+# esa línea se retiró (aviso del despliegue del 7 nov 2026).
 http://www.oleadatvplus.com/* https://oleadatvplus.com/:splat 301
-https://www.oleadatvplus.com/* https://oleadatvplus.com/:splat 301
 http://oleadatvplus.com/* https://oleadatvplus.com/:splat 301
 
 # Redirección de la antigua landing de Magis TV por si alguien la guardó
