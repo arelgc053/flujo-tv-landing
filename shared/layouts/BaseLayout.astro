@@ -1,5 +1,16 @@
 ---
 import '@shared/styles/global.css';
+import ClickTracking from '../components/ClickTracking.astro';
+import { PRODUCT_NAME, SELLER_NAME } from '../data/stella';
+
+// Identidades (nov 2026):
+//   - El SITIO y la ORGANIZACIÓN son Oleada TV (quien vende y atiende).
+//   - El PRODUCTO es Stella TV (Product.brand), vendido por Oleada TV (Offer.seller).
+// Así el sitio no se presenta como la web oficial de Stella.
+//
+// Sin aggregateRating: las calificaciones de Google Maps/terceros no se pueden
+// marcar en el propio sitio (política de fragmentos de reseña de Google).
+// Sin LocalBusiness: no hay dirección física publicada, que ese tipo requiere.
 
 interface ProductSchema {
   name: string;
@@ -9,24 +20,22 @@ interface ProductSchema {
   availability?: string;
 }
 
-interface LocalBusinessSchema {
+interface OrganizationInfo {
   telephone: string;
-  priceRange: string;
-  currenciesAccepted: string;
-  paymentAccepted: string;
   areaServed: string[];
-  siteName: string;
+  paymentAccepted?: string;
 }
 
 interface Props {
   title: string;
   description: string;
-  keywords: string;
+  keywords?: string;
   canonical: string;
-  brand: string;
+  /** Nombre del producto (para compatibilidad con llamadas existentes). */
+  brand?: string;
+  siteName?: string;
+  country: 'PE' | 'AR' | 'EC';
   whatsapp?: string;
-  author?: string;
-  twitterCreator?: string;
   themeColor?: string;
   lang?: string;
   locale?: string;
@@ -36,10 +45,11 @@ interface Props {
   alternates?: { hreflang: string; href: string }[];
   faqSchema?: { q: string; a: string }[];
   productSchema?: ProductSchema | null;
-  aggregateRating?: { ratingValue: string; reviewCount: string } | null;
-  localBusiness?: LocalBusinessSchema | null;
+  organization?: OrganizationInfo | null;
   breadcrumb?: { name: string; url: string }[];
   noindex?: boolean;
+  /** false en páginas sin hero de imagen (evita descargar una imagen que no se usa). */
+  preloadHero?: boolean;
 }
 
 const {
@@ -47,10 +57,10 @@ const {
   description,
   keywords,
   canonical,
-  brand,
+  brand = PRODUCT_NAME,
+  siteName = SELLER_NAME,
+  country,
   whatsapp,
-  author = brand,
-  twitterCreator,
   themeColor = '#FF4500',
   lang = 'es',
   locale = 'es_PE',
@@ -60,76 +70,48 @@ const {
   alternates = [],
   faqSchema = [],
   productSchema = null,
-  aggregateRating = null,
-  localBusiness = null,
+  organization = null,
   breadcrumb = [],
   noindex = false,
+  preloadHero = true,
 } = Astro.props;
 
-const ogImage = new URL('/img/og-image.png', Astro.site).href;
-const logoUrl  = new URL('/img/icon.png', Astro.site).href;
-// Dimensiones reales de public/img/og-image.png — no asumir el estándar 1200x630.
-const OG_IMAGE_WIDTH = 1424;
-const OG_IMAGE_HEIGHT = 752;
+const siteRoot = new URL('/', Astro.site).href;
+const ogImage = new URL('/img/og-oleada.png', Astro.site).href;
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 630;
+// Imagen del producto (logo de Stella TV) — solo para el Product, no para la identidad del sitio.
+const productImage = new URL('/img/og-image.png', Astro.site).href;
+const sellerLogo = new URL('/img/oleada-180.png', Astro.site).href;
+const telephone = organization?.telephone ?? (whatsapp ? `+${whatsapp}` : undefined);
 
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: localBusiness?.siteName ?? brand,
-  url: canonical,
-  description,
+  name: siteName,
+  url: siteRoot,
   inLanguage: lang,
 };
 
-const orgSchema = localBusiness
-  ? {
-      '@context': 'https://schema.org',
-      '@type': ['Organization', 'LocalBusiness'],
-      name: localBusiness.siteName,
-      url: canonical,
-      logo: {
-        '@type': 'ImageObject',
-        url: logoUrl,
-        width: 1024,
-        height: 1024,
-      },
-      image: ogImage,
-      description,
-      telephone: localBusiness.telephone,
-      priceRange: localBusiness.priceRange,
-      currenciesAccepted: localBusiness.currenciesAccepted,
-      paymentAccepted: localBusiness.paymentAccepted,
-      areaServed: localBusiness.areaServed.map(name => ({ '@type': 'AdministrativeArea', name })),
-      contactPoint: {
-        '@type': 'ContactPoint',
-        telephone: localBusiness.telephone,
-        contactType: 'customer service',
-        contactOption: 'TollFree',
-        availableLanguage: 'Spanish',
-        hoursAvailable: {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-          opens: '00:00',
-          closes: '23:59',
-        },
-      },
-    }
-  : {
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: brand,
-      url: canonical,
-      logo: logoUrl,
-      description,
-      ...(whatsapp && {
-        contactPoint: {
-          '@type': 'ContactPoint',
-          telephone: `+${whatsapp}`,
-          contactType: 'customer service',
-          availableLanguage: 'Spanish',
-        },
-      }),
-    };
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteName,
+  url: siteRoot,
+  logo: sellerLogo,
+  description: `${siteName} comercializa ${PRODUCT_NAME}: contratación, pago y soporte por WhatsApp.`,
+  ...(organization && {
+    areaServed: organization.areaServed.map(name => ({ '@type': 'AdministrativeArea', name })),
+  }),
+  ...(telephone && {
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone,
+      contactType: 'sales',
+      availableLanguage: 'Spanish',
+    },
+  }),
+};
 
 const faqSchemaFull = faqSchema.length > 0
   ? {
@@ -149,23 +131,15 @@ const productSchemaFull = productSchema
       '@type': 'Product',
       name: productSchema.name,
       description: productSchema.description,
+      image: productImage,
       brand: { '@type': 'Brand', name: brand },
-      ...(aggregateRating && {
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: aggregateRating.ratingValue,
-          reviewCount: aggregateRating.reviewCount,
-          bestRating: '5',
-        },
-      }),
       offers: {
         '@type': 'Offer',
         url: canonical,
         priceCurrency: productSchema.priceCurrency,
         price: productSchema.price,
         availability: productSchema.availability ?? 'https://schema.org/InStock',
-        itemCondition: 'https://schema.org/NewCondition',
-        seller: { '@type': 'Organization', name: brand },
+        seller: { '@type': 'Organization', name: siteName, url: siteRoot },
       },
     }
   : null;
@@ -184,25 +158,23 @@ const breadcrumbSchema = breadcrumb.length > 0
   : null;
 ---
 <!DOCTYPE html>
-<html lang={lang}>
+<html lang={lang} data-country={country}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
-  {author && <meta name="author" content={author} />}
+  <meta name="author" content={siteName} />
   <meta name="theme-color" content={themeColor} />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="keywords" content={keywords} />
+  {keywords && <meta name="keywords" content={keywords} />}
   <link rel="canonical" href={canonical} />
   {alternates.map(a => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
 
   <!-- Geo -->
   <meta name="geo.region" content={geoRegion} />
-  <meta name="language" content="Spanish" />
   {geoPlacename && <meta name="geo.placename" content={geoPlacename} />}
   {geoPosition && <meta name="geo.position" content={geoPosition} />}
-  {geoPosition && <meta name="ICBM" content={geoPosition} />}
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -212,28 +184,28 @@ const breadcrumbSchema = breadcrumb.length > 0
   <meta property="og:image" content={ogImage} />
   <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
   <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
-  <meta property="og:image:alt" content={title} />
+  <meta property="og:image:alt" content={`${siteName} — ${PRODUCT_NAME}`} />
   <meta property="og:locale" content={locale} />
-  <meta property="og:site_name" content={brand} />
+  <meta property="og:site_name" content={siteName} />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
-  {twitterCreator && <meta name="twitter:creator" content={twitterCreator} />}
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/img/icon-32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/icon-180.png" />
+  <!-- Favicon (identidad Oleada TV) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/oleada-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/oleada-180.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Hero preload -->
-  <link rel="preload" as="image" href="/img/hero.webp" fetchpriority="high" />
+  <!-- Hero preload: variante liviana en móvil (LCP). Solo en páginas con hero de imagen. -->
+  {preloadHero && <link rel="preload" as="image" href="/img/hero-m.webp" media="(max-width: 768px)" fetchpriority="high" />}
+  {preloadHero && <link rel="preload" as="image" href="/img/hero.webp" media="(min-width: 769px)" fetchpriority="high" />}
 
   <!-- Schema.org -->
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
@@ -250,6 +222,8 @@ const breadcrumbSchema = breadcrumb.length > 0
 </head>
 <body>
   <slot />
+
+  <ClickTracking country={country} />
 
   <script>
     // Scroll reveal

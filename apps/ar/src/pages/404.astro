@@ -5,15 +5,18 @@ import Navbar         from '@shared/components/Navbar.astro';
 import Footer          from '@shared/components/Footer.astro';
 import WhatsAppFloat   from '@shared/components/WhatsAppFloat.astro';
 import { STELLA_AR } from '../stella.config';
+import { AR_FOOTER_PAGES } from '../site';
+import { waHref, waTag } from '@shared/lib/wa';
 
-const waLink = `https://wa.me/${STELLA_AR.whatsapp}?text=${encodeURIComponent(`Hola, quiero información sobre ${STELLA_AR.brand}`)}`;
+const TAG = waTag('AR', '404');
+const waLink = waHref(STELLA_AR.whatsapp, `Hola, quiero información sobre ${STELLA_AR.brand}.`, TAG);
 ---
 <BaseLayout
-  title={`Página no encontrada — ${STELLA_AR.brand}`}
-  description={`La página que buscás no existe o fue movida. Volvé al inicio de ${STELLA_AR.brand} o escribinos por WhatsApp.`}
-  keywords="stella tv argentina"
+  title="Página no encontrada — Oleada TV"
+  description="La página que buscás no existe o fue movida. Volvé al inicio o escribinos por WhatsApp."
+  preloadHero={false}
   canonical="https://ar.oleadatvplus.com/404"
-  brand={STELLA_AR.brand}
+  country="AR"
   whatsapp={STELLA_AR.whatsapp}
   lang="es-AR"
   locale="es_AR"
@@ -22,7 +25,7 @@ const waLink = `https://wa.me/${STELLA_AR.whatsapp}?text=${encodeURIComponent(`H
   noindex
 />
 
-<Navbar brand={STELLA_AR.brand} whatsapp={STELLA_AR.whatsapp} />
+<Navbar whatsapp={STELLA_AR.whatsapp} waTag={TAG} links={[{ href: '/', label: 'Inicio' }, ...AR_FOOTER_PAGES.map(l => ({ href: l.href, label: l.label.replace('Cómo instalar Stella TV', 'Instalar') }))]} />
 
 <main>
   <section class="not-found">
@@ -33,15 +36,16 @@ const waLink = `https://wa.me/${STELLA_AR.whatsapp}?text=${encodeURIComponent(`H
         Puede que el enlace esté roto o que la página se haya movido. Volvé al inicio o escribinos por WhatsApp y te ayudamos directamente.
       </p>
       <div class="not-found-actions">
-        <a href="/" class="btn-wa">Volver al inicio</a>
-        <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-ghost">Escribir por WhatsApp</a>
+        <a href="/" class="btn-ghost">Volver al inicio</a>
+        <a href="/instalar-stella-tv" class="btn-ghost">Descargas e instalación</a>
+        <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-wa">Escribir por WhatsApp</a>
       </div>
     </div>
   </section>
 </main>
 
-<Footer brand={STELLA_AR.brand} whatsapp={STELLA_AR.whatsapp} />
-<WhatsAppFloat whatsapp={STELLA_AR.whatsapp} brand={STELLA_AR.brand} />
+<Footer whatsapp={STELLA_AR.whatsapp} waTag={TAG} country="Argentina" sectionLinks={[{ href: '/', label: 'Inicio' }]} pageLinks={AR_FOOTER_PAGES} />
+<WhatsAppFloat whatsapp={STELLA_AR.whatsapp} waTag={TAG} />
 
 <style>
   .not-found {

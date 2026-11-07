@@ -1,0 +1,94 @@
+---
+// "Antes de pagar, te confirmamos todo" — sustituye a los testimonios que no se
+// podían verificar (nov 2026). Solo describe el proceso real de venta por
+// WhatsApp: nada de cifras de clientes, puntuaciones ni reseñas.
+import { PRODUCT_NAME } from '../data/stella';
+import { waHref } from '../lib/wa';
+
+interface Props {
+  whatsapp: string;
+  waTag: string;
+  voseo?: boolean;
+  /** Cómo se confirma el importe en cada país (texto del punto 2). */
+  paymentText: string;
+}
+const { whatsapp, waTag, voseo = false, paymentText } = Astro.props;
+const v = (tu: string, vos: string) => (voseo ? vos : tu);
+const wa = waHref(whatsapp, `Hola, antes de contratar ${PRODUCT_NAME} quiero confirmar si mi equipo es compatible.`, waTag);
+
+const points = [
+  {
+    title: 'Si tu equipo es compatible',
+    desc: v(
+      `Revisamos si tu TV, TV Box o celular es Android. Si no lo es (Samsung, LG, iPhone), te decimos qué opción necesitas antes de pagar.`,
+      `Revisamos si tu TV, TV Box o celular es Android. Si no lo es (Samsung, LG, iPhone), te decimos qué opción necesitás antes de pagar.`,
+    ),
+  },
+  { title: 'El importe exacto', desc: paymentText },
+  {
+    title: 'Cómo se instala',
+    desc: v('Te pasamos el código o el APK vigente y te acompañamos paso a paso por el mismo chat.', 'Te pasamos el código o el APK vigente y te acompañamos paso a paso por el mismo chat.'),
+  },
+  {
+    title: 'Sin permanencia',
+    desc: v('Pagas solo el plan que eliges y renuevas cuando quieras.', 'Pagás solo el plan que elegís y renovás cuando quieras.'),
+  },
+];
+---
+<section class="bp" id="antes-de-pagar" aria-labelledby="bp-title">
+  <div class="inner">
+    <h2 id="bp-title" class="section-title reveal">Antes de pagar, <em>te confirmamos todo</em></h2>
+    <p class="section-sub reveal">{v('Así sabes exactamente qué contratas', 'Así sabés exactamente qué contratás')}</p>
+    <ol class="bp-grid">
+      {points.map((p, i) => (
+        <li class="bp-card reveal">
+          <span class="bp-num" aria-hidden="true">{i + 1}</span>
+          <h3>{p.title}</h3>
+          <p>{p.desc}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="bp-cta reveal">
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-wa" data-track-location="antes-de-pagar">Consultar antes de pagar</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .bp { padding: var(--section-pad, 96px) 20px; text-align: center; }
+  .bp-grid {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1080px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    text-align: left;
+  }
+  .bp-card {
+    background: var(--glass-bg, rgba(255,255,255,0.03));
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+    border-radius: var(--radius-lg, 18px);
+    padding: 22px 20px;
+  }
+  .bp-num {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--orange-soft);
+    border: 1px solid var(--orange-border);
+    color: var(--orange);
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .bp-card h3 { color: #fff; font-size: 1.02rem; font-weight: 700; margin: 0 0 6px; }
+  .bp-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin: 0; }
+  .bp-cta { margin: 28px 0 0; }
+  .bp-cta .btn-wa { white-space: normal; max-width: 100%; text-align: center; }
+  @media (max-width: 960px) { .bp-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .bp-grid { grid-template-columns: 1fr; } }
+</style>

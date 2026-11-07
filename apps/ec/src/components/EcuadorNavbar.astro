@@ -1,20 +1,27 @@
 ---
-interface Props { whatsapp: string; }
+import { waHref } from '@shared/lib/wa';
+interface NavLink { href: string; label: string; }
+interface Props { whatsapp: string; waTag: string; /** '/' en páginas sin estas secciones (p. ej. 404). */ anchorBase?: string; /** Reemplaza los enlaces por defecto (páginas con otras secciones). */ links?: NavLink[]; }
 
-const { whatsapp } = Astro.props;
-const wa = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quiero información de Oleada TV Ecuador')}`;
+const { whatsapp, waTag, anchorBase = '', links } = Astro.props;
+const menu: NavLink[] = links ?? [
+  { href: `${anchorBase}#inicio`, label: 'Inicio' },
+  { href: `${anchorBase}#activacion`, label: 'Activación' },
+  { href: `${anchorBase}#planes`, label: 'Planes' },
+  { href: `${anchorBase}#contenido`, label: 'Contenido' },
+  { href: `${anchorBase}#descargas`, label: 'Descargas' },
+  { href: '/instalar-stella-tv', label: 'Instalar' },
+  { href: `${anchorBase}#faq`, label: 'Dudas' },
+];
+const wa = waHref(whatsapp, 'Hola, quiero información sobre Stella TV en Ecuador.', waTag);
 ---
-<nav class="navbar" id="navbar">
+<nav class="navbar" id="navbar" data-track-location="navbar">
   <div class="navbar-inner">
-    <a href="#inicio" class="navbar-logo" aria-label="Oleada TV Ecuador — inicio">
+    <a href="/" class="navbar-logo" aria-label="Oleada TV Ecuador — inicio">
       <img src="/img/logo.png" alt="Oleada TV" width="140" height="34" />
     </a>
     <ul class="navbar-menu" id="navMenu">
-      <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#activacion">Activación</a></li>
-      <li><a href="#planes">Planes</a></li>
-      <li><a href="#contenido">Contenido</a></li>
-      <li><a href="#faq">Dudas</a></li>
+      {menu.map(l => <li><a href={l.href}>{l.label}</a></li>)}
     </ul>
     <a href={wa} target="_blank" rel="noopener noreferrer" class="navbar-cta">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

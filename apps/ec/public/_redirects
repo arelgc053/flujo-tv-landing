@@ -1,35 +1,22 @@
-# === PENDIENTE DE AUTORIZACIÓN EXPLÍCITA PARA DESPLEGAR ===
-# Migración de home EC hacia la marca canónica Stella. Solo el home tiene un
-# destino real de un salto verificado con curl (29-ago-2026): ec.stellatvplus.com/
-# responde 200; las 5 páginas temáticas de EC (tv-online-quito-guayaquil,
-# tv-por-internet-ecuador, tv-sin-cortes-ecuador, ver-deportes-por-internet-ecuador,
-# ver-mundial-2026-ecuador) NO tienen equivalente en ec.stellatvplus.com (404),
-# así que a propósito no se redirigen — seguirían apagando contenido real sin
-# destino. Esta línea usa ruta exacta "/" (sin comodín), por lo que no afecta a
-# esas 5 páginas aunque queden más abajo en este mismo archivo.
-# ADVERTENCIA: en cuanto este archivo se despliegue por cualquier motivo, esta
-# regla queda viva y el home de EC deja de servir su propia landing.
-https://ec.oleadatvplus.com/ https://ec.stellatvplus.com/ 301!
+# ec.oleadatvplus.com — Cloudflare Pages (proyecto oleadatvlanding07).
+# Sintaxis de Cloudflare Pages: sin "!" y sin reglas de dominio completo (no
+# soportadas aquí; www → apex lo resuelve la regla de Cloudflare "www a apex").
+# Por decisión del negocio, NINGUNA regla redirige hacia stellatvplus.com.
+# La barra final la gestiona Cloudflare Pages (build.format = 'file').
 
-# www y http → https sin www (canonical de dominio)
-http://www.ec.oleadatvplus.com/* https://ec.oleadatvplus.com/:splat 301!
-https://www.ec.oleadatvplus.com/* https://ec.oleadatvplus.com/:splat 301!
-http://ec.oleadatvplus.com/* https://ec.oleadatvplus.com/:splat 301!
+# El Mundial 2026 terminó (julio de 2026): su intención vigente vive en la guía de deportes
+/ver-mundial-2026-ecuador /ver-deportes-por-internet-ecuador 301
+/ver-mundial-2026-ecuador/ /ver-deportes-por-internet-ecuador 301
 
-# Trailing slash → sin trailing slash (canonical de URL)
-/tv-por-internet-ecuador/ /tv-por-internet-ecuador 301!
-/ver-deportes-por-internet-ecuador/ /ver-deportes-por-internet-ecuador 301!
-/tv-online-quito-guayaquil/ /tv-online-quito-guayaquil 301!
-/ver-mundial-2026-ecuador/ /ver-mundial-2026-ecuador 301!
-/tv-sin-cortes-ecuador/ /tv-sin-cortes-ecuador 301!
+# Rutas heredadas de la plantilla de Perú
+/tv-por-internet-peru /tv-por-internet-ecuador 301
+/tv-online-lima /tv-online-quito-guayaquil 301
+/paga-con-yape / 301
+/tv-sin-cortes-peru /tv-sin-cortes-ecuador 301
+/ver-deportes-por-internet /ver-deportes-por-internet-ecuador 301
+/alternativa-magis-tv /tv-sin-cortes-ecuador 301
 
-# Rutas heredadas de la plantilla de Perú → reemplazo correcto para Ecuador
-/tv-por-internet-peru /tv-por-internet-ecuador 301!
-/tv-online-lima /tv-online-quito-guayaquil 301!
-/paga-con-yape /ver-mundial-2026-ecuador 301!
-/tv-sin-cortes-peru /tv-sin-cortes-ecuador 301!
-/ver-deportes-por-internet /ver-deportes-por-internet-ecuador 301!
-
-# Redirección de la antigua landing de Magis TV por si alguien la guardó
-/alternativa-magis-tv /tv-sin-cortes-ecuador 301!
-/alternativa-magis-tv/ /tv-sin-cortes-ecuador 301!
+# Variantes cortas hacia la guía de instalación
+/instalar /instalar-stella-tv 301
+/descargar /instalar-stella-tv 301
+/descargas /instalar-stella-tv 301

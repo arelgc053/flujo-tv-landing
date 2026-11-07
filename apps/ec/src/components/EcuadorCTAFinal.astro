@@ -1,14 +1,16 @@
 ---
+import { waHref } from '@shared/lib/wa';
 interface Props {
   whatsapp: string;
+  waTag: string;
   currency: string;
   monthlyOffer: string;
 }
 
-const { whatsapp, currency, monthlyOffer } = Astro.props;
-const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quiero que me guíen para activar Oleada TV en Ecuador')}`;
+const { whatsapp, waTag, currency, monthlyOffer } = Astro.props;
+const waLink = waHref(whatsapp, 'Hola, quiero que me guíen para contratar Stella TV en Ecuador.', waTag);
 ---
-<section class="cta-final">
+<section class="cta-final" data-track-location="cta-final">
   <div class="cta-final-glow" aria-hidden="true"></div>
   <div class="inner cta-final-inner">
     <h2 class="section-title reveal">¿Lo dejamos listo hoy?</h2>

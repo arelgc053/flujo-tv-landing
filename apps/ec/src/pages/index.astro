@@ -9,7 +9,7 @@ import EcuadorPlans        from '../components/EcuadorPlans.astro';
 import ActivationStrip     from '../components/ActivationStrip.astro';
 import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
 import EcuadorDevices      from '../components/EcuadorDevices.astro';
-import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import BeforePaying         from '@shared/components/BeforePaying.astro';
 import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
 import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
 import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
@@ -17,18 +17,15 @@ import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
 import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
 import { internalSeoLinks } from '../internalLinks';
 import { STELLA_EC } from '../stella.config';
+import SellerNotice from '@shared/components/SellerNotice.astro';
+import Downloads from '@shared/components/Downloads.astro';
+import { waTag } from '@shared/lib/wa';
+import { EC_FOOTER_PAGES, EC_SITE_LINKS } from '../site';
+import { homeAlternates } from '@shared/data/sites';
+import { DOWNLOADS } from '@shared/data/stella';
 
-const COUNTRY = {
-  brand:           'Oleada TV',
-  whatsapp:        '51940405911',
-  currency:        '$',
-  monthlyOriginal: '6',
-  monthlyOffer:    '4.99',
-  annualOriginal:  '65',
-  annualOffer:     '49.99',
-  annualSaving:    '9.89',
-  paymentMethods:  ['PayPal', 'Tarjeta de crédito/débito'],
-};
+const TAG = waTag('EC', 'HOME');
+const monthly = STELLA_EC.plans[0];
 
 const faqItems = [
   {
@@ -41,18 +38,18 @@ const faqItems = [
   },
   {
     q: '¿Puedo cambiar de dispositivo?',
-    a: 'Sí. La cuenta permite 1 dispositivo activo simultáneo, pero puedes usarla en otro equipo cuando lo necesites. Lo importante es que solo reproduzca una pantalla a la vez.',
+    a: 'Sí. Cada cuenta permite 3 pantallas a la vez, y puedes cambiar de equipo cuando lo necesites.',
   },
   {
     q: '¿Cómo pago desde Ecuador?',
-    a: 'Aceptamos PayPal y tarjeta de crédito o débito. Te enviamos el enlace de pago seguro por WhatsApp y, en cuanto se confirma, continuamos con la activación por el mismo chat.',
+    a: 'Por transferencia bancaria desde Banco Pichincha o Banco Guayaquil. Te enviamos los datos de pago por WhatsApp y, en cuanto se confirma, continuamos con la activación por el mismo chat.',
   },
   {
     q: '¿Tengo que quedarme varios meses?',
-    a: 'No. Puedes empezar mensual y renovar solo cuando quieras continuar. El anual conviene si ya sabes que lo vas a usar durante todo el año.',
+    a: 'No. Puedes empezar mensual y renovar solo cuando quieras continuar. Los planes de 6 y 12 meses convienen si ya sabes que lo vas a usar más tiempo: traen 1 y 2 meses gratis.',
   },
   {
-    q: '¿Qué puedo ver con Oleada TV en Ecuador?',
+    q: '¿Qué puedo ver con Stella TV en Ecuador?',
     a: 'TV en vivo, películas, series, eventos deportivos y contenido familiar. Si buscas algo específico, escríbenos y te confirmamos disponibilidad antes de activar.',
   },
   {
@@ -61,7 +58,7 @@ const faqItems = [
   },
   {
     q: '¿Funciona en Android TV o TV Box?',
-    a: 'Sí. Son los equipos más cómodos para usar Oleada TV en la pantalla principal. Te enviamos el método de instalación adecuado para tu dispositivo.',
+    a: 'Sí. Son los equipos más cómodos para usar Stella TV en la pantalla principal. Te enviamos el método de instalación adecuado para tu dispositivo.',
   },
   {
     q: '¿Qué pasa si necesito actualizar la app?',
@@ -77,34 +74,26 @@ const faqItems = [
   },
   {
     q: '¿Puedo empezar solo por un mes?',
-    a: 'Sí. El plan mensual sirve para probar el servicio sin comprometerte a largo plazo. Si luego quieres ahorrar, puedes pasar al plan anual.',
+    a: 'Sí. El plan mensual sirve para probar el servicio sin comprometerte a largo plazo. Si luego quieres ahorrar, puedes pasar a un plan de 6 o 12 meses.',
   },
   {
-    q: '¿Puedo ver el Mundial 2026 y los partidos de Ecuador con Oleada TV?',
-    a: 'Sí. Con tu acceso a Oleada TV puedes seguir el Mundial 2026 y todos los partidos de la Selección de Ecuador en vivo, sin depender del cable ni de instalaciones adicionales. Solo necesitas tu dispositivo y conexión a internet.',
+    q: '¿Cuánto cuesta Stella TV en Ecuador?',
+    a: `1 mes $${STELLA_EC.plans[0].price}, 3 meses $${STELLA_EC.plans[1].price}, 6 meses $${STELLA_EC.plans[2].price} (con 1 mes gratis) y 12 meses $${STELLA_EC.plans[3].price} (con 2 meses gratis), en dólares y sin conversiones. Los cuatro planes incluyen lo mismo.`,
   },
   {
-    q: '¿Necesito un plan especial para ver el Mundial 2026?',
-    a: 'No. Cualquiera de nuestros planes (mensual o anual) te permite ver el Mundial 2026 en vivo. Si te preocupa la estabilidad de la señal durante los partidos, te ayudamos a revisar tu conexión antes de que arranque el torneo.',
+    q: '¿Cuál es el código de Stella TV para Downloader?',
+    a: `Para televisores el código vigente es ${DOWNLOADS.tv.downloaderCode}. El ${DOWNLOADS.legacyCodes.join(' / ')} es un código anterior. En el celular basta con el APK directo (versión ${DOWNLOADS.mobile.version}).`,
   },
 ];
 
 const productSchema = {
-  name: 'Plan Mensual Oleada TV Ecuador',
+  name: 'Plan Mensual Stella TV Ecuador',
   description: 'Plan mensual de TV por internet para Ecuador con acceso guiado por WhatsApp, pagos en USD y soporte para TV Box, Fire Stick y Android.',
-  price: COUNTRY.monthlyOffer,
+  price: monthly.price,
   priceCurrency: 'USD',
   availability: 'https://schema.org/InStock',
 };
 
-const localBusiness = {
-  siteName: 'Oleada TV',
-  telephone: '+51940405911',
-  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
-  currenciesAccepted: 'USD',
-  paymentAccepted: 'PayPal, Tarjeta de Crédito, Tarjeta de Débito',
-  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
-};
 
 const breadcrumb = [
   { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
@@ -112,50 +101,52 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title={`${STELLA_EC.brand} Ecuador | Fútbol y Deportes en Vivo, Series y Cine 4K — Activación Inmediata desde $${STELLA_EC.plans[0].price}`}
-  description={`${STELLA_EC.brand} en Ecuador: +1,000 canales, fútbol y deportes en vivo, cine y series. Activación inmediata por WhatsApp, pago en USD desde $${STELLA_EC.plans[0].price} al mes.`}
-  keywords="stella tv, stella tv ecuador, stella tv precio, stella tv dolares, stella tv instalación, stella tv descarga, stella tv apk android, instalar stella tv con downloader, instalar stella tv fire stick, stella tv tv box, stella tv android, tv por internet ecuador, tv online ecuador, canales por internet ecuador, ver tv online ecuador, deportes en vivo ecuador, fútbol en vivo ecuador, series hd ecuador, cine hd ecuador, tv sin cable ecuador, canales online ecuador, stella tv soporte whatsapp, alternativa cable tv ecuador, ver mundial 2026 ecuador en vivo, partidos de ecuador mundial 2026, donde ver el mundial 2026 ecuador, la tri mundial 2026, transmision mundial 2026 ecuador, ver mundial 2026 por internet, mundial 2026 tv en vivo ecuador, tv online quito mundial 2026, tv online guayaquil mundial 2026"
+  title={`Stella TV Ecuador desde $${monthly.price}/mes: planes, instalación y código`}
+  description={`Contrata Stella TV en Ecuador con Oleada TV: desde $${monthly.price} al mes en dólares, pago por transferencia, APK y código Downloader ${DOWNLOADS.tv.downloaderCode}. Soporte por WhatsApp.`}
+  keywords="stella tv, stella tv ecuador, stella tv precio, stella tv dolares, stella tv instalación, stella tv descarga, stella tv apk android, instalar stella tv con downloader, instalar stella tv fire stick, stella tv tv box, stella tv android, tv por internet ecuador, tv online ecuador, canales por internet ecuador, ver tv online ecuador, deportes en vivo ecuador, fútbol en vivo ecuador, series hd ecuador, cine hd ecuador, tv sin cable ecuador, canales online ecuador, stella tv soporte whatsapp, alternativa cable tv ecuador"
   canonical="https://ec.oleadatvplus.com/"
-  brand={STELLA_EC.brand}
-  author={STELLA_EC.brand}
+  country="EC"
+  whatsapp={STELLA_EC.whatsapp}
   themeColor="#00C853"
   lang="es-EC"
   locale="es_EC"
   geoRegion="EC"
   geoPlacename="Quito, Ecuador"
   geoPosition="-0.1807;-78.4678"
-  alternates={[
-    { hreflang: 'es-EC', href: 'https://ec.oleadatvplus.com/' },
-    { hreflang: 'es-PE', href: 'https://oleadatvplus.com/' },
-    { hreflang: 'es-AR', href: 'https://ar.oleadatvplus.com/' },
-    { hreflang: 'x-default', href: 'https://oleadatvplus.com/' },
-  ]}
+  alternates={homeAlternates('ec')}
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA_EC.rating.value, reviewCount: STELLA_EC.rating.count }}
-  localBusiness={localBusiness}
+  organization={{ telephone: `+${STELLA_EC.whatsapp}`, areaServed: STELLA_EC.areaServed }}
   breadcrumb={breadcrumb}
 />
 
-<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+<SellerNotice country="Ecuador" />
+<EcuadorNavbar whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <main>
   <EcuadorHero
-    whatsapp={COUNTRY.whatsapp}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
     country="Ecuador"
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    badge="Oleada TV · Stella TV en Ecuador"
+    headlineTop="Stella TV en Ecuador"
+    headlineEm={`planes desde $${monthly.price} al mes`}
+    sub="Más de 1,000 canales, deportes en vivo, cine y series. Pagas en dólares por transferencia bancaria y te guiamos por WhatsApp hasta dejarlo listo en tu TV Box, Fire TV o Android."
+    currency={STELLA_EC.currency}
+    monthlyOffer={monthly.price}
   />
 
   <ActivationStrip
-    whatsapp={COUNTRY.whatsapp}
-    paymentMethods={COUNTRY.paymentMethods}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
+    paymentMethods={STELLA_EC.paymentMethods}
   />
 
   <EcuadorPlans
     currency={STELLA_EC.currency}
     plans={STELLA_EC.plans}
     whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
     brand={STELLA_EC.brand}
     features={STELLA_EC.planFeatures}
     paymentMethods={STELLA_EC.paymentMethods}
@@ -165,27 +156,31 @@ const breadcrumb = [
 
   <EcuadorDevices />
 
-  <EcuadorTestimonials />
+  <BeforePaying whatsapp={STELLA_EC.whatsapp} waTag={TAG} paymentText={STELLA_EC.beforePayingText} />
 
   <EcuadorHowItWorks />
+
+  <Downloads whatsapp={STELLA_EC.whatsapp} waTag={TAG} guideHref="/instalar-stella-tv" />
 
   <FAQ items={faqItems} />
 
   <EcuadorCTAFinal
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
+    currency={STELLA_EC.currency}
+    monthlyOffer={monthly.price}
   />
 
   <EcuadorInternalSeoLinks links={internalSeoLinks.home} />
 </main>
 
-<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+<Footer whatsapp={STELLA_EC.whatsapp} waTag={TAG} country="Ecuador" pageLinks={EC_FOOTER_PAGES} siteLinks={EC_SITE_LINKS} />
 
-<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+<EcuadorWhatsAppFloat whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <EcuadorStickyMobileCTA
-  whatsapp={COUNTRY.whatsapp}
-  currency={COUNTRY.currency}
-  monthlyOffer={COUNTRY.monthlyOffer}
+  whatsapp={STELLA_EC.whatsapp}
+  waTag={TAG}
+  currency={STELLA_EC.currency}
+  monthlyOffer={monthly.price}
 />

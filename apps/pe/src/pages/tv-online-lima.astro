@@ -5,35 +5,38 @@ import Hero           from '@shared/components/Hero.astro';
 import StatsBar       from '@shared/components/StatsBar.astro';
 import HowItWorks     from '@shared/components/HowItWorks.astro';
 import Plans          from '@shared/components/Plans.astro';
-import Testimonials   from '@shared/components/Testimonials.astro';
+import BeforePaying from '@shared/components/BeforePaying.astro';
 import Devices        from '@shared/components/Devices.astro';
-import Installation   from '@shared/components/Installation.astro';
+import Downloads      from '@shared/components/Downloads.astro';
 import FAQ            from '@shared/components/FAQ.astro';
 import CTAFinal       from '@shared/components/CTAFinal.astro';
 import Footer         from '@shared/components/Footer.astro';
 import WhatsAppFloat  from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA from '@shared/components/StickyMobileCTA.astro';
-import BrandTransitionStrip from '../components/BrandTransitionStrip.astro';
+import SellerNotice from '@shared/components/SellerNotice.astro';
+import { waTag } from '@shared/lib/wa';
+import { PE_FOOTER_PAGES, PE_SITE_LINKS, PE_SUBPAGE_NAV, PE_INSTALL_PATH } from '../site';
 import InternalSeoLinks from '../components/InternalSeoLinks.astro';
-import { internalSeoLinks, seoContent, stellaTestimonials } from '../seoContent';
+import { internalSeoLinks, seoContent } from '../seoContent';
 import { STELLA } from '../stella.config';
 
 const pageSeo = seoContent.tvOnlineLima;
 const monthly = STELLA.plans[0];
-const longest = STELLA.plans[STELLA.plans.length - 1];
+const TAG = waTag('PE', 'TV-ONLINE-LIMA');
+const priceFrom = `${STELLA.currency}${monthly.price}`;
 
 const faqItems = [
   {
     q: '¿Stella TV funciona bien en Lima?',
-    a: 'Sí. Lima es una de nuestras zonas con más usuarios activos. Con cualquier proveedor de internet en Lima — WiFi o datos móviles — el servicio funciona sin problemas desde el primer día.',
+    a: 'Sí, con cualquier proveedor de internet en Lima. Lo importante es tener una conexión estable: te ayudamos a revisarla por WhatsApp antes de activar.',
   },
   {
     q: '¿Funciona en todos los distritos de Lima?',
-    a: 'Sí. Lima Norte, Lima Sur, Lima Este, Lima Centro, Callao — Stella TV funciona en todos los distritos. No hay zonas excluidas dentro de Lima.',
+    a: 'Sí. Stella TV funciona por internet, así que no depende del distrito: Lima Norte, Sur, Este, Centro o Callao, mientras tengas una conexión estable.',
   },
   {
     q: '¿Cómo activo Stella TV en Lima hoy mismo?',
-    a: 'Escríbenos por WhatsApp, elige tu plan, paga con Yape o Plin, y en menos de 5 minutos tienes tus credenciales. Nuestro soporte te guía en la instalación paso a paso.',
+    a: 'Escríbenos por WhatsApp, elige tu plan, paga con Yape o Plin, y recibes tus credenciales por WhatsApp. Nuestro soporte te guía en la instalación paso a paso.',
   },
   {
     q: '¿Puedo pagar con Yape desde cualquier banco en Lima?',
@@ -41,11 +44,11 @@ const faqItems = [
   },
   {
     q: '¿Tienen soporte en Lima o es solo por internet?',
-    a: 'Nuestro soporte es 100% por WhatsApp — eso nos permite atenderte más rápido que cualquier call center. Respondemos en minutos, desde cualquier distrito de Lima.',
+    a: 'El soporte es por WhatsApp: nos escribes desde cualquier distrito y te ayudamos con la instalación, cambios de equipo o cualquier duda.',
   },
   {
     q: '¿Cuánto tiempo tarda la activación en Lima?',
-    a: 'En minutos tras confirmar tu pago. No hay demoras, no hay visitas técnicas, no hay esperas. Todo se hace por WhatsApp desde tu celular.',
+    a: 'Después de confirmar tu pago te enviamos tus datos de acceso por WhatsApp. No hay visitas técnicas: todo se hace desde tu celular.',
   },
   {
     q: '¿Funciona con WiFi de casa o necesito internet especial?',
@@ -67,19 +70,11 @@ const faqItems = [
 
 const productSchema = {
   name: `${STELLA.brand} Lima — TV Online sin Cable`,
-  description: `TV online en Lima sin cable ni contratos desde S/ ${monthly.price}. Actívate hoy mismo pagando con Yape o Plin. Disponible en todos los distritos de Lima.`,
+  description: `TV online en Lima sin cable ni contratos desde ${priceFrom}. Actívate hoy mismo pagando con Yape o Plin. Disponible en todos los distritos de Lima.`,
   price: monthly.price,
-  priceCurrency: 'PEN',
+  priceCurrency: 'USD',
 };
 
-const localBusiness = {
-  siteName: STELLA.brand,
-  telephone: `+${STELLA.whatsapp}`,
-  priceRange: `S/ ${monthly.price} - S/ ${longest.price}`,
-  currenciesAccepted: 'PEN',
-  paymentAccepted: 'Yape, Plin',
-  areaServed: ['Lima', 'Lima Norte', 'Lima Sur', 'Lima Este', 'Callao', 'Miraflores', 'San Isidro', 'Surco', 'San Juan de Lurigancho'],
-};
 
 const breadcrumb = [
   { name: 'Inicio', url: 'https://oleadatvplus.com/' },
@@ -88,10 +83,10 @@ const breadcrumb = [
 ---
 <BaseLayout
   title={`TV Online en Lima sin Cable — ${STELLA.brand} | Actívate con Yape en minutos`}
-  description={`TV online en Lima sin cable ni contratos desde S/ ${monthly.price}. Paga con Yape y actívate en minutos. Sin técnicos ni esperas.`}
+  description={`TV online en Lima sin cable ni contratos desde ${priceFrom}. Paga con Yape y actívate en minutos. Sin técnicos ni esperas.`}
   keywords="tv online lima, tv por internet lima, canales online lima, ver tv lima peru, television online lima, canales por internet lima, tv sin cable lima, ver tv en vivo lima, tv digital lima, activar tv yape lima, canales lima peru, stella tv lima"
   canonical="https://oleadatvplus.com/tv-online-lima/"
-  brand={STELLA.brand}
+  country="PE"
   whatsapp={STELLA.whatsapp}
   lang="es-PE"
   locale="es_PE"
@@ -100,23 +95,23 @@ const breadcrumb = [
   geoPosition="-12.0464;-77.0428"
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA.rating.value, reviewCount: STELLA.rating.count }}
-  localBusiness={localBusiness}
+  organization={{ telephone: `+${STELLA.whatsapp}`, areaServed: STELLA.areaServed }}
   breadcrumb={breadcrumb}
 />
 
-<BrandTransitionStrip previousBrand={STELLA.previousBrand} brand={STELLA.brand} />
-<Navbar brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<SellerNotice country="Perú" />
+<Navbar whatsapp={STELLA.whatsapp} waTag={TAG} links={PE_SUBPAGE_NAV} />
 
 <main>
   <Hero
     brand={STELLA.brand}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     headlineTop="TV online en Lima"
     headlineEm="actívate hoy, paga con Yape"
-    sub="El servicio de TV por internet favorito de los limeños. Sin técnicos, sin visitas, sin esperar. Yapeas y en minutos estás viendo."
+    sub="TV por internet para Lima y Callao. Sin técnicos, sin visitas, sin esperar: pagas con Yape o Plin y te ayudamos a dejarlo listo."
     badge="Cobertura en todo Lima y Callao"
     waText={`Hola, quiero activar ${STELLA.brand} en Lima`}
   />
@@ -128,18 +123,21 @@ const breadcrumb = [
     currency={STELLA.currency}
     plans={STELLA.plans}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     brand={STELLA.brand}
     features={STELLA.planFeatures}
     paymentMethods={STELLA.paymentMethods}
+    paymentNote={STELLA.paymentNote}
   />
 
-  <Testimonials testimonials={stellaTestimonials} />
+  <BeforePaying whatsapp={STELLA.whatsapp} waTag={TAG} paymentText={STELLA.beforePayingText} />
   <Devices />
-  <Installation whatsapp={STELLA.whatsapp} brand={STELLA.brand} downloaderCode={STELLA.downloaderCode} />
+  <Downloads whatsapp={STELLA.whatsapp} waTag={TAG} guideHref={PE_INSTALL_PATH} />
   <FAQ items={faqItems} />
 
   <CTAFinal
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     brand={STELLA.brand}
@@ -148,10 +146,11 @@ const breadcrumb = [
   <InternalSeoLinks links={internalSeoLinks.tvOnlineLima} />
 </main>
 
-<Footer brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
-<WhatsAppFloat whatsapp={STELLA.whatsapp} brand={STELLA.brand} />
+<Footer whatsapp={STELLA.whatsapp} waTag={TAG} country="Perú" pageLinks={PE_FOOTER_PAGES} siteLinks={PE_SITE_LINKS} />
+<WhatsAppFloat whatsapp={STELLA.whatsapp} waTag={TAG} brand={STELLA.brand} />
 <StickyMobileCTA
   whatsapp={STELLA.whatsapp}
+  waTag={TAG}
   currency={STELLA.currency}
   monthlyOffer={monthly.price}
   brand={STELLA.brand}

@@ -1,22 +1,40 @@
 ---
-interface Props { whatsapp: string; brand?: string; }
-const { whatsapp, brand = 'nosotros' } = Astro.props;
-const wa = `https://wa.me/${whatsapp}?text=${encodeURIComponent(`Hola, quiero información sobre ${brand}`)}`;
+import { PRODUCT_NAME, SELLER_NAME } from '../data/stella';
+import { waHref } from '../lib/wa';
+
+interface NavLink { href: string; label: string; }
+interface Props {
+  whatsapp: string;
+  waTag: string;
+  /** Producto (Stella TV) — solo para el mensaje de WhatsApp. */
+  brand?: string;
+  links?: NavLink[];
+  waText?: string;
+}
+
+const defaultLinks: NavLink[] = [
+  { href: '#planes', label: 'Planes' },
+  { href: '#dispositivos', label: 'Dispositivos' },
+  { href: '#descargas', label: 'Descargas' },
+  { href: '#faq', label: 'Preguntas' },
+];
+
+const {
+  whatsapp,
+  waTag,
+  brand = PRODUCT_NAME,
+  links = defaultLinks,
+  waText = `Hola, quiero información sobre ${brand}.`,
+} = Astro.props;
+const wa = waHref(whatsapp, waText, waTag);
 ---
-<nav class="navbar" id="navbar">
+<nav class="navbar" id="navbar" data-track-location="navbar">
   <div class="navbar-inner">
-    <a href="#inicio" class="navbar-logo" aria-label={`${brand} — inicio`}>
-      <img src="/img/icon-180.png" alt="" width="30" height="30" />
-      <span>{brand}</span>
+    <a href="/" class="navbar-logo" aria-label={`${SELLER_NAME} — inicio`}>
+      <img src="/img/logo.png" alt={SELLER_NAME} width="70" height="34" class="navbar-logo-img" />
     </a>
     <ul class="navbar-menu" id="navMenu">
-      <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#ventajas">Ventajas</a></li>
-      <li><a href="#planes">Planes</a></li>
-      <li><a href="#dispositivos">Dispositivos</a></li>
-      <li><a href="#testimonios">Testimonios</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#descargas">Descargas</a></li>
+      {links.map(l => <li><a href={l.href}>{l.label}</a></li>)}
     </ul>
     <a href={wa} target="_blank" rel="noopener noreferrer" class="navbar-cta">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -24,11 +42,15 @@ const wa = `https://wa.me/${whatsapp}?text=${encodeURIComponent(`Hola, quiero in
       </svg>
       Contratar
     </a>
-    <button class="navbar-burger" id="navBurger" aria-label="Abrir menú" aria-expanded="false">
+    <button class="navbar-burger" id="navBurger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navMenu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
+
+<style>
+  .navbar-logo .navbar-logo-img { height: 34px; width: auto; }
+</style>
 
 <script>
   const navbar  = document.getElementById('navbar');

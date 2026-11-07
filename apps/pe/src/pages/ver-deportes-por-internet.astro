@@ -5,22 +5,25 @@ import Hero           from '@shared/components/Hero.astro';
 import StatsBar       from '@shared/components/StatsBar.astro';
 import HowItWorks     from '@shared/components/HowItWorks.astro';
 import Plans          from '@shared/components/Plans.astro';
-import Testimonials   from '@shared/components/Testimonials.astro';
+import BeforePaying from '@shared/components/BeforePaying.astro';
 import Devices        from '@shared/components/Devices.astro';
-import Installation   from '@shared/components/Installation.astro';
+import Downloads      from '@shared/components/Downloads.astro';
 import FAQ            from '@shared/components/FAQ.astro';
 import CTAFinal       from '@shared/components/CTAFinal.astro';
 import Footer         from '@shared/components/Footer.astro';
 import WhatsAppFloat  from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA from '@shared/components/StickyMobileCTA.astro';
-import BrandTransitionStrip from '../components/BrandTransitionStrip.astro';
+import SellerNotice from '@shared/components/SellerNotice.astro';
+import { waTag } from '@shared/lib/wa';
+import { PE_FOOTER_PAGES, PE_SITE_LINKS, PE_SUBPAGE_NAV, PE_INSTALL_PATH } from '../site';
 import InternalSeoLinks from '../components/InternalSeoLinks.astro';
-import { internalSeoLinks, seoContent, stellaTestimonials } from '../seoContent';
+import { internalSeoLinks, seoContent } from '../seoContent';
 import { STELLA } from '../stella.config';
 
 const pageSeo = seoContent.verDeportesPorInternet;
 const monthly = STELLA.plans[0];
-const longest = STELLA.plans[STELLA.plans.length - 1];
+const TAG = waTag('PE', 'DEPORTES');
+const priceFrom = `${STELLA.currency}${monthly.price}`;
 
 const faqItems = [
   {
@@ -33,7 +36,7 @@ const faqItems = [
   },
   {
     q: '¿La señal de deportes se corta o tiene lag?',
-    a: 'Con una conexión de al menos 10 Mbps la señal es estable y sin cortes. Si en algún momento hay algún problema, el soporte responde en minutos.',
+    a: 'Recomendamos al menos 10 Mbps estables para HD. La calidad también depende de tu WiFi y de tu equipo; si notas cortes, te ayudamos a revisarlo por WhatsApp.',
   },
   {
     q: '¿Cuánto internet necesito para ver deportes en HD?',
@@ -45,7 +48,7 @@ const faqItems = [
   },
   {
     q: '¿Cuánto cuesta ver deportes por internet en Perú?',
-    a: `Con Stella TV pagas desde S/ ${monthly.price} al mes — mucho menos que el cable tradicional que cobra S/ 80 o más solo por canales deportivos. Sin contrato ni permanencia.`,
+    a: `Con Stella TV pagas desde ${priceFrom} al mes. Los precios están en dólares y el monto en soles te lo confirmamos antes de pagar con Yape o Plin. Sin contrato ni permanencia.`,
   },
   {
     q: '¿Puedo ver más de un deporte al mismo tiempo?',
@@ -67,19 +70,11 @@ const faqItems = [
 
 const productSchema = {
   name: `${STELLA.brand} — Ver Deportes por Internet en Perú`,
-  description: `Servicio de TV por internet para ver deportes en vivo en Full HD. Fútbol, básquet y más. Actívate hoy pagando con Yape o Plin desde S/ ${monthly.price} al mes.`,
+  description: `Servicio de TV por internet para ver deportes en vivo en Full HD. Fútbol, básquet y más. Actívate hoy pagando con Yape o Plin desde ${priceFrom} al mes.`,
   price: monthly.price,
-  priceCurrency: 'PEN',
+  priceCurrency: 'USD',
 };
 
-const localBusiness = {
-  siteName: STELLA.brand,
-  telephone: `+${STELLA.whatsapp}`,
-  priceRange: `S/ ${monthly.price} - S/ ${longest.price}`,
-  currenciesAccepted: 'PEN',
-  paymentAccepted: 'Yape, Plin',
-  areaServed: ['Perú', 'Lima', 'Arequipa', 'Trujillo', 'Cusco', 'Piura'],
-};
 
 const breadcrumb = [
   { name: 'Inicio', url: 'https://oleadatvplus.com/' },
@@ -87,11 +82,11 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title={`Ver Deportes por Internet en Perú — ${STELLA.brand} | Fútbol en vivo desde S/ ${monthly.price}`}
-  description={`Ve fútbol y deportes en vivo por internet en Full HD desde S/ ${monthly.price} al mes. Sin cable, sin contratos. Paga con Yape o Plin y actívate en minutos.`}
+  title={`Ver Deportes por Internet en Perú — ${STELLA.brand} | Fútbol en vivo desde ${priceFrom}`}
+  description={`Ve fútbol y deportes en vivo por internet en Full HD desde ${priceFrom} al mes. Sin cable, sin contratos. Paga con Yape o Plin y actívate en minutos.`}
   keywords="ver deportes por internet peru, futbol en vivo por internet peru, deportes online peru, ver futbol online peru, futbol en vivo hd peru, deportes en vivo sin cable, ver partidos por internet, futbol por internet yape, tv deportes peru, stella tv deportes"
   canonical="https://oleadatvplus.com/ver-deportes-por-internet/"
-  brand={STELLA.brand}
+  country="PE"
   whatsapp={STELLA.whatsapp}
   lang="es-PE"
   locale="es_PE"
@@ -100,22 +95,22 @@ const breadcrumb = [
   geoPosition="-12.0464;-77.0428"
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA.rating.value, reviewCount: STELLA.rating.count }}
-  localBusiness={localBusiness}
+  organization={{ telephone: `+${STELLA.whatsapp}`, areaServed: STELLA.areaServed }}
   breadcrumb={breadcrumb}
 />
 
-<BrandTransitionStrip previousBrand={STELLA.previousBrand} brand={STELLA.brand} />
-<Navbar brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<SellerNotice country="Perú" />
+<Navbar whatsapp={STELLA.whatsapp} waTag={TAG} links={PE_SUBPAGE_NAV} />
 
 <main>
   <Hero
     brand={STELLA.brand}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     headlineTop="Ve deportes en vivo por internet"
-    headlineEm={`desde S/ ${monthly.price} al mes`}
+    headlineEm={`desde ${priceFrom} al mes`}
     sub="Fútbol, básquet y más en Full HD — desde tu TV, celular o tablet. Sin cable, sin contratos, sin esperar técnicos. Actívate hoy."
     badge="Deportes en vivo en Full HD"
     waText={`Hola, quiero ver deportes en vivo por internet con ${STELLA.brand}`}
@@ -128,18 +123,21 @@ const breadcrumb = [
     currency={STELLA.currency}
     plans={STELLA.plans}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     brand={STELLA.brand}
     features={STELLA.planFeatures}
     paymentMethods={STELLA.paymentMethods}
+    paymentNote={STELLA.paymentNote}
   />
 
-  <Testimonials testimonials={stellaTestimonials} />
+  <BeforePaying whatsapp={STELLA.whatsapp} waTag={TAG} paymentText={STELLA.beforePayingText} />
   <Devices />
-  <Installation whatsapp={STELLA.whatsapp} brand={STELLA.brand} downloaderCode={STELLA.downloaderCode} />
+  <Downloads whatsapp={STELLA.whatsapp} waTag={TAG} guideHref={PE_INSTALL_PATH} />
   <FAQ items={faqItems} />
 
   <CTAFinal
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     brand={STELLA.brand}
@@ -148,10 +146,11 @@ const breadcrumb = [
   <InternalSeoLinks links={internalSeoLinks.verDeportesPorInternet} />
 </main>
 
-<Footer brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
-<WhatsAppFloat whatsapp={STELLA.whatsapp} brand={STELLA.brand} />
+<Footer whatsapp={STELLA.whatsapp} waTag={TAG} country="Perú" pageLinks={PE_FOOTER_PAGES} siteLinks={PE_SITE_LINKS} />
+<WhatsAppFloat whatsapp={STELLA.whatsapp} waTag={TAG} brand={STELLA.brand} />
 <StickyMobileCTA
   whatsapp={STELLA.whatsapp}
+  waTag={TAG}
   currency={STELLA.currency}
   monthlyOffer={monthly.price}
   brand={STELLA.brand}

@@ -1,6 +1,14 @@
 # Oleada TV — Landing Pages
 
-Monorepo de landing pages para el servicio de streaming Oleada TV. Arquitectura multi-país basada en **Astro 4** con npm workspaces.
+Monorepo de landing pages de **Oleada TV**, que comercializa el servicio **Stella TV** en Perú, Argentina y Ecuador. Arquitectura multi-país basada en **Astro 4** con npm workspaces.
+
+## Estado y reglas (nov 2026)
+
+- **Identidad:** el sitio y la organización son *Oleada TV* (vende y atiende); *Stella TV* es el producto. Los sitios de Oleada **no enlazan ni redirigen** a `stellatvplus.com`; la única excepción son los APK oficiales.
+- **Datos únicos:** precios en USD, versiones, APK y códigos Downloader viven en [`shared/data/stella.ts`](shared/data/stella.ts). Estado de cada sitio (activo / hreflang) en [`shared/data/sites.ts`](shared/data/sites.ts).
+- **WhatsApp con origen:** todos los mensajes terminan con una etiqueta `[OLEADA-<PAÍS>-<PÁGINA>]` ([`shared/lib/wa.ts`](shared/lib/wa.ts)). Stella usa el mismo número, así que la etiqueta es la única forma de atribuir ventas a Oleada.
+- **Medición:** [`ClickTracking.astro`](shared/components/ClickTracking.astro) publica `whatsapp_click`, `apk_download` y `downloader_code_copy` en `window.dataLayer` (sin herramienta ni ID configurados).
+- **Hosting observado el 7 nov 2026:** AR en Netlify (detrás de Cloudflare); PE en Cloudflare Pages (proyecto `flujo-tv-landing`); EC redirigido entero a `ec.stellatvplus.com` por una regla de Cloudflare a nivel de zona.
 
 ---
 

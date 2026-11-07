@@ -9,7 +9,7 @@ import EcuadorPlans        from '../components/EcuadorPlans.astro';
 import ActivationStrip     from '../components/ActivationStrip.astro';
 import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
 import EcuadorDevices      from '../components/EcuadorDevices.astro';
-import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import BeforePaying         from '@shared/components/BeforePaying.astro';
 import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
 import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
 import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
@@ -17,73 +17,60 @@ import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
 import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
 import { internalSeoLinks } from '../internalLinks';
 import { STELLA_EC } from '../stella.config';
+import SellerNotice from '@shared/components/SellerNotice.astro';
+import Downloads from '@shared/components/Downloads.astro';
+import { waTag } from '@shared/lib/wa';
+import { EC_FOOTER_PAGES, EC_SITE_LINKS } from '../site';
 
-const COUNTRY = {
-  brand:           'Oleada TV',
-  whatsapp:        '51940405911',
-  currency:        '$',
-  monthlyOriginal: '6',
-  monthlyOffer:    '4.99',
-  annualOriginal:  '65',
-  annualOffer:     '49.99',
-  annualSaving:    '9.89',
-  paymentMethods:  ['PayPal', 'Tarjeta de crédito/débito'],
-};
+const TAG = waTag('EC', 'SIN-CORTES');
+const monthly = STELLA_EC.plans[0];
 
 const faqItems = [
   {
     q: '¿Por qué mi TV por internet se corta constantemente?',
-    a: 'Los cortes suelen venir de servidores inestables o sobrecargados del proveedor que usas. Con Oleada TV monitoreamos nuestros servidores para resolver cualquier incidencia antes de que la notes.',
+    a: 'Los cortes suelen venir de servidores inestables o sobrecargados del proveedor que usas. Con Stella TV monitoreamos nuestros servidores para resolver cualquier incidencia antes de que la notes.',
   },
   {
     q: '¿Cuánto internet necesito para que no se corte la señal?',
     a: 'Recomendamos mínimo 10 Mbps para HD y 25 Mbps para 4K. Si tu internet cumple eso y el servicio sigue cortándose, el problema es el proveedor de TV, no tu internet.',
   },
   {
-    q: '¿Oleada TV realmente no tiene cortes en Ecuador?',
+    q: '¿Stella TV realmente no tiene cortes en Ecuador?',
     a: 'Buscamos la mayor disponibilidad posible. Ningún servicio puede garantizar cero incidencias, pero si algo falla nuestro soporte responde rápido por WhatsApp y lo resuelve al momento.',
   },
   {
-    q: '¿Qué pasa si hay un corte justo en un partido del Mundial 2026?',
-    a: 'Nuestro equipo de soporte está activo todos los días, especialmente en fechas de partidos importantes como los del Mundial 2026. Si hay algún problema, escríbenos por WhatsApp y lo resolvemos cuanto antes.',
+    q: '¿Qué pasa si hay un corte justo en un partido importante?',
+    a: 'Escríbenos por WhatsApp y revisamos contigo la conexión, el equipo y el servicio. Para partidos importantes, te recomendamos probar la señal con anticipación.',
   },
   {
-    q: '¿Puedo cambiar de mi servicio actual a Oleada TV sin complicaciones?',
+    q: '¿Puedo cambiar de mi servicio actual a Stella TV sin complicaciones?',
     a: 'Sí. Solo escríbenos por WhatsApp y en minutos tienes tus nuevas credenciales. No necesitas desinstalar nada antes — te guiamos paso a paso en tu mismo dispositivo.',
   },
   {
     q: '¿Funciona en el mismo TV Box o Fire Stick que ya tengo?',
-    a: 'Sí. Oleada TV es compatible con TV Box Android, Amazon Fire Stick, celulares y tablets Android. Usas el dispositivo que ya tienes, sin comprar nada nuevo.',
+    a: 'Sí. Stella TV es compatible con TV Box Android, Amazon Fire Stick, celulares y tablets Android. Usas el dispositivo que ya tienes, sin comprar nada nuevo.',
   },
   {
-    q: '¿Cuánto cuesta cambiarse a Oleada TV en Ecuador?',
-    a: `Desde $${COUNTRY.monthlyOffer} al mes. Sin permanencia ni contratos — si decides que no es lo que buscas, simplemente no renuevas.`,
+    q: '¿Cuánto cuesta cambiarse a Stella TV en Ecuador?',
+    a: `Desde $${monthly.price} al mes. Sin permanencia ni contratos — si decides que no es lo que buscas, simplemente no renuevas.`,
   },
   {
     q: '¿Cómo pago desde Ecuador?',
-    a: 'Aceptamos PayPal y tarjeta de crédito o débito. Te enviamos el enlace de pago seguro por WhatsApp y en minutos tienes tu acceso activado.',
+    a: 'Por transferencia bancaria desde Banco Pichincha o Banco Guayaquil. Te enviamos los datos de pago por WhatsApp y, en cuanto se confirma, continuamos con la activación por el mismo chat.',
   },
   {
     q: '¿Funciona bien en provincia o solo en Quito y Guayaquil?',
-    a: 'En todo Ecuador. Quito, Guayaquil, Cuenca, Ambato, Manta — donde tengas internet de al menos 10 Mbps, Oleada TV funciona.',
+    a: 'En todo Ecuador. Quito, Guayaquil, Cuenca, Ambato, Manta — donde tengas internet de al menos 10 Mbps, Stella TV funciona.',
   },
 ];
 
 const productSchema = {
-  name: 'Oleada TV — TV por Internet Estable sin Cortes en Ecuador',
-  description: 'Servicio de TV por internet estable y sin cortes para Ecuador. Soporte por WhatsApp. Pago en USD. Desde $4.99 al mes.',
-  price: COUNTRY.monthlyOffer,
+  name: 'Stella TV — TV por Internet Estable sin Cortes en Ecuador',
+  description: 'Servicio de TV por internet estable y sin cortes para Ecuador. Soporte por WhatsApp. Pago en USD. Desde $9 al mes.',
+  price: monthly.price,
   priceCurrency: 'USD',
 };
 
-const localBusiness = {
-  siteName: 'Oleada TV',
-  telephone: '+51940405911',
-  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
-  currenciesAccepted: 'USD',
-  paymentAccepted: 'PayPal, Tarjeta de Crédito, Tarjeta de Débito',
-  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
-};
 
 const breadcrumb = [
   { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
@@ -91,13 +78,12 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title={`TV por Internet sin Cortes en Ecuador — ${STELLA_EC.brand} | Señal Estable`}
-  description="¿Tu TV por internet se corta todo el tiempo? Oleada TV ofrece señal estable, soporte por WhatsApp y activación rápida en Ecuador. Desde $4.99, pago en USD."
-  keywords="tv por internet sin cortes ecuador, tv online estable ecuador, servicio tv internet que no falla ecuador, tv por internet confiable ecuador, por que se corta mi tv por internet, tv sin interrupciones ecuador, mejor servicio tv online ecuador, no perder señal mundial 2026 ecuador, tv estable mundial 2026"
+  title={`TV por Internet sin Cortes en Ecuador — ${STELLA_EC.brand} | Cómo Evitar Cortes`}
+  description="¿Tu TV por internet se corta todo el tiempo? Velocidad recomendada, consejos de WiFi y soporte por WhatsApp con Stella TV en Ecuador. Desde $9, pago en USD."
+  keywords="tv por internet sin cortes ecuador, tv online estable ecuador, servicio tv internet que no falla ecuador, tv por internet confiable ecuador, por que se corta mi tv por internet, tv sin interrupciones ecuador, mejor servicio tv online ecuador"
   canonical="https://ec.oleadatvplus.com/tv-sin-cortes-ecuador"
-  brand={STELLA_EC.brand}
-  author="Oleada TV Ecuador"
-  twitterCreator="@oleadatvplus"
+  country="EC"
+  whatsapp={STELLA_EC.whatsapp}
   themeColor="#00C853"
   lang="es-EC"
   locale="es_EC"
@@ -106,35 +92,38 @@ const breadcrumb = [
   geoPosition="-1.8312;-78.1834"
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA_EC.rating.value, reviewCount: STELLA_EC.rating.count }}
-  localBusiness={localBusiness}
+  organization={{ telephone: `+${STELLA_EC.whatsapp}`, areaServed: STELLA_EC.areaServed }}
   breadcrumb={breadcrumb}
 />
 
-<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+<SellerNotice country="Ecuador" />
+<EcuadorNavbar whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <main>
   <EcuadorHero
-    whatsapp={COUNTRY.whatsapp}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
     country="Ecuador"
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
-    badge="Señal estable, incluso en los partidos importantes"
+    currency={STELLA_EC.currency}
+    monthlyOffer={monthly.price}
+    badge="Revisamos tu conexión antes de activar"
     headlineTop="¿Tu TV por internet se corta"
-    headlineEm="todo el tiempo? Prueba Oleada TV"
-    sub="Señal estable y soporte por WhatsApp en minutos. No te quedes sin imagen justo cuando juega Ecuador o en un partido del Mundial 2026."
-    waText="Hola, quiero un servicio de TV por internet sin cortes con Oleada TV en Ecuador"
+    headlineEm="todo el tiempo? Prueba Stella TV"
+    sub="Te ayudamos a revisar tu WiFi y tu equipo antes de activar, y si notas cortes te atendemos por WhatsApp."
+    waText="Hola, quiero un servicio de TV por internet sin cortes con Stella TV en Ecuador"
   />
 
   <ActivationStrip
-    whatsapp={COUNTRY.whatsapp}
-    paymentMethods={COUNTRY.paymentMethods}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
+    paymentMethods={STELLA_EC.paymentMethods}
   />
 
   <EcuadorPlans
     currency={STELLA_EC.currency}
     plans={STELLA_EC.plans}
     whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
     brand={STELLA_EC.brand}
     features={STELLA_EC.planFeatures}
     paymentMethods={STELLA_EC.paymentMethods}
@@ -144,27 +133,31 @@ const breadcrumb = [
 
   <EcuadorDevices />
 
-  <EcuadorTestimonials />
+  <BeforePaying whatsapp={STELLA_EC.whatsapp} waTag={TAG} paymentText={STELLA_EC.beforePayingText} />
 
   <EcuadorHowItWorks />
+
+  <Downloads whatsapp={STELLA_EC.whatsapp} waTag={TAG} guideHref="/instalar-stella-tv" />
 
   <FAQ items={faqItems} />
 
   <EcuadorCTAFinal
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
+    currency={STELLA_EC.currency}
+    monthlyOffer={monthly.price}
   />
 
   <EcuadorInternalSeoLinks links={internalSeoLinks.tvSinCortesEcuador} />
 </main>
 
-<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+<Footer whatsapp={STELLA_EC.whatsapp} waTag={TAG} country="Ecuador" pageLinks={EC_FOOTER_PAGES} siteLinks={EC_SITE_LINKS} />
 
-<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+<EcuadorWhatsAppFloat whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <EcuadorStickyMobileCTA
-  whatsapp={COUNTRY.whatsapp}
-  currency={COUNTRY.currency}
-  monthlyOffer={COUNTRY.monthlyOffer}
+  whatsapp={STELLA_EC.whatsapp}
+  waTag={TAG}
+  currency={STELLA_EC.currency}
+  monthlyOffer={monthly.price}
 />

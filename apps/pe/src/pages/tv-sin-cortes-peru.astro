@@ -5,27 +5,30 @@ import Hero           from '@shared/components/Hero.astro';
 import StatsBar       from '@shared/components/StatsBar.astro';
 import HowItWorks     from '@shared/components/HowItWorks.astro';
 import Plans          from '@shared/components/Plans.astro';
-import Testimonials   from '@shared/components/Testimonials.astro';
+import BeforePaying from '@shared/components/BeforePaying.astro';
 import Devices        from '@shared/components/Devices.astro';
-import Installation   from '@shared/components/Installation.astro';
+import Downloads      from '@shared/components/Downloads.astro';
 import FAQ            from '@shared/components/FAQ.astro';
 import CTAFinal       from '@shared/components/CTAFinal.astro';
 import Footer         from '@shared/components/Footer.astro';
 import WhatsAppFloat  from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA from '@shared/components/StickyMobileCTA.astro';
-import BrandTransitionStrip from '../components/BrandTransitionStrip.astro';
+import SellerNotice from '@shared/components/SellerNotice.astro';
+import { waTag } from '@shared/lib/wa';
+import { PE_FOOTER_PAGES, PE_SITE_LINKS, PE_SUBPAGE_NAV, PE_INSTALL_PATH } from '../site';
 import InternalSeoLinks from '../components/InternalSeoLinks.astro';
-import { internalSeoLinks, seoContent, stellaTestimonials } from '../seoContent';
+import { internalSeoLinks, seoContent } from '../seoContent';
 import { STELLA } from '../stella.config';
 
 const pageSeo = seoContent.tvSinCortesPeru;
 const monthly = STELLA.plans[0];
-const longest = STELLA.plans[STELLA.plans.length - 1];
+const TAG = waTag('PE', 'TV-SIN-CORTES');
+const priceFrom = `${STELLA.currency}${monthly.price}`;
 
 const faqItems = [
   {
     q: '¿Por qué mi TV por internet se corta constantemente?',
-    a: 'Los cortes suelen venir de servidores inestables o sobrecargados del proveedor que usas. Con Stella TV monitoreamos nuestros servidores 24/7 y resolvemos cualquier incidencia en minutos antes de que la notes.',
+    a: 'Los cortes suelen venir del WiFi de la casa, del equipo o de servidores saturados del proveedor. Si notas cortes con Stella TV, escríbenos por WhatsApp y revisamos contigo la conexión, el dispositivo y el servicio.',
   },
   {
     q: '¿Cuánto internet necesito para que no se corte la señal?',
@@ -33,7 +36,7 @@ const faqItems = [
   },
   {
     q: '¿Stella TV realmente no tiene cortes?',
-    a: 'Mantenemos una disponibilidad del 99.9%. Ningún servicio puede garantizar cero incidencias, pero si algo falla nuestro soporte responde en minutos y lo resuelve al momento.',
+    a: 'Ningún servicio por internet puede garantizar cero cortes: la estabilidad también depende de tu conexión y de tu equipo. Lo que sí hacemos es revisar contigo el WiFi y el dispositivo antes de activar, y atenderte por WhatsApp si algo falla.',
   },
   {
     q: '¿Puedo cambiar de mi servicio actual a Stella TV sin complicaciones?',
@@ -45,11 +48,11 @@ const faqItems = [
   },
   {
     q: '¿Qué pasa cuando hay un partido importante y se va la señal?',
-    a: 'Nuestro equipo de soporte está activo todo el día, todos los días — especialmente en fechas de eventos importantes. Si hay algún problema, escríbenos por WhatsApp y lo resolvemos antes de que terminen los primeros minutos.',
+    a: 'Escríbenos por WhatsApp y revisamos contigo la conexión, el equipo y el servicio. Si tienes un evento importante, te recomendamos probar la señal con anticipación.',
   },
   {
     q: '¿Cuánto cuesta cambiarse a Stella TV?',
-    a: `Desde S/ ${monthly.price} al mes. Sin permanencia ni contratos — si decides que no es lo que buscas, simplemente no renuevas. Sin penalidades.`,
+    a: `Desde ${priceFrom} al mes. Sin permanencia ni contratos — si decides que no es lo que buscas, simplemente no renuevas. Sin penalidades.`,
   },
   {
     q: '¿Puedo pagar con Yape o Plin?',
@@ -57,7 +60,7 @@ const faqItems = [
   },
   {
     q: '¿Cómo sé que Stella TV es más estable que lo que uso ahora?',
-    a: 'Más de 5,000 clientes activos son nuestra mejor prueba. Muchos llegaron exactamente por lo mismo que tú buscas: estabilidad y soporte real cuando algo falla.',
+    a: 'La mejor forma es revisarlo antes de pagar: por WhatsApp verificamos contigo tu velocidad de internet y tu equipo, para saber si tu conexión alcanza para HD (recomendamos 10 Mbps) o 4K (25 Mbps).',
   },
   {
     q: '¿Funciona bien en provincia o solo en Lima?',
@@ -66,20 +69,12 @@ const faqItems = [
 ];
 
 const productSchema = {
-  name: `${STELLA.brand} — TV por Internet Estable sin Cortes en Perú`,
-  description: `Servicio de TV por internet estable y sin cortes para Perú. Soporte 24/7 por WhatsApp. Actívate en minutos pagando con Yape o Plin. Desde S/ ${monthly.price} al mes.`,
+  name: `${STELLA.brand} — TV por internet en Perú`,
+  description: `TV por internet para Perú con soporte por WhatsApp para revisar conexión y equipo. Pago con Yape o Plin. Desde ${priceFrom} al mes.`,
   price: monthly.price,
-  priceCurrency: 'PEN',
+  priceCurrency: 'USD',
 };
 
-const localBusiness = {
-  siteName: STELLA.brand,
-  telephone: `+${STELLA.whatsapp}`,
-  priceRange: `S/ ${monthly.price} - S/ ${longest.price}`,
-  currenciesAccepted: 'PEN',
-  paymentAccepted: 'Yape, Plin',
-  areaServed: ['Perú', 'Lima', 'Arequipa', 'Trujillo', 'Cusco', 'Piura', 'Iquitos', 'Huancayo'],
-};
 
 const breadcrumb = [
   { name: 'Inicio', url: 'https://oleadatvplus.com/' },
@@ -87,11 +82,11 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title={`TV por Internet sin Cortes en Perú — ${STELLA.brand} | Señal Estable 24/7`}
-  description={`¿Tu TV por internet se corta todo el tiempo? ${STELLA.brand} ofrece señal estable 24/7, soporte por WhatsApp y activación en minutos pagando con Yape. Desde S/ ${monthly.price}.`}
+  title={`TV por Internet sin Cortes en Perú — ${STELLA.brand} | Cómo Evitar Cortes`}
+  description={`¿Tu TV por internet se corta todo el tiempo? Velocidad recomendada, consejos de WiFi y soporte por WhatsApp con ${STELLA.brand}. Paga con Yape o Plin desde ${priceFrom}.`}
   keywords="tv por internet sin cortes peru, tv online estable peru, servicio tv internet que no falla, tv por internet confiable peru, por que se corta mi tv por internet, tv por internet problemas peru, mejor servicio tv online peru, tv sin interrupciones peru, cambiar servicio tv por internet, stella tv peru"
   canonical="https://oleadatvplus.com/tv-sin-cortes-peru/"
-  brand={STELLA.brand}
+  country="PE"
   whatsapp={STELLA.whatsapp}
   lang="es-PE"
   locale="es_PE"
@@ -100,24 +95,24 @@ const breadcrumb = [
   geoPosition="-12.0464;-77.0428"
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA.rating.value, reviewCount: STELLA.rating.count }}
-  localBusiness={localBusiness}
+  organization={{ telephone: `+${STELLA.whatsapp}`, areaServed: STELLA.areaServed }}
   breadcrumb={breadcrumb}
 />
 
-<BrandTransitionStrip previousBrand={STELLA.previousBrand} brand={STELLA.brand} />
-<Navbar brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<SellerNotice country="Perú" />
+<Navbar whatsapp={STELLA.whatsapp} waTag={TAG} links={PE_SUBPAGE_NAV} />
 
 <main>
   <Hero
     brand={STELLA.brand}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     headlineTop="¿Tu TV por internet se corta"
     headlineEm={`todo el tiempo? Prueba ${STELLA.brand}`}
-    sub="Señal estable 24/7, soporte por WhatsApp en minutos. Miles de usuarios en Perú ya cambiaron y no volvieron atrás."
-    badge="99.9% de disponibilidad"
+    sub="Antes de activar revisamos contigo tu WiFi y tu equipo, y si notas cortes te ayudamos por WhatsApp."
+    badge="Soporte por WhatsApp si algo falla"
     waText={`Hola, quiero un servicio de TV por internet sin cortes con ${STELLA.brand}`}
   />
 
@@ -128,18 +123,21 @@ const breadcrumb = [
     currency={STELLA.currency}
     plans={STELLA.plans}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     brand={STELLA.brand}
     features={STELLA.planFeatures}
     paymentMethods={STELLA.paymentMethods}
+    paymentNote={STELLA.paymentNote}
   />
 
-  <Testimonials testimonials={stellaTestimonials} />
+  <BeforePaying whatsapp={STELLA.whatsapp} waTag={TAG} paymentText={STELLA.beforePayingText} />
   <Devices />
-  <Installation whatsapp={STELLA.whatsapp} brand={STELLA.brand} downloaderCode={STELLA.downloaderCode} />
+  <Downloads whatsapp={STELLA.whatsapp} waTag={TAG} guideHref={PE_INSTALL_PATH} />
   <FAQ items={faqItems} />
 
   <CTAFinal
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     brand={STELLA.brand}
@@ -148,10 +146,11 @@ const breadcrumb = [
   <InternalSeoLinks links={internalSeoLinks.tvSinCortesPeru} />
 </main>
 
-<Footer brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
-<WhatsAppFloat whatsapp={STELLA.whatsapp} brand={STELLA.brand} />
+<Footer whatsapp={STELLA.whatsapp} waTag={TAG} country="Perú" pageLinks={PE_FOOTER_PAGES} siteLinks={PE_SITE_LINKS} />
+<WhatsAppFloat whatsapp={STELLA.whatsapp} waTag={TAG} brand={STELLA.brand} />
 <StickyMobileCTA
   whatsapp={STELLA.whatsapp}
+  waTag={TAG}
   currency={STELLA.currency}
   monthlyOffer={monthly.price}
   brand={STELLA.brand}

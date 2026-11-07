@@ -1,0 +1,143 @@
+---
+// Guía de instalación por dispositivo (cuerpo de /instalar-stella-tv).
+//
+// Contenido propio de Oleada: pasos por equipo + problemas frecuentes. Los
+// datos (versiones, códigos, enlaces) salen de shared/data/stella.ts.
+// Sin videos ni reproductores externos (brief nov 2026).
+import { DOWNLOADS, PRODUCT_NAME } from '../data/stella';
+import { waHref } from '../lib/wa';
+
+interface Props {
+  whatsapp: string;
+  waTag: string;
+  voseo?: boolean;
+}
+const { whatsapp, waTag, voseo = false } = Astro.props;
+const v = (tu: string, vos: string) => (voseo ? vos : tu);
+const { tv, mobile, legacyCodes } = DOWNLOADS;
+const helpWa = waHref(whatsapp, `Hola, necesito ayuda para instalar ${PRODUCT_NAME}.`, waTag);
+---
+<section class="ig" id="guia" aria-labelledby="ig-title">
+  <div class="inner ig-inner">
+    <h2 id="ig-title" class="ig-h2">Paso a paso según tu equipo</h2>
+    <p class="ig-lead">
+      Los nombres de los menús cambian un poco según la marca y la versión del sistema. Si algún paso no
+      coincide con lo que ves en pantalla, {v('escríbenos', 'escribinos')} y lo resolvemos por WhatsApp.
+    </p>
+
+    <article class="ig-block" id="fire-tv">
+      <h3>Fire TV y Fire TV Stick (Amazon)</h3>
+      <ol>
+        <li>{v('En la pantalla de inicio, busca', 'En la pantalla de inicio, buscá')} <strong>Downloader</strong> {v('e instálalo desde la Appstore de Amazon.', 'e instalalo desde la Appstore de Amazon.')}</li>
+        <li>{v('Ve a', 'Andá a')} <em>Configuración › Mi Fire TV › Opciones para desarrolladores › Instalar apps desconocidas</em> {v('y activa', 'y activá')} Downloader.</li>
+        <li>{v('Si no ves "Opciones para desarrolladores", entra en', 'Si no ves "Opciones para desarrolladores", entrá en')} <em>Mi Fire TV › Acerca de</em> {v('y pulsa 7 veces sobre el nombre del dispositivo.', 'y apretá 7 veces sobre el nombre del dispositivo.')}</li>
+        <li>{v('Abre Downloader, escribe', 'Abrí Downloader, escribí')} <strong>{tv.downloaderCode}</strong> {v('y pulsa', 'y apretá')} <em>Go</em>. {v('Cuando termine la descarga, elige', 'Cuando termine la descarga, elegí')} <em>Instalar</em>.</li>
+      </ol>
+    </article>
+
+    <article class="ig-block" id="google-tv">
+      <h3>Google TV y Chromecast con Google TV</h3>
+      <ol>
+        <li>{v('Instala', 'Instalá')} <strong>Downloader</strong> {v('desde Google Play.', 'desde Google Play.')}</li>
+        <li>{v('Activa las opciones de desarrollador:', 'Activá las opciones de desarrollador:')} <em>Configuración › Sistema › Acerca de</em> {v('y pulsa 7 veces sobre', 'y apretá 7 veces sobre')} <em>Compilación del SO de Android TV</em>.</li>
+        <li>{v('Permite la instalación en', 'Permití la instalación en')} <em>Configuración › Apps › Seguridad y restricciones › Fuentes desconocidas</em> {v('activando Downloader.', 'activando Downloader.')}</li>
+        <li>{v('Abre Downloader, escribe', 'Abrí Downloader, escribí')} <strong>{tv.downloaderCode}</strong> {v('e instala', 'e instalá')} {PRODUCT_NAME}.</li>
+      </ol>
+    </article>
+
+    <article class="ig-block" id="android-tv">
+      <h3>Android TV y TV Box</h3>
+      <ol>
+        <li>{v('Instala', 'Instalá')} <strong>Downloader</strong> {v('desde Google Play (en algunos TV Box viene una tienda propia).', 'desde Google Play (en algunos TV Box viene una tienda propia).')}</li>
+        <li>{v('Busca', 'Buscá')} <em>Fuentes desconocidas</em> {v('en', 'en')} <em>Configuración › Seguridad y restricciones</em> {v('(o en Preferencias del dispositivo) y habilita Downloader.', '(o en Preferencias del dispositivo) y habilitá Downloader.')}</li>
+        <li>{v('Escribe el código', 'Escribí el código')} <strong>{tv.downloaderCode}</strong> {v('en Downloader e instala la app.', 'en Downloader e instalá la app.')}</li>
+      </ol>
+      <p class="ig-tip">
+        {v('¿Sin Downloader?', '¿Sin Downloader?')} También {v('puedes', 'podés')} bajar el APK de TV (v{tv.version}) en una memoria USB e instalarlo desde un explorador de archivos.
+      </p>
+    </article>
+
+    <article class="ig-block" id="celular">
+      <h3>Celular o tablet Android</h3>
+      <ol>
+        <li>{v('Desde el celular, toca', 'Desde el celular, tocá')} <a href={mobile.apkUrl} rel="nofollow noopener" data-track="apk_download" data-track-label="mobile">Descargar APK para celular (v{mobile.version})</a>.</li>
+        <li>{v('Abre el archivo. Si Android lo pide, permite', 'Abrí el archivo. Si Android lo pide, permití')} <em>instalar apps de esta fuente</em> {v('para tu navegador.', 'para tu navegador.')}</li>
+        <li>{v('Instala, abre', 'Instalá, abrí')} {PRODUCT_NAME} {v('e ingresa tus datos de acceso.', 'e ingresá tus datos de acceso.')}</li>
+      </ol>
+      <p class="ig-tip">
+        En el celular no hace falta Downloader. Si igual {v('prefieres', 'preferís')} usarlo, el código alternativo es <strong>{mobile.downloaderCode}</strong>.
+      </p>
+    </article>
+
+    <article class="ig-block ig-block-warn" id="no-compatibles">
+      <h3>Samsung, LG e iPhone</h3>
+      <p>
+        Los Smart TV Samsung (Tizen) y LG (webOS) no permiten instalar {PRODUCT_NAME} de forma nativa, y no existe versión para
+        iPhone ni iPad. Para ver en esos televisores se conecta por HDMI un Fire TV, un dispositivo con Google TV o un TV Box Android.
+        Antes de comprar un equipo, {v('consúltanos', 'consultanos')} por WhatsApp cuál conviene para tu caso.
+      </p>
+    </article>
+
+    <h2 class="ig-h2" id="problemas">Problemas frecuentes</h2>
+    <dl class="ig-issues">
+      <div>
+        <dt>Downloader dice que el código no existe</dt>
+        <dd>{v('Revisa que escribiste', 'Revisá que escribiste')} {tv.downloaderCode} (TV) o {mobile.downloaderCode} (celular), sin espacios. {legacyCodes.length > 0 && <>El {legacyCodes.join(' / ')} es un código anterior: {v('usa', 'usá')} el vigente.</>}</dd>
+      </div>
+      <div>
+        <dt>"App no instalada" o la instalación se corta</dt>
+        <dd>{v('Comprueba que tienes', 'Fijate que tengas')} espacio libre (el APK de TV pesa unos 60 MB y el del celular unos 80 MB). Si {v('tienes', 'tenés')} una versión vieja que no se actualiza, {v('desinstálala', 'desinstalala')} y {v('vuelve', 'volvé')} a instalar.</dd>
+      </div>
+      <div>
+        <dt>La app pide usuario y contraseña</dt>
+        <dd>Son los datos de acceso de tu plan. Te los {v('enviamos', 'mandamos')} por WhatsApp al contratar; la app sola no incluye el servicio.</dd>
+      </div>
+      <div>
+        <dt>Se ve con cortes</dt>
+        <dd>{v('Prueba', 'Probá')} con el equipo más cerca del router o por cable de red, y {v('cierra', 'cerrá')} otras descargas. Si sigue igual, {v('escríbenos y lo revisamos contigo.', 'escribinos y lo revisamos con vos.')}</dd>
+      </div>
+    </dl>
+
+    <p class="ig-help">
+      <a href={helpWa} target="_blank" rel="noopener noreferrer" class="btn-wa" data-track-location="guia-ayuda">
+        {v('Pedir ayuda con la instalación', 'Pedir ayuda con la instalación')}
+      </a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .ig { padding: clamp(56px, 8vw, 96px) 20px; }
+  .ig-inner { max-width: 820px; }
+  .ig-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 12px;
+    line-height: 1.15;
+  }
+  #problemas { margin-top: 48px; }
+  .ig-lead { color: var(--text-muted); line-height: 1.7; margin: 0 0 28px; }
+  .ig-block {
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+    background: var(--glass-bg, rgba(255,255,255,0.03));
+    border-radius: var(--radius-lg, 18px);
+    padding: 22px 22px 18px;
+    margin-bottom: 16px;
+    scroll-margin-top: 90px;
+  }
+  .ig-block h3 { color: #fff; font-size: 1.12rem; font-weight: 700; margin: 0 0 12px; }
+  .ig-block ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 9px; }
+  .ig-block li, .ig-block p { color: var(--text-muted); line-height: 1.65; font-size: 0.94rem; }
+  .ig-block strong { color: #fff; letter-spacing: 0.03em; }
+  .ig-block em { color: rgba(255,255,255,0.86); font-style: normal; }
+  .ig-block a { color: var(--orange); text-decoration: underline; text-underline-offset: 3px; }
+  .ig-block-warn { border-color: var(--orange-border); }
+  .ig-tip { margin: 12px 0 0; font-size: 0.88rem !important; }
+  .ig-issues { margin: 0; display: grid; gap: 14px; }
+  .ig-issues div { border-left: 3px solid var(--orange-border); padding: 4px 0 4px 14px; }
+  .ig-issues dt { color: #fff; font-weight: 700; margin-bottom: 4px; }
+  .ig-issues dd { margin: 0; color: var(--text-muted); line-height: 1.65; font-size: 0.94rem; }
+  .ig-help { text-align: center; margin: 36px 0 0; }
+</style>

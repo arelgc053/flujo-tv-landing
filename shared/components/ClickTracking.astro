@@ -1,0 +1,53 @@
+---
+// Medición de clics, lista para conectar a una herramienta de analítica.
+//
+// NO carga ninguna herramienta ni usa IDs: solo publica eventos en
+// window.dataLayer (formato GTM/GA4). Si en el futuro se instala GA4 (gtag) o
+// Plausible con la autorización del negocio, los mismos eventos les llegan
+// sin tocar los componentes.
+//
+// Eventos:
+//   whatsapp_click        — cualquier enlace a wa.me
+//   apk_download          — data-track="apk_download"  (label: tv | mobile)
+//   downloader_code_copy  — data-track="downloader_code_copy" (label: tv | mobile)
+// Parámetros: site_country, page_path, track_location (sección o botón),
+//             wa_tag (etiqueta [OLEADA-…] del mensaje), track_label.
+interface Props {
+  country: 'PE' | 'AR' | 'EC';
+}
+const { country } = Astro.props;
+---
+<script is:inline define:vars={{ country }}>
+  (function () {
+    var TAG_RE = /\[OLEADA-[A-Z0-9-]+\]/;
+    function locationOf(el) {
+      if (el.dataset.trackLocation) return el.dataset.trackLocation;
+      var holder = el.closest('[data-track-location]');
+      if (holder) return holder.getAttribute('data-track-location');
+      var section = el.closest('[id]');
+      return section ? section.id : 'sin-seccion';
+    }
+    document.addEventListener('click', function (event) {
+      var target = event.target;
+      if (!(target instanceof Element)) return;
+      var el = target.closest('a[href], button[data-track]');
+      if (!el) return;
+      var href = el.getAttribute('href') || '';
+      var name = el.getAttribute('data-track') || (href.indexOf('wa.me/') !== -1 ? 'whatsapp_click' : '');
+      if (!name) return;
+      var tagMatch = '';
+      try { tagMatch = (decodeURIComponent(href).match(TAG_RE) || [''])[0]; } catch (e) { tagMatch = ''; }
+      var params = {
+        site_country: country,
+        page_path: location.pathname,
+        track_location: locationOf(el),
+        track_label: el.getAttribute('data-track-label') || '',
+        wa_tag: tagMatch,
+      };
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(Object.assign({ event: name }, params));
+      if (typeof window.gtag === 'function') window.gtag('event', name, params);
+      if (typeof window.plausible === 'function') window.plausible(name, { props: params });
+    }, { capture: true });
+  })();
+</script>

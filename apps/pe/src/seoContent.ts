@@ -2,9 +2,8 @@
 // WhatsApp, dispositivos, planes) viven en `stella.config.ts` y son iguales en
 // las 6 páginas — aquí solo queda el copy contextual de "Cómo funciona" por página.
 //
-// Testimonios: un único array `stellaTestimonials`, compartido por las 6 páginas.
-// Son los 3 reales verificados en stellatvplus.com — no se inventan variantes
-// por landing.
+// Testimonios: retirados el 7 nov 2026. Venían copiados de stellatvplus.com y ya
+// no se podían verificar; en su lugar las páginas usan BeforePaying.astro.
 
 type HowItWorksContent = {
   subtitle?: string;
@@ -74,71 +73,48 @@ export const seoContent: Record<string, { howItWorks: HowItWorksContent }> = {
   },
 };
 
-// Los 3 testimonios reales verificados en stellatvplus.com (20 ago 2026).
-// No usar otros — ver auditoría para la fuente exacta de cada cita.
-export const stellaTestimonials = [
-  {
-    initials: 'CH',
-    gradient: 'linear-gradient(135deg,#FF4500,#d93a00)',
-    name: 'Carlos H.',
-    city: 'Lima',
-    plan: 'Plan 6 Meses',
-    text: 'Tenía contratado cable y la diferencia fue inmediata. Cero cortes en los partidos de la selección, canales nacionales y señales internacionales en HD. Llevo cuatro meses sin ningún problema.',
-  },
-  {
-    initials: 'LR',
-    gradient: 'linear-gradient(135deg,#0ea5e9,#0284c7)',
-    name: 'Lucía R.',
-    city: 'Arequipa',
-    plan: 'Plan Anual',
-    text: 'El soporte me ayudó a instalarlo en el TV Box de mi abuela en 10 minutos por WhatsApp. Canales de noticias, deportes y series. Pagué con Yape al instante. 100% recomendado.',
-  },
-  {
-    initials: 'MT',
-    gradient: 'linear-gradient(135deg,#10b981,#059669)',
-    name: 'Miguel T.',
-    city: 'Trujillo',
-    plan: 'Plan 3 Meses',
-    text: 'Lo uso en el celular en el trabajo y en la TV con un Fire Stick. Funciona perfecto. La calidad en Ultra HD es real, no como otros que dicen HD y pixelan. El precio en soles es muy accesible.',
-  },
-];
-
 export const internalSeoLinks = {
   home: [
-    { href: '/tv-por-internet-peru/', text: 'Conoce la pagina pilar de TV por internet en Peru' },
-    { href: '/tv-online-lima/', text: 'Si buscas TV online en Lima, revisa la cobertura por zonas y Callao' },
-    { href: '/tv-sin-cortes-peru/', text: 'Si tu prioridad es estabilidad, mira recomendaciones de WiFi y Mbps' },
-    { href: '/paga-con-yape/', text: 'Si quieres pagar con Yape o Plin, revisa el proceso de activacion' },
-    { href: '/ver-deportes-por-internet/', text: 'Para futbol y eventos deportivos, mira la guia de deportes por internet' },
+    { href: '/instalar-stella-tv/', text: 'Cómo instalar Stella TV: código Downloader y APK actualizados' },
+    { href: '/tv-por-internet-peru/', text: 'TV por internet en Perú: cómo reemplazar el cable' },
+    { href: '/tv-online-lima/', text: 'TV online en Lima y Callao' },
+    { href: '/tv-sin-cortes-peru/', text: 'Cómo evitar cortes: WiFi y velocidad recomendada' },
+    { href: '/paga-con-yape/', text: 'Pagar con Yape o Plin: comprobante y activación' },
+    { href: '/ver-deportes-por-internet/', text: 'Ver deportes por internet en Perú' },
   ],
   tvPorInternetPeru: [
-    { href: '/tv-online-lima/', text: 'Si buscas TV online en Lima, tambien atendemos Lima Norte, Sur, Este y Callao' },
-    { href: '/tv-sin-cortes-peru/', text: 'Si tu prioridad es estabilidad, revisa la guia para evitar cortes' },
-    { href: '/ver-deportes-por-internet/', text: 'Si quieres ver futbol y partidos, prepara tu TV Box o Fire Stick' },
-    { href: '/paga-con-yape/', text: 'Si quieres pagar con Yape, aqui explicamos comprobante y activacion' },
+    { href: '/instalar-stella-tv/', text: 'Guía de instalación por dispositivo' },
+    { href: '/tv-online-lima/', text: 'TV online en Lima y Callao' },
+    { href: '/tv-sin-cortes-peru/', text: 'Cómo evitar cortes: WiFi y velocidad recomendada' },
+    { href: '/ver-deportes-por-internet/', text: 'Ver fútbol y deportes en TV Box o Fire TV' },
+    { href: '/paga-con-yape/', text: 'Pagar con Yape: comprobante y activación' },
   ],
   tvOnlineLima: [
-    { href: '/tv-por-internet-peru/', text: 'Para una vision nacional, revisa TV por internet en Peru' },
-    { href: '/tv-sin-cortes-peru/', text: 'Si tu WiFi de Lima falla, mira recomendaciones de Mbps y estabilidad' },
-    { href: '/ver-deportes-por-internet/', text: 'Si buscas partidos o eventos deportivos, revisa la guia de deportes' },
-    { href: '/paga-con-yape/', text: 'Si quieres pagar con Yape desde Lima, conoce como validar tu pago' },
+    { href: '/tv-por-internet-peru/', text: 'TV por internet en todo el Perú' },
+    { href: '/instalar-stella-tv/', text: 'Guía de instalación por dispositivo' },
+    { href: '/tv-sin-cortes-peru/', text: 'Si tu WiFi falla: velocidad recomendada y estabilidad' },
+    { href: '/ver-deportes-por-internet/', text: 'Ver deportes por internet' },
+    { href: '/paga-con-yape/', text: 'Pagar con Yape desde Lima' },
   ],
   tvSinCortesPeru: [
-    { href: '/tv-por-internet-peru/', text: 'Si quieres comparar con la pagina pilar, revisa TV por internet Peru' },
-    { href: '/ver-deportes-por-internet/', text: 'Para partidos y eventos deportivos, prepara tu señal antes del evento' },
-    { href: '/tv-online-lima/', text: 'Si estas en Lima o Callao, revisa la opcion de TV online local' },
-    { href: '/paga-con-yape/', text: 'Si necesitas renovar, valida tu comprobante de Yape o Plin' },
+    { href: '/tv-por-internet-peru/', text: 'TV por internet en Perú' },
+    { href: '/instalar-stella-tv/', text: 'Reinstalar o actualizar Stella TV' },
+    { href: '/ver-deportes-por-internet/', text: 'Preparar la señal antes de un partido' },
+    { href: '/tv-online-lima/', text: 'TV online en Lima y Callao' },
+    { href: '/paga-con-yape/', text: 'Renovar con Yape o Plin' },
   ],
   verDeportesPorInternet: [
-    { href: '/tv-sin-cortes-peru/', text: 'Si quieres ver partidos sin cortes, revisa velocidad recomendada y WiFi' },
-    { href: '/paga-con-yape/', text: 'Si necesitas activar antes de un evento, paga con Yape y envia tu comprobante' },
-    { href: '/tv-por-internet-peru/', text: 'Para entretenimiento completo, visita TV por internet Peru' },
-    { href: '/tv-online-lima/', text: 'Si estas en Lima, tambien puedes activar TV online por zonas y Callao' },
+    { href: '/tv-sin-cortes-peru/', text: 'Ver partidos sin cortes: velocidad y WiFi' },
+    { href: '/instalar-stella-tv/', text: 'Instalar Stella TV en TV Box o Fire TV' },
+    { href: '/paga-con-yape/', text: 'Activar antes del partido pagando con Yape' },
+    { href: '/tv-por-internet-peru/', text: 'TV por internet en Perú' },
+    { href: '/tv-online-lima/', text: 'TV online en Lima y Callao' },
   ],
   pagaConYape: [
-    { href: '/tv-por-internet-peru/', text: 'Si aun comparas opciones, revisa TV por internet Peru sin cable' },
-    { href: '/tv-online-lima/', text: 'Si estas en Lima, tambien puedes activar TV online en tu distrito' },
-    { href: '/ver-deportes-por-internet/', text: 'Si activas para futbol, mira como ver deportes por internet' },
-    { href: '/tv-sin-cortes-peru/', text: 'Si renuevas por estabilidad, revisa como reducir cortes con buen WiFi' },
+    { href: '/tv-por-internet-peru/', text: 'TV por internet en Perú sin cable' },
+    { href: '/instalar-stella-tv/', text: 'Cómo instalar Stella TV después de pagar' },
+    { href: '/tv-online-lima/', text: 'TV online en Lima' },
+    { href: '/ver-deportes-por-internet/', text: 'Ver deportes por internet' },
+    { href: '/tv-sin-cortes-peru/', text: 'Cómo reducir cortes con buen WiFi' },
   ],
 } as const;

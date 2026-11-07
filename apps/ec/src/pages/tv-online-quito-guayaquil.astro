@@ -9,7 +9,7 @@ import EcuadorPlans        from '../components/EcuadorPlans.astro';
 import ActivationStrip     from '../components/ActivationStrip.astro';
 import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
 import EcuadorDevices      from '../components/EcuadorDevices.astro';
-import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import BeforePaying         from '@shared/components/BeforePaying.astro';
 import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
 import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
 import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
@@ -17,31 +17,26 @@ import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
 import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
 import { internalSeoLinks } from '../internalLinks';
 import { STELLA_EC } from '../stella.config';
+import SellerNotice from '@shared/components/SellerNotice.astro';
+import Downloads from '@shared/components/Downloads.astro';
+import { waTag } from '@shared/lib/wa';
+import { EC_FOOTER_PAGES, EC_SITE_LINKS } from '../site';
 
-const COUNTRY = {
-  brand:           'Oleada TV',
-  whatsapp:        '51940405911',
-  currency:        '$',
-  monthlyOriginal: '6',
-  monthlyOffer:    '4.99',
-  annualOriginal:  '65',
-  annualOffer:     '49.99',
-  annualSaving:    '9.89',
-  paymentMethods:  ['PayPal', 'Tarjeta de crédito/débito'],
-};
+const TAG = waTag('EC', 'QUITO-GUAYAQUIL');
+const monthly = STELLA_EC.plans[0];
 
 const faqItems = [
   {
-    q: '¿Oleada TV funciona bien en Quito y Guayaquil?',
-    a: 'Sí. Quito y Guayaquil son nuestras zonas con más usuarios activos. Con cualquier proveedor de internet — WiFi o datos móviles — el servicio funciona sin problemas desde el primer día.',
+    q: '¿Stella TV funciona bien en Quito y Guayaquil?',
+    a: 'Sí, con cualquier proveedor de internet en Quito o Guayaquil. Lo importante es tener una conexión estable: te ayudamos a revisarla por WhatsApp antes de activar.',
   },
   {
     q: '¿Funciona también en Cuenca, Ambato o Manta?',
-    a: 'Sí. Oleada TV funciona en Cuenca, Ambato, Manta, Portoviejo, Loja, Esmeraldas y cualquier ciudad de Ecuador con internet estable. No hay zonas excluidas.',
+    a: 'Sí. Stella TV funciona en Cuenca, Ambato, Manta, Portoviejo, Loja, Esmeraldas y cualquier ciudad de Ecuador con internet estable.',
   },
   {
-    q: '¿Cómo activo Oleada TV en Quito o Guayaquil hoy mismo?',
-    a: 'Escríbenos por WhatsApp, elige tu plan, paga con PayPal o tarjeta de crédito/débito, y en minutos tienes tus credenciales. Te guiamos en la instalación paso a paso.',
+    q: '¿Cómo activo Stella TV en Quito o Guayaquil hoy mismo?',
+    a: 'Escríbenos por WhatsApp, elige tu plan, paga por transferencia desde Banco Pichincha o Banco Guayaquil y te enviamos tus credenciales. Te guiamos en la instalación paso a paso.',
   },
   {
     q: '¿Tienen soporte local en Quito o Guayaquil?',
@@ -53,33 +48,25 @@ const faqItems = [
   },
   {
     q: '¿Puedo ver canales ecuatorianos en vivo desde Quito o Guayaquil?',
-    a: 'Sí. Oleada TV incluye canales nacionales en vivo para que veas noticias, programas locales y eventos deportivos sin perderte nada.',
+    a: 'Sí. Stella TV incluye canales nacionales en vivo para que veas noticias, programas locales y eventos deportivos sin perderte nada.',
   },
   {
-    q: '¿Puedo ver el Mundial 2026 desde Quito o Guayaquil con Oleada TV?',
-    a: 'Sí. Cualquier usuario en Quito, Guayaquil o el resto de Ecuador puede seguir el Mundial 2026 y los partidos de la Selección en vivo con su cuenta de Oleada TV.',
+    q: '¿Puedo ver deportes en vivo desde Quito o Guayaquil?',
+    a: 'Sí. Stella TV incluye deportes en vivo y funciona en cualquier ciudad con internet estable. Si buscas un evento específico, consúltanos por WhatsApp antes de contratar.',
   },
   {
-    q: '¿Qué dispositivo necesito para usar Oleada TV en mi ciudad?',
+    q: '¿Qué dispositivo necesito para usar Stella TV en mi ciudad?',
     a: 'Un TV Box Android, Amazon Fire Stick, celular Android o tablet. Si no tienes ninguno, te asesoramos cuál comprar según tu presupuesto.',
   },
 ];
 
 const productSchema = {
-  name: 'Oleada TV Quito y Guayaquil — TV Online sin Cable',
-  description: 'TV online en Quito, Guayaquil y el resto de Ecuador, sin cable ni contratos, desde $4.99. Pago en USD, activación guiada por WhatsApp.',
-  price: COUNTRY.monthlyOffer,
+  name: 'Stella TV Quito y Guayaquil — TV Online sin Cable',
+  description: 'TV online en Quito, Guayaquil y el resto de Ecuador, sin cable ni contratos, desde $9. Pago en USD, activación guiada por WhatsApp.',
+  price: monthly.price,
   priceCurrency: 'USD',
 };
 
-const localBusiness = {
-  siteName: 'Oleada TV',
-  telephone: '+51940405911',
-  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
-  currenciesAccepted: 'USD',
-  paymentAccepted: 'PayPal, Tarjeta de Crédito, Tarjeta de Débito',
-  areaServed: ['Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas', 'Ecuador'],
-};
 
 const breadcrumb = [
   { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
@@ -88,12 +75,11 @@ const breadcrumb = [
 ---
 <BaseLayout
   title={`TV Online en Quito y Guayaquil — ${STELLA_EC.brand} | Actívate sin Cable en Minutos`}
-  description="TV online en Quito, Guayaquil y todo Ecuador, sin cable ni contratos, desde $4.99. El servicio favorito para ver canales, series y el Mundial 2026. Pago en USD."
-  keywords="tv online quito, tv online guayaquil, tv por internet quito, tv por internet guayaquil, canales en vivo quito, canales en vivo guayaquil, tv online cuenca, tv online ambato, tv online manta, ver mundial 2026 quito, ver mundial 2026 guayaquil, alternativa cable tv quito, alternativa cable tv guayaquil"
+  description="TV online en Quito, Guayaquil y todo Ecuador, sin cable ni contratos, desde $9. Canales, series y deportes en vivo. Pago en USD por transferencia."
+  keywords="tv online quito, tv online guayaquil, tv por internet quito, tv por internet guayaquil, canales en vivo quito, canales en vivo guayaquil, tv online cuenca, tv online ambato, tv online manta, alternativa cable tv quito, alternativa cable tv guayaquil"
   canonical="https://ec.oleadatvplus.com/tv-online-quito-guayaquil"
-  brand={STELLA_EC.brand}
-  author="Oleada TV Ecuador"
-  twitterCreator="@oleadatvplus"
+  country="EC"
+  whatsapp={STELLA_EC.whatsapp}
   themeColor="#00C853"
   lang="es-EC"
   locale="es_EC"
@@ -102,35 +88,38 @@ const breadcrumb = [
   geoPosition="-0.1807;-78.4678"
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA_EC.rating.value, reviewCount: STELLA_EC.rating.count }}
-  localBusiness={localBusiness}
+  organization={{ telephone: `+${STELLA_EC.whatsapp}`, areaServed: STELLA_EC.areaServed }}
   breadcrumb={breadcrumb}
 />
 
-<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+<SellerNotice country="Ecuador" />
+<EcuadorNavbar whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <main>
   <EcuadorHero
-    whatsapp={COUNTRY.whatsapp}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
     country="Quito y Guayaquil"
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    currency={STELLA_EC.currency}
+    monthlyOffer={monthly.price}
     badge="Cobertura confirmada en Quito, Guayaquil y más"
     headlineTop="TV online en Quito y Guayaquil,"
     headlineEm="activación el mismo día"
     sub="Escríbenos por WhatsApp, confirma tu pago en dólares y recibe el acceso guiado para ver desde tu TV Box, Fire Stick o Android, sin visitas técnicas en tu sector."
-    waText="Hola, quiero activar Oleada TV en Quito/Guayaquil"
+    waText="Hola, quiero activar Stella TV en Quito/Guayaquil"
   />
 
   <ActivationStrip
-    whatsapp={COUNTRY.whatsapp}
-    paymentMethods={COUNTRY.paymentMethods}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
+    paymentMethods={STELLA_EC.paymentMethods}
   />
 
   <EcuadorPlans
     currency={STELLA_EC.currency}
     plans={STELLA_EC.plans}
     whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
     brand={STELLA_EC.brand}
     features={STELLA_EC.planFeatures}
     paymentMethods={STELLA_EC.paymentMethods}
@@ -140,27 +129,31 @@ const breadcrumb = [
 
   <EcuadorDevices />
 
-  <EcuadorTestimonials />
+  <BeforePaying whatsapp={STELLA_EC.whatsapp} waTag={TAG} paymentText={STELLA_EC.beforePayingText} />
 
   <EcuadorHowItWorks />
+
+  <Downloads whatsapp={STELLA_EC.whatsapp} waTag={TAG} guideHref="/instalar-stella-tv" />
 
   <FAQ items={faqItems} />
 
   <EcuadorCTAFinal
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
+    currency={STELLA_EC.currency}
+    monthlyOffer={monthly.price}
   />
 
   <EcuadorInternalSeoLinks links={internalSeoLinks.tvOnlineQuitoGuayaquil} />
 </main>
 
-<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+<Footer whatsapp={STELLA_EC.whatsapp} waTag={TAG} country="Ecuador" pageLinks={EC_FOOTER_PAGES} siteLinks={EC_SITE_LINKS} />
 
-<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+<EcuadorWhatsAppFloat whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <EcuadorStickyMobileCTA
-  whatsapp={COUNTRY.whatsapp}
-  currency={COUNTRY.currency}
-  monthlyOffer={COUNTRY.monthlyOffer}
+  whatsapp={STELLA_EC.whatsapp}
+  waTag={TAG}
+  currency={STELLA_EC.currency}
+  monthlyOffer={monthly.price}
 />

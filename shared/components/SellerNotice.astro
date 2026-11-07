@@ -1,0 +1,39 @@
+---
+// Aviso de transparencia: quién vende y qué producto se contrata.
+// Reemplaza al antiguo "Oleada evoluciona a Stella TV", que sugería que ambos
+// sitios eran la misma web/empresa.
+import { PRODUCT_NAME, SELLER_NAME } from '../data/stella';
+
+interface Props {
+  country: string;
+  voseo?: boolean;
+}
+const { country, voseo = false } = Astro.props;
+---
+<div class="seller-notice" role="note">
+  <p>
+    <strong>{SELLER_NAME}</strong> comercializa <strong>{PRODUCT_NAME}</strong> en {country}.
+    {voseo
+      ? ' Contratás, pagás y recibís soporte por WhatsApp con nosotros.'
+      : ' Contratas, pagas y recibes soporte por WhatsApp con nosotros.'}
+  </p>
+</div>
+
+<style>
+  .seller-notice {
+    background: #0a0a0a;
+    border-bottom: 1px solid var(--border);
+    padding: 8px 20px;
+    text-align: center;
+  }
+  .seller-notice p {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.62);
+  }
+  .seller-notice strong { color: rgba(255, 255, 255, 0.9); font-weight: 600; }
+  @media (max-width: 480px) {
+    .seller-notice p { font-size: 0.72rem; }
+  }
+</style>

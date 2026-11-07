@@ -249,6 +249,7 @@ a:focus-visible, button:focus-visible {
 .hero {
   min-height: calc(100svh - var(--navbar-h));
   background: url('/img/hero.webp') center / cover no-repeat;
+  /* móvil: ver media query al final (hero-m.webp, 828px) */
   position: relative;
   display: flex;
   align-items: center;
@@ -1008,3 +1009,23 @@ details[open] .faq-chevron { transform:rotate(180deg); color:var(--orange); }
   .footer-nav { gap: 20px; }
   .footer-col { min-width: 120px; }
 }
+
+/* ─── Fix responsive (nov 2026) ───────────────────────────────
+   En 390px, palabras largas en mayúsculas ("ENTRETENIMIENTO") y los botones
+   con white-space:nowrap desbordaban el ancho (scroll horizontal de 490–600px). */
+.hero-content h1 { font-size: clamp(1.6rem, 5.5vw, 3.6rem); overflow-wrap: break-word; }
+@media (max-width: 480px) {
+  .hero-content h1 { font-size: 1.6rem; overflow-wrap: break-word; }
+  .btn-wa { white-space: normal; text-align: center; padding: 14px 20px; max-width: 100%; }
+}
+
+/* Hero liviano en móvil (LCP): 828px / ~35-45 KB en vez de la imagen de 4000+px */
+@media (max-width: 768px) {
+  .hero { background-image: url('/img/hero-m.webp'); }
+}
+
+/* Legibilidad de botones de plan (nov 2026): texto oscuro sobre el amarillo de marca
+   (blanco sobre #FBBF24 daba contraste ~1,7:1) y tamaño que entra en una línea con 4 columnas. */
+.plan-btn { font-size: 0.88rem; letter-spacing: 0.03em; }
+.plan-btn:hover, .plan-card.featured .plan-btn { color: #111; }
+.plans-note { color: var(--text-muted); }

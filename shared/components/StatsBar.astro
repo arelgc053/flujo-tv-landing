@@ -1,10 +1,21 @@
 ---
-const stats = [
-  { num: '+5,000', label: 'Clientes activos' },
-  { num: '4K',     label: 'Calidad máxima' },
-  { num: '99.9%',  label: 'Disponibilidad' },
-  { num: '24/7',   label: 'Soporte activo' },
-];
+// Solo datos verificables del producto/oferta. Se retiraron "+5,000 clientes
+// activos" y "99.9% disponibilidad": no hay una fuente que los respalde y el
+// brief prohíbe afirmaciones comerciales sin respaldo. Si el negocio tiene la
+// cifra real documentada, se puede pasar por `stats`.
+import { CHANNELS_LABEL, SCREENS, USD_PLANS, USD_SYMBOL } from '../data/stella';
+
+interface Stat { num: string; label: string; }
+interface Props { stats?: Stat[]; }
+
+const {
+  stats = [
+    { num: CHANNELS_LABEL.replace(' canales', ''), label: 'Canales en vivo' },
+    { num: String(SCREENS), label: 'Pantallas a la vez' },
+    { num: `${USD_SYMBOL}${USD_PLANS[0].price}`, label: 'Desde, por mes' },
+    { num: '0', label: 'Contratos de permanencia' },
+  ],
+} = Astro.props;
 ---
 <div class="stats-bar">
   <div class="stats-inner">

@@ -1,0 +1,311 @@
+---
+// Sección "Descargar Stella TV" — versiones, APK y códigos vigentes.
+//
+// Datos: shared/data/stella.ts (DOWNLOADS). No hardcodear versiones ni códigos
+// acá. Estilos scopeados en este archivo para que funcione igual con el
+// global.css de PE/AR y con el de EC (que no tiene las clases .install-*).
+//
+// Reglas de contenido (brief nov 2026):
+//   - sin videos ni reproductores externos;
+//   - Downloader NO es obligatorio en el celular (APK directo);
+//   - sin promesas de iOS, Samsung Tizen ni LG webOS nativos;
+//   - el código anterior solo se menciona como reemplazado.
+import { DOWNLOADS, PRODUCT_NAME } from '../data/stella';
+import { waHref } from '../lib/wa';
+
+interface Props {
+  whatsapp: string;
+  waTag: string;
+  /** true = español rioplatense (Argentina). */
+  voseo?: boolean;
+  title?: string;
+  subtitle?: string;
+  /** Enlace opcional a la guía completa de instalación del mismo sitio. */
+  guideHref?: string;
+  id?: string;
+}
+
+const {
+  whatsapp,
+  waTag,
+  voseo = false,
+  title = `Descargar ${PRODUCT_NAME} <em>– Instalación y códigos actualizados</em>`,
+  subtitle,
+  guideHref,
+  id = 'descargas',
+} = Astro.props;
+
+const v = (tu: string, vos: string) => (voseo ? vos : tu);
+const { tv, mobile, legacyCodes, updatedLabel } = DOWNLOADS;
+
+const helpWa = waHref(
+  whatsapp,
+  v(`Hola, necesito ayuda para instalar ${PRODUCT_NAME}.`, `Hola, necesito ayuda para instalar ${PRODUCT_NAME}.`),
+  waTag,
+);
+const resolvedSubtitle =
+  subtitle ??
+  v(
+    `Versiones vigentes, verificadas en ${updatedLabel}. La app necesita un plan activo: los datos de acceso te los enviamos por WhatsApp al contratar.`,
+    `Versiones vigentes, verificadas en ${updatedLabel}. La app necesita un plan activo: los datos de acceso te los mandamos por WhatsApp al contratar.`,
+  );
+---
+<section class="dl" id={id} aria-labelledby={`${id}-title`}>
+  <div class="inner">
+    <h2 id={`${id}-title`} class="section-title reveal" set:html={title}></h2>
+    <p class="section-sub reveal">{resolvedSubtitle}</p>
+
+    <div class="dl-grid">
+      <article class="dl-card reveal">
+        <span class="dl-tag">Televisores</span>
+        <h3>{PRODUCT_NAME} para televisores</h3>
+        <p class="dl-meta">Versión {tv.version} · Android TV, Google TV, Fire TV y TV Box</p>
+
+        <div class="dl-code">
+          <span class="dl-code-label">Código Downloader</span>
+          <span class="dl-code-value">{tv.downloaderCode}</span>
+          <button type="button" class="dl-copy" data-copy={tv.downloaderCode} data-track="downloader_code_copy" data-track-label="tv">
+            Copiar
+          </button>
+        </div>
+
+        <ol class="dl-steps">
+          <li>{v('Instala la app', 'Instalá la app')} <strong>Downloader</strong> {v('desde Google Play (Android TV / Google TV) o desde la Appstore de Amazon (Fire TV).', 'desde Google Play (Android TV / Google TV) o desde la Appstore de Amazon (Fire TV).')}</li>
+          <li>{v('Cuando el equipo lo pida, permite que Downloader instale aplicaciones de origen desconocido.', 'Cuando el equipo lo pida, permití que Downloader instale aplicaciones de origen desconocido.')}</li>
+          <li>{v('Abre Downloader, escribe el código', 'Abrí Downloader, escribí el código')} <strong>{tv.downloaderCode}</strong> {v('y confirma la descarga.', 'y confirmá la descarga.')}</li>
+          <li>{v('Instala y abre', 'Instalá y abrí')} {PRODUCT_NAME}; {v('ingresa con los datos de acceso de tu plan.', 'ingresá con los datos de acceso de tu plan.')}</li>
+        </ol>
+
+        <a href={tv.apkUrl} class="dl-btn dl-btn-ghost" rel="nofollow noopener" data-track="apk_download" data-track-label="tv">
+          {v('Descargar APK para TV', 'Descargar APK para TV')} (v{tv.version})
+        </a>
+      </article>
+
+      <article class="dl-card reveal">
+        <span class="dl-tag">Celular y tablet</span>
+        <h3>{PRODUCT_NAME} para Android móvil</h3>
+        <p class="dl-meta">Versión {mobile.version} · Celulares y tablets Android</p>
+
+        <a href={mobile.apkUrl} class="dl-btn" rel="nofollow noopener" data-track="apk_download" data-track-label="mobile">
+          Descargar APK para celular (v{mobile.version})
+        </a>
+
+        <ol class="dl-steps">
+          <li>{v('Toca el botón desde tu celular o tablet Android.', 'Tocá el botón desde tu celular o tablet Android.')}</li>
+          <li>{v('Abre el archivo descargado. Si el teléfono lo pide, permite instalar apps desde tu navegador.', 'Abrí el archivo descargado. Si el teléfono lo pide, permití instalar apps desde tu navegador.')}</li>
+          <li>{v('Instala, abre la app e ingresa tus datos de acceso.', 'Instalá, abrí la app e ingresá tus datos de acceso.')}</li>
+        </ol>
+
+        <p class="dl-alt">
+          {v('¿Prefieres usar Downloader?', '¿Preferís usar Downloader?')} Código alternativo: <strong>{mobile.downloaderCode}</strong>
+          <button type="button" class="dl-copy dl-copy-sm" data-copy={mobile.downloaderCode} data-track="downloader_code_copy" data-track-label="mobile">
+            Copiar
+          </button>
+          <span class="dl-alt-note">{v('Es opcional: en el celular basta con el APK directo.', 'Es opcional: en el celular alcanza con el APK directo.')}</span>
+        </p>
+      </article>
+    </div>
+
+    {legacyCodes.length > 0 && (
+      <p class="dl-note reveal">
+        <strong>{v('¿Buscabas el código', '¿Buscabas el código')} {legacyCodes.join(' o ')}?</strong>
+        {' '}Es un código anterior. {v('Hoy corresponde usar', 'Hoy corresponde usar')} <strong>{tv.downloaderCode}</strong> {v('en televisores.', 'en televisores.')}
+      </p>
+    )}
+
+    <p class="dl-note reveal">
+      {PRODUCT_NAME} funciona en Android. No hay versión para iPhone ni iPad, y los Smart TV Samsung (Tizen) y LG (webOS)
+      no permiten instalarla de forma nativa: en esos televisores {v('se conecta', 'se conecta')} un Fire TV, Google TV o TV Box por HDMI.
+    </p>
+
+    <div class="dl-help reveal">
+      <p>{v('¿Te trabaste en algún paso?', '¿Te trabaste en algún paso?')}</p>
+      <a href={helpWa} target="_blank" rel="noopener noreferrer" class="btn-wa" data-track-location={`${id}-ayuda`}>
+        {v('Pedir ayuda por WhatsApp', 'Pedir ayuda por WhatsApp')}
+      </a>
+      {guideHref && (
+        <a href={guideHref} class="dl-guide-link">{v('Ver la guía completa por dispositivo', 'Ver la guía completa por dispositivo')}</a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .dl { background: var(--bg2, #0b0b0b); padding: var(--section-pad, 96px) 20px; text-align: center; }
+  .dl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+    align-items: stretch;
+  }
+  .dl-card {
+    background: var(--glass-bg, rgba(255,255,255,0.03));
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+    border-radius: var(--radius-xl, 24px);
+    padding: 28px 26px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .dl-tag {
+    align-self: flex-start;
+    background: var(--orange-soft);
+    border: 1px solid var(--orange-border);
+    color: var(--orange);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill, 50px);
+  }
+  .dl-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin: 0;
+  }
+  .dl-meta { font-size: 0.84rem; color: var(--text-muted); margin: -6px 0 0; }
+  .dl-code {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+  .dl-code-label { font-size: 0.76rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; flex-basis: 100%; }
+  .dl-code-value {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #fff;
+    line-height: 1;
+  }
+  .dl-copy {
+    margin-left: auto;
+    min-height: 40px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--orange-border);
+    background: var(--orange-soft);
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 0.86rem;
+    cursor: pointer;
+  }
+  .dl-copy-sm { margin-left: 6px; min-height: 40px; padding: 6px 14px; font-size: 0.82rem; }
+  .dl-copy.is-copied { background: var(--green); border-color: var(--green); color: #fff; }
+  .dl-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    counter-reset: dlstep;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  /* Bloque (no flex): con flex, cada <strong> del texto se volvía una columna aparte. */
+  .dl-steps li {
+    position: relative;
+    padding-left: 32px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    counter-increment: dlstep;
+  }
+  .dl-steps li::before {
+    content: counter(dlstep);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--orange-soft);
+    border: 1px solid var(--orange-border);
+    color: var(--orange);
+    font-weight: 800;
+    font-size: 0.76rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dl-steps strong, .dl-alt strong, .dl-note strong { color: #fff; }
+  .dl-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 18px;
+    border-radius: var(--radius, 12px);
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-align: center;
+    text-decoration: none;
+  }
+  .dl-btn-ghost {
+    margin-top: auto;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+  }
+  .dl-btn:hover { filter: brightness(1.08); }
+  .dl-alt { font-size: 0.86rem; color: var(--text-muted); line-height: 1.6; margin: auto 0 0; }
+  .dl-alt-note { display: block; font-size: 0.78rem; color: var(--text-muted); opacity: 0.8; margin-top: 4px; }
+  .dl-note {
+    max-width: 760px;
+    margin: 18px auto 0;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .dl-help {
+    margin: 28px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .dl-help p { margin: 0; color: #fff; font-weight: 600; }
+  .dl-help .btn-wa { white-space: normal; max-width: 100%; text-align: center; }
+  .dl-guide-link { color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; font-size: 0.88rem; }
+  .dl-guide-link:hover { color: var(--orange); }
+  @media (max-width: 720px) {
+    .dl-grid { grid-template-columns: 1fr; }
+    .dl-card { padding: 22px 18px; }
+    .dl-code-value { font-size: 1.7rem; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.dl-copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = btn.dataset.copy ?? '';
+      try {
+        await navigator.clipboard.writeText(code);
+      } catch {
+        const tmp = document.createElement('textarea');
+        tmp.value = code;
+        document.body.appendChild(tmp);
+        tmp.select();
+        try { document.execCommand('copy'); } catch { /* sin portapapeles: el código igual está visible */ }
+        tmp.remove();
+      }
+      const original = btn.textContent;
+      btn.textContent = 'Copiado';
+      btn.classList.add('is-copied');
+      setTimeout(() => { btn.textContent = original; btn.classList.remove('is-copied'); }, 1800);
+    });
+  });
+</script>

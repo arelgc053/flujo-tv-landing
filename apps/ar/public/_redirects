@@ -2,3 +2,16 @@
 http://www.ar.oleadatvplus.com/* https://ar.oleadatvplus.com/:splat 301!
 https://www.ar.oleadatvplus.com/* https://ar.oleadatvplus.com/:splat 301!
 http://ar.oleadatvplus.com/* https://ar.oleadatvplus.com/:splat 301!
+
+# URL canónica sin barra final (build.format = 'file' genera /pagina.html).
+# Sin "!" a propósito: si algún día existe un archivo en esa ruta, se sirve el
+# archivo en vez de redirigir (evita bucles con la normalización de Netlify).
+/instalar-stella-tv/ /instalar-stella-tv 301
+/precio-stella-tv/ /precio-stella-tv 301
+
+# Variantes cortas que la gente escribe o comparte
+/instalar /instalar-stella-tv 301
+/descargar /instalar-stella-tv 301
+/descargas /instalar-stella-tv 301
+/precio /precio-stella-tv 301
+/precios /precio-stella-tv 301

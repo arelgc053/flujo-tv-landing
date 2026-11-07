@@ -7,35 +7,45 @@ import HowItWorks              from '@shared/components/HowItWorks.astro';
 import ContentGrid              from '@shared/components/ContentGrid.astro';
 import Plans                     from '@shared/components/Plans.astro';
 import Comparison                 from '@shared/components/Comparison.astro';
-import Testimonials                from '@shared/components/Testimonials.astro';
+import BeforePaying from '@shared/components/BeforePaying.astro';
 import Devices                      from '@shared/components/Devices.astro';
-import Installation                  from '@shared/components/Installation.astro';
+import Downloads                     from '@shared/components/Downloads.astro';
 import FAQ                            from '@shared/components/FAQ.astro';
 import CTAFinal                        from '@shared/components/CTAFinal.astro';
 import Footer                           from '@shared/components/Footer.astro';
 import WhatsAppFloat                     from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA                    from '@shared/components/StickyMobileCTA.astro';
-import BrandTransitionStrip from '../components/BrandTransitionStrip.astro';
+import SellerNotice         from '@shared/components/SellerNotice.astro';
 import InternalSeoLinks     from '../components/InternalSeoLinks.astro';
-import { internalSeoLinks, seoContent, stellaTestimonials } from '../seoContent';
+import { internalSeoLinks, seoContent } from '../seoContent';
 import { STELLA } from '../stella.config';
+import { PE_FOOTER_PAGES, PE_HOME_NAV, PE_INSTALL_PATH, PE_SITE_LINKS } from '../site';
+import { DOWNLOADS } from '@shared/data/stella';
+import { homeAlternates } from '@shared/data/sites';
+import { waTag } from '@shared/lib/wa';
 
 const pageSeo = seoContent.home;
 const monthly = STELLA.plans[0];
-const longest = STELLA.plans[STELLA.plans.length - 1];
+const TAG = waTag('PE', 'HOME');
+const priceFrom = `${STELLA.currency}${monthly.price}`;
+const [p1, p3, p6, p12] = STELLA.plans;
 
 const faqItems = [
   {
-    q: '¿Qué es Stella TV?',
-    a: 'Un servicio de streaming por internet con más de 1,000 canales, deportes en vivo, cine de estreno y series en Full HD. Se activa por WhatsApp, sin instalación técnica ni contratos de permanencia.',
+    q: '¿Qué es Stella TV y quién lo vende en este sitio?',
+    a: 'Stella TV es un servicio de streaming por internet con más de 1,000 canales, deportes en vivo, cine y series en Full HD. En este sitio lo comercializa Oleada TV: contratas, pagas y recibes soporte por WhatsApp con nosotros.',
+  },
+  {
+    q: '¿Cuánto cuesta Stella TV en Perú?',
+    a: `1 mes ${STELLA.currency}${p1.price}, 3 meses ${STELLA.currency}${p3.price}, 6 meses ${STELLA.currency}${p6.price} (con 1 mes gratis) y 12 meses ${STELLA.currency}${p12.price} (con 2 meses gratis). Los precios están en dólares; pagas con Yape o Plin y te confirmamos el monto en soles antes de pagar.`,
   },
   {
     q: '¿Qué dispositivos son compatibles?',
-    a: 'Android TV, Google TV, TV Box, Fire Stick, Fire TV Cube, celulares y tablets Android — es un servicio pensado para el ecosistema Android.',
+    a: 'Android TV, Google TV, TV Box, Fire TV Stick, Fire TV Cube, celulares y tablets Android — es un servicio pensado para el ecosistema Android. No hay versión para iPhone ni iPad.',
   },
   {
     q: '¿Cómo instalo Stella TV?',
-    a: 'En celular o tablet Android descargas el APK directo desde el enlace que te enviamos por WhatsApp. En TV Box, Fire Stick, Google TV o Android TV instalas la app Downloader y usas el código de instalación que te confirmamos al activar tu plan.',
+    a: `En celular o tablet Android descargas el APK directo (versión ${DOWNLOADS.mobile.version}) desde la sección de descargas. En TV Box, Fire TV, Google TV o Android TV instalas la app Downloader y usas el código ${DOWNLOADS.tv.downloaderCode}.`,
   },
   {
     q: '¿Funciona en Samsung?',
@@ -51,15 +61,15 @@ const faqItems = [
   },
   {
     q: '¿Cómo uso Downloader?',
-    a: 'Downloader es una app gratuita que se descarga desde la Play Store (o la Amazon Appstore en Fire Stick). Ábrela, ingresa el código de instalación que te damos por WhatsApp y descarga Stella TV automáticamente.',
+    a: `Downloader es una app gratuita que se descarga desde Google Play (o la Appstore de Amazon en Fire TV). Ábrela, escribe el código ${DOWNLOADS.tv.downloaderCode} y se descarga Stella TV. En el celular no hace falta: basta con el APK directo.`,
   },
   {
-    q: '¿Cuál es el código de instalación?',
-    a: 'Te lo confirmamos por WhatsApp en el momento de activar tu plan, así siempre recibes el código vigente.',
+    q: '¿Cuál es el código de instalación de Stella TV?',
+    a: `Para televisores el código Downloader vigente es ${DOWNLOADS.tv.downloaderCode}. El ${DOWNLOADS.legacyCodes.join(' / ')} es un código anterior y ya no corresponde usarlo. Para celular hay un código alternativo, ${DOWNLOADS.mobile.downloaderCode}, aunque basta con el APK directo.`,
   },
   {
     q: '¿Qué incluyen los planes?',
-    a: 'Los 4 planes (1, 3, 6 y 12 meses) incluyen exactamente lo mismo: +1,000 canales, 3 pantallas, cine y series VOD, calidad Full HD, soporte 24/7 y activación inmediata. Solo cambia la duración y el ahorro.',
+    a: 'Los 4 planes (1, 3, 6 y 12 meses) incluyen exactamente lo mismo: +1,000 canales, 3 pantallas, cine y series a demanda, calidad Full HD y soporte por WhatsApp. Solo cambia la duración y el ahorro.',
   },
   {
     q: '¿Cuántas pantallas puedo usar?',
@@ -67,79 +77,63 @@ const faqItems = [
   },
   {
     q: '¿Cómo se activa?',
-    a: 'Escríbenos por WhatsApp, elige tu plan, paga con Yape o Plin y recibes tus credenciales en minutos — la activación es inmediata.',
+    a: 'Escríbenos por WhatsApp, elige tu plan, te confirmamos el monto en soles, pagas con Yape o Plin y te enviamos tus credenciales.',
   },
   {
     q: '¿Cómo pago?',
-    a: 'Aceptamos Yape y Plin. Es rápido, seguro y no necesitas tarjeta de crédito.',
+    a: 'Con Yape o Plin, sin tarjeta de crédito. Los precios se publican en dólares y antes de pagar te confirmamos por WhatsApp el monto final en soles.',
   },
   {
     q: '¿Cómo recibo soporte?',
-    a: 'Por WhatsApp, las 24 horas. Te ayudamos con la instalación, cambios de dispositivo o cualquier duda que tengas.',
+    a: 'Por WhatsApp. Te ayudamos con la instalación, cambios de dispositivo o cualquier duda que tengas.',
   },
 ];
 
 const productSchema = {
   name: `Plan Mensual ${STELLA.brand} Perú`,
-  description: `Plan de streaming ${STELLA.brand} con más de 1,000 canales, deportes en vivo, cine de estreno y series en Full HD. Actívate en minutos pagando con Yape o Plin.`,
+  description: `Plan mensual de ${STELLA.brand} para Perú: más de 1,000 canales, deportes en vivo, cine y series en Full HD. ${priceFrom} al mes, pago con Yape o Plin. Vendido por Oleada TV.`,
   price: monthly.price,
-  priceCurrency: 'PEN',
+  priceCurrency: 'USD',
   availability: 'https://schema.org/InStock',
 };
 
-const localBusiness = {
-  siteName: STELLA.brand,
-  telephone: `+${STELLA.whatsapp}`,
-  priceRange: `${STELLA.currency} ${monthly.price} - ${STELLA.currency} ${longest.price}`,
-  currenciesAccepted: 'PEN',
-  paymentAccepted: 'Yape, Plin',
-  areaServed: STELLA.areaServed,
-};
 
-const breadcrumb = [
-  { name: 'Inicio', url: 'https://oleadatvplus.com/' },
-  { name: 'Planes', url: 'https://oleadatvplus.com/#planes' },
-];
 ---
 <BaseLayout
-  title={`${STELLA.brand} Perú | Fútbol y Deportes en Vivo, Cine y Series HD — Activación Inmediata desde S/${monthly.price}`}
-  description={`${STELLA.brand} en Perú: +1,000 canales, fútbol y deportes en vivo, cine y series en Full HD. Activación inmediata por WhatsApp, paga con Yape o Plin desde S/${monthly.price} al mes.`}
-  keywords="stella tv, stella tv peru, stella tv precio, stella tv soles, stella tv instalacion, stella tv descarga, stella tv apk android, stella tv downloader, instalar stella tv fire stick, stella tv tv box, stella tv android tv, stella tv google tv, stella tv yape, stella tv soporte whatsapp, stella tv planes, stella tv activacion, futbol en vivo peru, deportes en vivo por internet"
+  title={`${STELLA.brand} Perú | Fútbol y Deportes en Vivo, Cine y Series HD — Activación Inmediata desde ${priceFrom}`}
+  description={`${STELLA.brand} en Perú: +1,000 canales, fútbol y deportes en vivo, cine y series en Full HD. Paga con Yape o Plin desde ${priceFrom} al mes. Código Downloader ${DOWNLOADS.tv.downloaderCode}.`}
+  keywords="stella tv, stella tv peru, stella tv precio, stella tv dolares, stella tv instalacion, stella tv descarga, stella tv apk android, stella tv downloader, instalar stella tv fire stick, stella tv tv box, stella tv android tv, stella tv google tv, stella tv yape, stella tv soporte whatsapp, stella tv planes, stella tv activacion, futbol en vivo peru, deportes en vivo por internet"
   canonical="https://oleadatvplus.com/"
-  brand={STELLA.brand}
+  country="PE"
   whatsapp={STELLA.whatsapp}
   lang="es-PE"
   locale="es_PE"
   geoRegion="PE"
   geoPlacename="Lima, Perú"
   geoPosition="-12.0464;-77.0428"
-  alternates={[
-    { hreflang: 'es-PE', href: 'https://oleadatvplus.com/' },
-    { hreflang: 'es-EC', href: 'https://ec.oleadatvplus.com/' },
-    { hreflang: 'es-AR', href: 'https://ar.oleadatvplus.com/' },
-    { hreflang: 'x-default', href: 'https://oleadatvplus.com/' },
-  ]}
+  alternates={homeAlternates('pe')}
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA.rating.value, reviewCount: STELLA.rating.count }}
-  localBusiness={localBusiness}
-  breadcrumb={breadcrumb}
+  organization={{ telephone: `+${STELLA.whatsapp}`, areaServed: STELLA.areaServed }}
 />
 
-<BrandTransitionStrip previousBrand={STELLA.previousBrand} brand={STELLA.brand} />
-<Navbar brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<SellerNotice country="Perú" />
+<Navbar whatsapp={STELLA.whatsapp} waTag={TAG} links={PE_HOME_NAV} />
 
 <main>
   <Hero
     brand={STELLA.brand}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     headlineTop={`${STELLA.brand} para tu hogar`}
     headlineEm="activación simple y soporte real"
     sub={`Más de 1,000 canales, cine, series y deportes en vivo en Full HD. Activa ${STELLA.brand} en minutos, paga con Yape o Plin y recibe soporte cuando lo necesites.`}
-    badge={`${STELLA.brand} Perú`}
-    waText={`Hola, quiero activar ${STELLA.brand}`}
+    badge="Oleada TV · Stella TV en Perú"
+    waText={`Hola, quiero contratar ${STELLA.brand} en Perú.`}
+    trustBadges={[`Desde ${priceFrom}/mes`, 'Yape y Plin', 'Sin contrato', 'Ayuda por WhatsApp']}
+    microcopy="Te confirmamos el monto en soles antes de que pagues"
   />
 
   <StatsBar />
@@ -152,9 +146,12 @@ const breadcrumb = [
     currency={STELLA.currency}
     plans={STELLA.plans}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     brand={STELLA.brand}
     features={STELLA.planFeatures}
     paymentMethods={STELLA.paymentMethods}
+    subtitle="Precios en dólares · Sin contratos · Sin permanencia"
+    paymentNote={STELLA.paymentNote}
   />
 
   <Comparison
@@ -163,20 +160,17 @@ const breadcrumb = [
     brand={STELLA.brand}
   />
 
-  <Testimonials testimonials={stellaTestimonials} />
+  <BeforePaying whatsapp={STELLA.whatsapp} waTag={TAG} paymentText={STELLA.beforePayingText} />
 
   <Devices />
 
-  <Installation
-    whatsapp={STELLA.whatsapp}
-    brand={STELLA.brand}
-    downloaderCode={STELLA.downloaderCode}
-  />
+  <Downloads whatsapp={STELLA.whatsapp} waTag={TAG} guideHref={PE_INSTALL_PATH} />
 
   <FAQ items={faqItems} />
 
   <CTAFinal
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     brand={STELLA.brand}
@@ -185,12 +179,13 @@ const breadcrumb = [
   <InternalSeoLinks links={internalSeoLinks.home} />
 </main>
 
-<Footer brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<Footer whatsapp={STELLA.whatsapp} waTag={TAG} country="Perú" pageLinks={PE_FOOTER_PAGES} siteLinks={PE_SITE_LINKS} />
 
-<WhatsAppFloat whatsapp={STELLA.whatsapp} brand={STELLA.brand} />
+<WhatsAppFloat whatsapp={STELLA.whatsapp} waTag={TAG} brand={STELLA.brand} />
 
 <StickyMobileCTA
   whatsapp={STELLA.whatsapp}
+  waTag={TAG}
   currency={STELLA.currency}
   monthlyOffer={monthly.price}
   brand={STELLA.brand}

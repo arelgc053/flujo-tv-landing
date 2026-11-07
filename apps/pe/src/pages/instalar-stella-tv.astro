@@ -1,0 +1,162 @@
+---
+// Intención: descargar / instalar / código de Stella TV. Versión para Perú de
+// la guía (hreflang con la de Argentina). Consultas observadas en Search
+// Console: "8821026", "stella tv apk", "descargar stella tv".
+import BaseLayout      from '@shared/layouts/BaseLayout.astro';
+import Navbar          from '@shared/components/Navbar.astro';
+import SellerNotice    from '@shared/components/SellerNotice.astro';
+import PageIntro       from '@shared/components/PageIntro.astro';
+import Downloads       from '@shared/components/Downloads.astro';
+import InstallGuide    from '@shared/components/InstallGuide.astro';
+import FAQ             from '@shared/components/FAQ.astro';
+import RelatedGuides   from '@shared/components/RelatedGuides.astro';
+import CTAFinal        from '@shared/components/CTAFinal.astro';
+import Footer          from '@shared/components/Footer.astro';
+import WhatsAppFloat   from '@shared/components/WhatsAppFloat.astro';
+import StickyMobileCTA from '@shared/components/StickyMobileCTA.astro';
+import { STELLA } from '../stella.config';
+import { PE_FOOTER_PAGES, PE_SITE_LINKS } from '../site';
+import { DOWNLOADS } from '@shared/data/stella';
+import { installAlternates } from '@shared/data/sites';
+import { waTag } from '@shared/lib/wa';
+
+const TAG = waTag('PE', 'INSTALAR');
+const CANONICAL = 'https://oleadatvplus.com/instalar-stella-tv/';
+const priceFrom = `${STELLA.currency}${STELLA.plans[0].price}`;
+const { tv, mobile, legacyCodes, updatedLabel } = DOWNLOADS;
+
+const faqItems = [
+  {
+    q: '¿Cuál es el código de Stella TV para Downloader?',
+    a: `El código vigente para televisores es ${tv.downloaderCode} (Stella TV ${tv.version}). Para el celular hay un código alternativo, ${mobile.downloaderCode}, pero ahí basta con el APK directo.`,
+  },
+  {
+    q: `¿Qué pasó con el código ${legacyCodes[0]}?`,
+    a: `Es un código anterior que descargaba una versión antigua de la app. Hoy corresponde usar ${tv.downloaderCode} en televisores.`,
+  },
+  {
+    q: '¿La app de Stella TV es gratis?',
+    a: `La descarga es gratuita, pero para ver los canales necesitas un plan activo. Los planes empiezan en ${priceFrom} al mes; pagas con Yape o Plin y contratas por WhatsApp con Oleada TV.`,
+  },
+  {
+    q: '¿Necesito Downloader en el celular?',
+    a: `No. En celulares y tablets Android descargas el APK directo (versión ${mobile.version}) y lo instalas como cualquier archivo.`,
+  },
+  {
+    q: '¿Se puede instalar en Smart TV Samsung o LG?',
+    a: 'No de forma nativa: Tizen (Samsung) y webOS (LG) no permiten instalar el APK. La solución es conectar por HDMI un Fire TV, un Google TV o un TV Box Android.',
+  },
+  {
+    q: '¿Hay Stella TV para iPhone?',
+    a: 'No. Stella TV funciona en Android (celular, tablet, Android TV, Google TV, Fire TV y TV Box). No hay versión para iPhone ni iPad.',
+  },
+  {
+    q: '¿Cómo actualizo Stella TV?',
+    a: 'Instala la versión nueva con el código o el APK vigente de esta página; mantenemos la fecha de actualización arriba. Si la instalación falla, desinstala la versión antigua y vuelve a instalar.',
+  },
+];
+
+const guides = [
+  { href: '/', title: 'Stella TV en Perú', desc: 'Planes, dispositivos compatibles y cómo contratar con Oleada TV.' },
+  { href: '/paga-con-yape/', title: 'Pagar con Yape o Plin', desc: 'Cómo se confirma el monto en soles, el comprobante y la activación.' },
+  { href: '/tv-sin-cortes-peru/', title: 'Evitar cortes', desc: 'Velocidad recomendada y consejos de WiFi para ver sin interrupciones.' },
+];
+---
+<BaseLayout
+  title={`Descargar e instalar Stella TV: código ${tv.downloaderCode} y APK actualizado`}
+  description={`Instala Stella TV en Fire TV, Google TV, Android TV, TV Box y celular. Código Downloader vigente ${tv.downloaderCode} (reemplaza al ${legacyCodes[0]}) y APK ${tv.version} / ${mobile.version}.`}
+  preloadHero={false}
+  canonical={CANONICAL}
+  country="PE"
+  whatsapp={STELLA.whatsapp}
+  lang="es-PE"
+  locale="es_PE"
+  geoRegion="PE"
+  geoPlacename="Perú"
+  alternates={installAlternates()}
+  faqSchema={faqItems}
+  breadcrumb={[
+    { name: 'Inicio', url: 'https://oleadatvplus.com/' },
+    { name: 'Instalar Stella TV', url: CANONICAL },
+  ]}
+/>
+
+<SellerNotice country="Perú" />
+<Navbar
+  whatsapp={STELLA.whatsapp}
+  waTag={TAG}
+  links={[
+    { href: '#descargas', label: 'Descargas' },
+    { href: '#guia', label: 'Paso a paso' },
+    { href: '#problemas', label: 'Problemas' },
+    { href: '#faq', label: 'Preguntas' },
+    { href: '/', label: 'Inicio' },
+  ]}
+/>
+
+<main>
+  <PageIntro
+    eyebrow="Guía de instalación"
+    title="Cómo descargar e instalar"
+    titleEm="Stella TV"
+    intro="Código Downloader vigente, APK para TV y para celular, y el paso a paso para Fire TV, Google TV, Android TV y TV Box. Si ya tienes tu plan, en unos minutos lo dejas listo; si te trabas, te ayudamos por WhatsApp."
+    updated={updatedLabel}
+    facts={[
+      { label: 'Código para TV', value: tv.downloaderCode },
+      { label: 'Versión TV', value: tv.version },
+      { label: 'Versión celular', value: mobile.version },
+    ]}
+    whatsapp={STELLA.whatsapp}
+    waTag={TAG}
+    waText="Hola, quiero contratar Stella TV y que me ayuden a instalarlo."
+    ctaLabel="Contratar y recibir ayuda"
+    secondaryHref="#descargas"
+    secondaryLabel="Ir a las descargas"
+  />
+
+  <Downloads
+    whatsapp={STELLA.whatsapp}
+    waTag={TAG}
+    title="Descargas y <em>códigos actualizados</em>"
+  />
+
+  <InstallGuide whatsapp={STELLA.whatsapp} waTag={TAG} />
+
+  <FAQ items={faqItems} />
+
+  <RelatedGuides guides={guides} title="Sigue <em>leyendo</em>" />
+
+  <CTAFinal
+    whatsapp={STELLA.whatsapp}
+    waTag={TAG}
+    currency={STELLA.currency}
+    monthlyOffer={STELLA.plans[0].price}
+    title="¿Todavía no tienes plan?"
+    waText="Hola, quiero contratar Stella TV en Perú."
+    sub="Te confirmamos el monto en soles y te ayudamos con la instalación"
+  />
+</main>
+
+<Footer
+  whatsapp={STELLA.whatsapp}
+  waTag={TAG}
+  country="Perú"
+  sectionLinks={[
+    { href: '#descargas', label: 'Descargas' },
+    { href: '#guia', label: 'Paso a paso por equipo' },
+    { href: '#problemas', label: 'Problemas frecuentes' },
+    { href: '#faq', label: 'Preguntas frecuentes' },
+  ]}
+  pageLinks={PE_FOOTER_PAGES.filter(l => l.href !== '/instalar-stella-tv/')}
+  siteLinks={PE_SITE_LINKS}
+/>
+
+<WhatsAppFloat whatsapp={STELLA.whatsapp} waTag={TAG} waText="Hola, necesito ayuda para instalar Stella TV." />
+
+<StickyMobileCTA
+  whatsapp={STELLA.whatsapp}
+  waTag={TAG}
+  currency={STELLA.currency}
+  monthlyOffer={STELLA.plans[0].price}
+  waText="Hola, quiero contratar Stella TV en Perú."
+/>

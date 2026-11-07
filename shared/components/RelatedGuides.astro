@@ -1,0 +1,53 @@
+---
+// Enlaces internos a otras páginas del MISMO sitio de Oleada (guías, precios).
+// Nunca enlaza a stellatvplus.com.
+interface Guide { href: string; title: string; desc: string; }
+interface Props {
+  guides: Guide[];
+  title?: string;
+}
+const { guides, title = 'Guías <em>útiles</em>' } = Astro.props;
+---
+{guides.length > 0 && (
+  <section class="guides" aria-labelledby="guides-title">
+    <div class="inner">
+      <h2 id="guides-title" class="section-title reveal" set:html={title}></h2>
+      <div class="guides-grid">
+        {guides.map(g => (
+          <a href={g.href} class="guide-card reveal">
+            <span class="guide-title">{g.title}</span>
+            <span class="guide-desc">{g.desc}</span>
+            <span class="guide-more" aria-hidden="true">Ver guía →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .guides { padding: clamp(56px, 8vw, 88px) 20px; text-align: center; }
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .guide-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    padding: 22px 22px 20px;
+    border-radius: var(--radius-lg, 18px);
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+    background: var(--glass-bg, rgba(255,255,255,0.03));
+    text-decoration: none;
+    transition: border-color var(--t-base, .2s), transform var(--t-base, .2s);
+  }
+  .guide-card:hover { border-color: var(--orange-border); transform: translateY(-2px); }
+  .guide-title { color: #fff; font-weight: 700; font-size: 1.02rem; }
+  .guide-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; }
+  .guide-more { color: var(--orange); font-size: 0.86rem; font-weight: 600; margin-top: auto; }
+</style>

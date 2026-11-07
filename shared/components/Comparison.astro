@@ -3,16 +3,15 @@ interface CompareRow { label: string; service: string; cable: string; }
 interface Props { currency: string; monthlyOffer: string; brand?: string; rows?: CompareRow[]; }
 const { currency, monthlyOffer, brand = 'Nosotros' } = Astro.props;
 
-// Default sin cambios — si una landing no pasa `rows`, el resultado es idéntico
-// al que ya tenían PE (único que usa este componente hoy).
+// Default genérico. Sin precios inventados del cable ni de otras monedas: solo
+// el precio publicado del plan y diferencias cualitativas.
 const defaultRows: CompareRow[] = [
-  { label: 'Precio mensual',     service: `${currency} ${monthlyOffer}`, cable: 'Desde S/ 80' },
-  { label: 'Contrato mínimo',    service: 'Sin permanencia',  cable: '12 a 24 meses' },
-  { label: 'Instalación',        service: 'Online, inmediata', cable: 'Técnico en casa' },
-  { label: 'Dispositivos',       service: 'TV, celular, tablet', cable: 'Solo TV principal' },
-  { label: 'Método de pago',     service: 'Yape / Plin',      cable: 'Factura mensual fija' },
-  { label: 'Activación',         service: 'En 5 minutos',     cable: '3 a 5 días hábiles' },
-  { label: 'Soporte',            service: 'WhatsApp 24/7',    cable: 'Call center limitado' },
+  { label: 'Precio mensual',     service: `Desde ${currency}${monthlyOffer}`, cable: 'Según operador y paquete' },
+  { label: 'Contrato mínimo',    service: 'Sin permanencia',  cable: 'Suele exigir permanencia' },
+  { label: 'Instalación',        service: 'Por WhatsApp, sin técnico', cable: 'Visita técnica' },
+  { label: 'Dispositivos',       service: 'TV, celular y tablet Android', cable: 'Decodificador en la TV' },
+  { label: 'Activación',         service: 'El mismo día',     cable: 'Según agenda del técnico' },
+  { label: 'Soporte',            service: 'Por WhatsApp',     cable: 'Call center' },
 ];
 const rows = Astro.props.rows ?? defaultRows;
 

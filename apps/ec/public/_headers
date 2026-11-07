@@ -1,0 +1,5 @@
+# El proyecto de Cloudflare Pages también publica este sitio en
+# oleadatvlanding07.pages.dev (verificado 7 nov 2026: 200 e indexable).
+# Esta regla solo aplica a ese host; ec.oleadatvplus.com no se ve afectado.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex

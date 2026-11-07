@@ -246,6 +246,7 @@ a:focus-visible, button:focus-visible {
 .hero {
   min-height: calc(100svh - var(--navbar-h));
   background: url('/img/hero.webp') center / cover no-repeat;
+  /* móvil: ver media query más abajo (hero-m.webp, 828px) */
   position: relative;
   display: flex;
   align-items: center;
@@ -495,7 +496,7 @@ a:focus-visible, button:focus-visible {
 .plan-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); transform: scale(1.01); }
 .plan-card.featured .plan-btn { background: var(--orange); color: #fff; border-color: var(--orange); box-shadow: 0 4px 24px rgba(255,69,0,0.4); }
 .plan-card.featured .plan-btn:hover { background: var(--orange-dark); }
-.plans-note { margin-top:1.8rem; font-size:0.8rem; color:var(--text-dim); display:flex; align-items:center; justify-content:center; gap:6px; }
+.plans-note { margin-top:1.8rem; font-size:0.8rem; color:var(--text-muted); display:flex; align-items:center; justify-content:center; gap:6px; }
 .plans-payment { margin-top:1rem; display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
 .payment-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:0.78rem; font-weight:600; color:var(--text-muted); letter-spacing:0.06em; }
 .payment-badge svg { color:var(--orange); flex-shrink:0; }
@@ -766,4 +767,9 @@ details[open] .faq-chevron { transform:rotate(180deg); color:var(--orange); }
   .hero { padding-bottom:48px; }
   .hero-buttons { flex-direction:column; align-items:stretch; }
   .hero-buttons .btn-wa, .hero-buttons .btn-ghost { width:100%; }
+}
+
+/* Hero liviano en móvil (LCP): 828px / ~35-45 KB en vez de la imagen de 4000+px */
+@media (max-width: 768px) {
+  .hero { background-image: url('/img/hero-m.webp'); }
 }

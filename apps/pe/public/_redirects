@@ -10,3 +10,8 @@ http://oleadatvplus.com/* https://oleadatvplus.com/:splat 301
 # Redirección de la antigua landing de Magis TV por si alguien la guardó
 /alternativa-magis-tv /tv-sin-cortes-peru/ 301
 /alternativa-magis-tv/ /tv-sin-cortes-peru/ 301
+
+# Variantes cortas hacia la guía de instalación
+/instalar /instalar-stella-tv/ 301
+/descargar /instalar-stella-tv/ 301
+/descargas /instalar-stella-tv/ 301

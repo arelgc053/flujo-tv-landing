@@ -1,9 +1,10 @@
 ---
+import { waHref } from '../lib/wa';
+
 interface Plan {
   id: string;
   label: string;
   price: string;
-  usd?: string;
   badge?: string;
   bonus?: string;
   saving?: string;
@@ -21,18 +22,22 @@ interface Props {
   currency: string;
   plans: Plan[];
   whatsapp: string;
+  waTag: string;
   brand: string;
   features?: string[];
   paymentMethods: (string | PaymentMethodWithIcon)[];
   title?: string;
   subtitle?: string;
   note?: string;
+  /** Aclaración sobre el pago en moneda local (se muestra bajo los métodos de pago). */
+  paymentNote?: string;
 }
 
 const {
   currency,
   plans,
   whatsapp,
+  waTag,
   brand,
   features = [
     '+1,000 Canales',
@@ -46,6 +51,7 @@ const {
   title = 'Elige tu <em>plan</em>',
   subtitle = 'Sin contratos · Sin permanencia · Actívate hoy',
   note = 'Todos los planes incluyen el mismo contenido — solo cambia la duración.',
+  paymentNote,
 } = Astro.props;
 
 const checkIcon = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
@@ -59,8 +65,8 @@ const badgeIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="current
 
     <div class="plans-grid plans-grid-4">
       {plans.map(plan => {
-        const waText = `Hola, quiero el plan ${plan.label} de ${brand} (${currency}${plan.price})`;
-        const wa = `https://wa.me/${whatsapp}?text=${encodeURIComponent(waText)}`;
+        const waText = `Hola, quiero el plan ${plan.label} de ${brand} (${currency}${plan.price}).`;
+        const wa = waHref(whatsapp, waText, waTag);
         return (
           <div class:list={['plan-card', 'reveal', { featured: plan.featured }]}>
             {plan.badge && (
@@ -71,7 +77,6 @@ const badgeIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="current
             )}
             <p class="plan-name">{plan.label}</p>
             <p class="plan-offer"><sup>{currency}</sup>{plan.price}</p>
-            {plan.usd && <p class="plan-usd">≈ USD ${plan.usd}</p>}
             {(plan.bonus || plan.saving) && (
               <p class="plan-saving">{[plan.bonus, plan.saving].filter(Boolean).join(' · ')}</p>
             )}
@@ -82,7 +87,7 @@ const badgeIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="current
                 </li>
               ))}
             </ul>
-            <a href={wa} target="_blank" rel="noopener noreferrer" class="plan-btn">
+            <a href={wa} target="_blank" rel="noopener noreferrer" class="plan-btn" data-track-location={`planes-${plan.id}`}>
               <Fragment set:html={waIcon} />
               Quiero {plan.label}
             </a>
@@ -104,5 +109,17 @@ const badgeIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="current
         return <span class="payment-badge">{icon && <Fragment set:html={icon} />}{label}</span>;
       })}
     </div>
+    {paymentNote && <p class="plans-note plans-note-local reveal">{paymentNote}</p>}
   </div>
 </section>
+
+<style>
+  .plans-note-local {
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 1rem auto 0;
+    line-height: 1.6;
+    text-align: center;
+    display: block;
+  }
+</style>

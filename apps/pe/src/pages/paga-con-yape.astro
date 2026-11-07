@@ -5,31 +5,34 @@ import Hero           from '@shared/components/Hero.astro';
 import StatsBar       from '@shared/components/StatsBar.astro';
 import HowItWorks     from '@shared/components/HowItWorks.astro';
 import Plans          from '@shared/components/Plans.astro';
-import Testimonials   from '@shared/components/Testimonials.astro';
+import BeforePaying from '@shared/components/BeforePaying.astro';
 import Devices        from '@shared/components/Devices.astro';
-import Installation   from '@shared/components/Installation.astro';
+import Downloads      from '@shared/components/Downloads.astro';
 import FAQ            from '@shared/components/FAQ.astro';
 import CTAFinal       from '@shared/components/CTAFinal.astro';
 import Footer         from '@shared/components/Footer.astro';
 import WhatsAppFloat  from '@shared/components/WhatsAppFloat.astro';
 import StickyMobileCTA from '@shared/components/StickyMobileCTA.astro';
-import BrandTransitionStrip from '../components/BrandTransitionStrip.astro';
+import SellerNotice from '@shared/components/SellerNotice.astro';
+import { waTag } from '@shared/lib/wa';
+import { PE_FOOTER_PAGES, PE_SITE_LINKS, PE_SUBPAGE_NAV, PE_INSTALL_PATH } from '../site';
 import InternalSeoLinks from '../components/InternalSeoLinks.astro';
-import { internalSeoLinks, seoContent, stellaTestimonials } from '../seoContent';
+import { internalSeoLinks, seoContent } from '../seoContent';
 import { STELLA } from '../stella.config';
 
 const pageSeo = seoContent.pagaConYape;
 const monthly = STELLA.plans[0];
-const longest = STELLA.plans[STELLA.plans.length - 1];
+const TAG = waTag('PE', 'YAPE');
+const priceFrom = `${STELLA.currency}${monthly.price}`;
 
 const faqItems = [
   {
     q: '¿Cómo pago con Yape para activar mi TV?',
-    a: 'Escríbenos por WhatsApp, elige tu plan y te damos el número de Yape. Yapeas el monto, nos mandas la captura de pantalla, y en minutos tienes tu acceso activado.',
+    a: 'Escríbenos por WhatsApp, elige tu plan y te confirmamos el monto en soles y el número de Yape. Yapeas, nos mandas la captura de pantalla y, al validar el pago, te enviamos tu acceso.',
   },
   {
     q: '¿Es seguro pagar con Yape para este servicio?',
-    a: 'Sí. Yape es el método de pago más usado en Perú porque es instantáneo y queda registrado. Miles de clientes pagaron con Yape sin ningún problema.',
+    a: 'Sí. Yape es instantáneo y el pago queda registrado en tu app, así que siempre tienes el comprobante.',
   },
   {
     q: '¿También aceptan Plin?',
@@ -37,7 +40,7 @@ const faqItems = [
   },
   {
     q: '¿Qué pasa si hago el Yape y no recibo mi acceso?',
-    a: 'Eso no ocurre. Pero si por alguna razón hay demora, nuestro soporte por WhatsApp está disponible todo el día. Respondemos en minutos y resolvemos de inmediato.',
+    a: 'Escríbenos por WhatsApp con la captura del pago y lo revisamos. El acceso se envía en cuanto el pago queda validado.',
   },
   {
     q: '¿Puedo pagar mensual con Yape cada mes?',
@@ -45,7 +48,7 @@ const faqItems = [
   },
   {
     q: '¿Cuánto tiempo después de yapear me activan?',
-    a: 'En minutos. Nuestro equipo confirma el pago al instante y te envía las credenciales por el mismo WhatsApp.',
+    a: 'En cuanto validamos el pago te enviamos las credenciales por el mismo WhatsApp.',
   },
   {
     q: '¿Aceptan otros métodos de pago además de Yape?',
@@ -61,25 +64,17 @@ const faqItems = [
   },
   {
     q: '¿Hay algún costo adicional por pagar con Yape?',
-    a: `No. El precio que te damos es el precio final — desde S/ ${monthly.price} al mes. Yape no cobra comisión al que paga, solo al comercio, y nosotros no te trasladamos ese costo.`,
+    a: `No. Los precios se publican en dólares (desde ${priceFrom} al mes) y antes de pagar te confirmamos el monto final en soles: ese es el monto que yapeas o plineas.`,
   },
 ];
 
 const productSchema = {
   name: `${STELLA.brand} — TV por Internet con Pago por Yape`,
-  description: `Activa tu TV por internet pagando con Yape o Plin. En minutos tienes tu acceso. Desde S/ ${monthly.price} al mes sin tarjetas ni contratos.`,
+  description: `Activa tu TV por internet pagando con Yape o Plin. En minutos tienes tu acceso. Desde ${priceFrom} al mes sin tarjetas ni contratos.`,
   price: monthly.price,
-  priceCurrency: 'PEN',
+  priceCurrency: 'USD',
 };
 
-const localBusiness = {
-  siteName: STELLA.brand,
-  telephone: `+${STELLA.whatsapp}`,
-  priceRange: `S/ ${monthly.price} - S/ ${longest.price}`,
-  currenciesAccepted: 'PEN',
-  paymentAccepted: 'Yape, Plin',
-  areaServed: ['Perú', 'Lima', 'Arequipa', 'Trujillo', 'Cusco', 'Piura'],
-};
 
 const breadcrumb = [
   { name: 'Inicio', url: 'https://oleadatvplus.com/' },
@@ -88,10 +83,10 @@ const breadcrumb = [
 ---
 <BaseLayout
   title={`TV por Internet con Yape en Perú — ${STELLA.brand} | Activación por WhatsApp`}
-  description={`Activa tu TV por internet pagando con Yape o Plin. En minutos tienes acceso en tu TV Box, celular o tablet. Desde S/ ${monthly.price} al mes.`}
+  description={`Activa tu TV por internet pagando con Yape o Plin. En minutos tienes acceso en tu TV Box, celular o tablet. Desde ${priceFrom} al mes.`}
   keywords="tv por internet yape peru, activar tv con yape, pagar tv online yape, tv yape peru, suscripcion tv yape, tv por internet plin peru, canales online yape, activar tv sin tarjeta peru, tv digital yape peru, stella tv yape"
   canonical="https://oleadatvplus.com/paga-con-yape/"
-  brand={STELLA.brand}
+  country="PE"
   whatsapp={STELLA.whatsapp}
   lang="es-PE"
   locale="es_PE"
@@ -100,24 +95,24 @@ const breadcrumb = [
   geoPosition="-12.0464;-77.0428"
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA.rating.value, reviewCount: STELLA.rating.count }}
-  localBusiness={localBusiness}
+  organization={{ telephone: `+${STELLA.whatsapp}`, areaServed: STELLA.areaServed }}
   breadcrumb={breadcrumb}
 />
 
-<BrandTransitionStrip previousBrand={STELLA.previousBrand} brand={STELLA.brand} />
-<Navbar brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
+<SellerNotice country="Perú" />
+<Navbar whatsapp={STELLA.whatsapp} waTag={TAG} links={PE_SUBPAGE_NAV} />
 
 <main>
   <Hero
     brand={STELLA.brand}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     headlineTop="Paga con Yape y ten tu TV"
     headlineEm="lista en minutos"
     sub={`La forma más fácil de activar ${STELLA.brand}. Yapeas o plineas el monto, nos avisas por WhatsApp, y listo — sin tarjetas, sin formularios, sin esperas.`}
-    badge="Acepta Yape y Plin al instante"
+    badge="Paga con Yape o Plin"
     waText={`Hola, quiero pagar con Yape y activar ${STELLA.brand}`}
   />
 
@@ -128,18 +123,21 @@ const breadcrumb = [
     currency={STELLA.currency}
     plans={STELLA.plans}
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     brand={STELLA.brand}
     features={STELLA.planFeatures}
     paymentMethods={STELLA.paymentMethods}
+    paymentNote={STELLA.paymentNote}
   />
 
-  <Testimonials testimonials={stellaTestimonials} />
+  <BeforePaying whatsapp={STELLA.whatsapp} waTag={TAG} paymentText={STELLA.beforePayingText} />
   <Devices />
-  <Installation whatsapp={STELLA.whatsapp} brand={STELLA.brand} downloaderCode={STELLA.downloaderCode} />
+  <Downloads whatsapp={STELLA.whatsapp} waTag={TAG} guideHref={PE_INSTALL_PATH} />
   <FAQ items={faqItems} />
 
   <CTAFinal
     whatsapp={STELLA.whatsapp}
+    waTag={TAG}
     currency={STELLA.currency}
     monthlyOffer={monthly.price}
     brand={STELLA.brand}
@@ -148,10 +146,11 @@ const breadcrumb = [
   <InternalSeoLinks links={internalSeoLinks.pagaConYape} />
 </main>
 
-<Footer brand={STELLA.brand} whatsapp={STELLA.whatsapp} />
-<WhatsAppFloat whatsapp={STELLA.whatsapp} brand={STELLA.brand} />
+<Footer whatsapp={STELLA.whatsapp} waTag={TAG} country="Perú" pageLinks={PE_FOOTER_PAGES} siteLinks={PE_SITE_LINKS} />
+<WhatsAppFloat whatsapp={STELLA.whatsapp} waTag={TAG} brand={STELLA.brand} />
 <StickyMobileCTA
   whatsapp={STELLA.whatsapp}
+  waTag={TAG}
   currency={STELLA.currency}
   monthlyOffer={monthly.price}
   brand={STELLA.brand}

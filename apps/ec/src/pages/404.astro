@@ -5,16 +5,19 @@ import EcuadorNavbar       from '../components/EcuadorNavbar.astro';
 import Footer              from '@shared/components/Footer.astro';
 import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
 import { STELLA_EC } from '../stella.config';
+import { EC_FOOTER_PAGES } from '../site';
+import { waHref, waTag } from '@shared/lib/wa';
 
-const waLink = `https://wa.me/${STELLA_EC.whatsapp}?text=${encodeURIComponent(`Hola, quiero información sobre ${STELLA_EC.brand}`)}`;
+const TAG = waTag('EC', '404');
+const waLink = waHref(STELLA_EC.whatsapp, `Hola, quiero información sobre ${STELLA_EC.brand}.`, TAG);
 ---
 <BaseLayout
-  title={`Página no encontrada — ${STELLA_EC.brand}`}
-  description={`La página que buscas no existe o fue movida. Vuelve al inicio de ${STELLA_EC.brand} o escríbenos por WhatsApp.`}
-  keywords="stella tv ecuador"
+  title="Página no encontrada — Oleada TV"
+  description="La página que buscas no existe o fue movida. Vuelve al inicio o escríbenos por WhatsApp."
+  preloadHero={false}
   canonical="https://ec.oleadatvplus.com/404"
-  brand={STELLA_EC.brand}
-  author={STELLA_EC.brand}
+  country="EC"
+  whatsapp={STELLA_EC.whatsapp}
   lang="es-EC"
   locale="es_EC"
   geoRegion="EC"
@@ -22,7 +25,7 @@ const waLink = `https://wa.me/${STELLA_EC.whatsapp}?text=${encodeURIComponent(`H
   noindex
 />
 
-<EcuadorNavbar whatsapp={STELLA_EC.whatsapp} />
+<EcuadorNavbar whatsapp={STELLA_EC.whatsapp} waTag={TAG} anchorBase="/" />
 
 <main>
   <section class="not-found">
@@ -33,15 +36,15 @@ const waLink = `https://wa.me/${STELLA_EC.whatsapp}?text=${encodeURIComponent(`H
         Puede que el enlace esté roto o que la página se haya movido. Vuelve al inicio o escríbenos por WhatsApp y te ayudamos directamente.
       </p>
       <div class="not-found-actions">
-        <a href="/" class="btn-wa">Volver al inicio</a>
-        <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-ghost">Escribir por WhatsApp</a>
+        <a href="/" class="btn-ghost">Volver al inicio</a>
+        <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-wa">Escribir por WhatsApp</a>
       </div>
     </div>
   </section>
 </main>
 
-<Footer brand={STELLA_EC.brand} whatsapp={STELLA_EC.whatsapp} />
-<EcuadorWhatsAppFloat whatsapp={STELLA_EC.whatsapp} />
+<Footer whatsapp={STELLA_EC.whatsapp} waTag={TAG} country="Ecuador" sectionLinks={[{ href: "/", label: "Inicio" }]} pageLinks={EC_FOOTER_PAGES.slice(1)} />
+<EcuadorWhatsAppFloat whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <style>
   .not-found {

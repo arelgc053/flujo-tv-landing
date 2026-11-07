@@ -9,7 +9,7 @@ import EcuadorPlans        from '../components/EcuadorPlans.astro';
 import ActivationStrip     from '../components/ActivationStrip.astro';
 import EcuadorShowcase     from '../components/EcuadorShowcase.astro';
 import EcuadorDevices      from '../components/EcuadorDevices.astro';
-import EcuadorTestimonials from '../components/EcuadorTestimonials.astro';
+import BeforePaying         from '@shared/components/BeforePaying.astro';
 import EcuadorHowItWorks   from '../components/EcuadorHowItWorks.astro';
 import EcuadorCTAFinal     from '../components/EcuadorCTAFinal.astro';
 import EcuadorWhatsAppFloat from '../components/EcuadorWhatsAppFloat.astro';
@@ -17,27 +17,22 @@ import EcuadorStickyMobileCTA from '../components/EcuadorStickyMobileCTA.astro';
 import EcuadorInternalSeoLinks from '../components/EcuadorInternalSeoLinks.astro';
 import { internalSeoLinks } from '../internalLinks';
 import { STELLA_EC } from '../stella.config';
+import SellerNotice from '@shared/components/SellerNotice.astro';
+import Downloads from '@shared/components/Downloads.astro';
+import { waTag } from '@shared/lib/wa';
+import { EC_FOOTER_PAGES, EC_SITE_LINKS } from '../site';
 
-const COUNTRY = {
-  brand:           'Oleada TV',
-  whatsapp:        '51940405911',
-  currency:        '$',
-  monthlyOriginal: '6',
-  monthlyOffer:    '4.99',
-  annualOriginal:  '65',
-  annualOffer:     '49.99',
-  annualSaving:    '9.89',
-  paymentMethods:  ['PayPal', 'Tarjeta de crédito/débito'],
-};
+const TAG = waTag('EC', 'DEPORTES');
+const monthly = STELLA_EC.plans[0];
 
 const faqItems = [
   {
-    q: '¿Qué deportes puedo ver por internet con Oleada TV en Ecuador?',
-    a: 'Fútbol ecuatoriano e internacional, el Mundial 2026 y otros eventos deportivos en vivo, directamente desde tu TV Box, Fire Stick, celular o tablet. Sin cable ni antena, solo conexión a internet.',
+    q: '¿Qué deportes puedo ver por internet con Stella TV en Ecuador?',
+    a: 'Partidos y competencias de distintas disciplinas en vivo, directamente desde tu TV Box, Fire TV, celular o tablet. Sin cable ni antena, solo conexión a internet.',
   },
   {
-    q: '¿Puedo ver los partidos de la Selección de Ecuador y el Mundial 2026?',
-    a: 'Sí. Con Oleada TV sigues en vivo los partidos de la Selección de Ecuador, incluyendo el Mundial 2026, además de fútbol nacional e internacional durante todo el año.',
+    q: '¿Puedo consultar si un partido o evento está disponible?',
+    a: 'Sí. Escríbenos por WhatsApp antes de contratar y te confirmamos si el evento que buscas está en la programación.',
   },
   {
     q: '¿La señal aguanta bien en partidos importantes?',
@@ -49,11 +44,11 @@ const faqItems = [
   },
   {
     q: '¿Puedo ver deportes desde mi celular si estoy fuera de casa?',
-    a: 'Sí. Oleada TV es compatible con celulares y tablets Android, así que puedes seguir tus partidos favoritos con datos móviles o WiFi estés donde estés.',
+    a: 'Sí. Stella TV es compatible con celulares y tablets Android, así que puedes seguir tus partidos favoritos con datos móviles o WiFi estés donde estés.',
   },
   {
     q: '¿Cuánto cuesta ver deportes por internet en Ecuador?',
-    a: `Desde $${COUNTRY.monthlyOffer} al mes con el plan mensual, o desde $${COUNTRY.annualOffer} al año si prefieres ahorrar viendo deportes todo el año.`,
+    a: `Desde $${monthly.price} al mes con el plan mensual, o desde $${STELLA_EC.plans[3].price} al año si prefieres ahorrar viendo deportes todo el año.`,
   },
   {
     q: '¿Debo activar algo especial antes de un partido importante?',
@@ -61,25 +56,17 @@ const faqItems = [
   },
   {
     q: '¿Funciona en TV Box, Fire Stick y Android TV?',
-    a: 'Sí. Oleada TV es compatible con TV Box Android, Amazon Fire Stick y Android TV. Te guiamos por WhatsApp para dejarlo listo antes del próximo partido.',
+    a: 'Sí. Stella TV es compatible con TV Box Android, Amazon Fire Stick y Android TV. Te guiamos por WhatsApp para dejarlo listo antes del próximo partido.',
   },
 ];
 
 const productSchema = {
-  name: 'Oleada TV — Deportes y Fútbol por Internet en Ecuador',
-  description: 'Ve fútbol ecuatoriano, el Mundial 2026 y otros deportes en vivo por internet en Ecuador, sin cable, desde $4.99 al mes. Pago en USD, activación por WhatsApp.',
-  price: COUNTRY.monthlyOffer,
+  name: 'Stella TV — Deportes y Fútbol por Internet en Ecuador',
+  description: 'Ve fútbol y otros deportes en vivo por internet en Ecuador, sin cable, desde $9 al mes. Pago en USD, activación por WhatsApp.',
+  price: monthly.price,
   priceCurrency: 'USD',
 };
 
-const localBusiness = {
-  siteName: 'Oleada TV',
-  telephone: '+51940405911',
-  priceRange: `$ ${COUNTRY.monthlyOffer} - $ ${COUNTRY.annualOffer}`,
-  currenciesAccepted: 'USD',
-  paymentAccepted: 'PayPal, Tarjeta de Crédito, Tarjeta de Débito',
-  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
-};
 
 const breadcrumb = [
   { name: 'Inicio', url: 'https://ec.oleadatvplus.com/' },
@@ -87,13 +74,12 @@ const breadcrumb = [
 ];
 ---
 <BaseLayout
-  title={`Ver Deportes por Internet en Ecuador — ${STELLA_EC.brand} | Fútbol y Mundial 2026 en Vivo`}
-  description="Ve fútbol, el Mundial 2026 y otros deportes en vivo por internet en Ecuador, sin cable. Desde $4.99 al mes, pago en USD y activación guiada por WhatsApp."
-  keywords="ver deportes por internet ecuador, futbol en vivo ecuador, deportes en vivo ecuador, ver futbol ecuatoriano online, ver mundial 2026 ecuador en vivo, partidos de ecuador mundial 2026, deportes online quito, deportes online guayaquil, tv deportiva por internet ecuador, ver liga pro ecuador online"
+  title={`Ver Deportes por Internet en Ecuador — ${STELLA_EC.brand} | Fútbol en Vivo`}
+  description="Ve fútbol y otros deportes en vivo por internet en Ecuador, sin cable. Desde $9 al mes, pago en USD y activación guiada por WhatsApp."
+  keywords="ver deportes por internet ecuador, futbol en vivo ecuador, deportes en vivo ecuador, ver futbol ecuatoriano online, deportes online quito, deportes online guayaquil, tv deportiva por internet ecuador, ver liga pro ecuador online"
   canonical="https://ec.oleadatvplus.com/ver-deportes-por-internet-ecuador"
-  brand={STELLA_EC.brand}
-  author="Oleada TV Ecuador"
-  twitterCreator="@oleadatvplus"
+  country="EC"
+  whatsapp={STELLA_EC.whatsapp}
   themeColor="#00C853"
   lang="es-EC"
   locale="es_EC"
@@ -102,35 +88,38 @@ const breadcrumb = [
   geoPosition="-1.8312;-78.1834"
   faqSchema={faqItems}
   productSchema={productSchema}
-  aggregateRating={{ ratingValue: STELLA_EC.rating.value, reviewCount: STELLA_EC.rating.count }}
-  localBusiness={localBusiness}
+  organization={{ telephone: `+${STELLA_EC.whatsapp}`, areaServed: STELLA_EC.areaServed }}
   breadcrumb={breadcrumb}
 />
 
-<EcuadorNavbar whatsapp={COUNTRY.whatsapp} />
+<SellerNotice country="Ecuador" />
+<EcuadorNavbar whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <main>
   <EcuadorHero
-    whatsapp={COUNTRY.whatsapp}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
     country="Ecuador"
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
-    badge="Fútbol, deportes y Mundial 2026 en un solo lugar"
+    currency={STELLA_EC.currency}
+    monthlyOffer={monthly.price}
+    badge="Deportes en vivo en tu pantalla"
     headlineTop="Tus deportes en vivo,"
     headlineEm="sin cable ni antena"
-    sub="Fútbol ecuatoriano, el Mundial 2026 y otros eventos deportivos en vivo desde tu TV Box, Fire Stick, celular o tablet. Activación guiada por WhatsApp y pago en dólares."
-    waText="Hola, quiero ver deportes y fútbol en vivo con Oleada TV en Ecuador"
+    sub="Partidos y competencias en vivo desde tu TV Box, Fire TV, celular o tablet. Activación guiada por WhatsApp y pago en dólares."
+    waText="Hola, quiero ver deportes y fútbol en vivo con Stella TV en Ecuador"
   />
 
   <ActivationStrip
-    whatsapp={COUNTRY.whatsapp}
-    paymentMethods={COUNTRY.paymentMethods}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
+    paymentMethods={STELLA_EC.paymentMethods}
   />
 
   <EcuadorPlans
     currency={STELLA_EC.currency}
     plans={STELLA_EC.plans}
     whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
     brand={STELLA_EC.brand}
     features={STELLA_EC.planFeatures}
     paymentMethods={STELLA_EC.paymentMethods}
@@ -140,27 +129,31 @@ const breadcrumb = [
 
   <EcuadorDevices />
 
-  <EcuadorTestimonials />
+  <BeforePaying whatsapp={STELLA_EC.whatsapp} waTag={TAG} paymentText={STELLA_EC.beforePayingText} />
 
   <EcuadorHowItWorks />
+
+  <Downloads whatsapp={STELLA_EC.whatsapp} waTag={TAG} guideHref="/instalar-stella-tv" />
 
   <FAQ items={faqItems} />
 
   <EcuadorCTAFinal
-    whatsapp={COUNTRY.whatsapp}
-    currency={COUNTRY.currency}
-    monthlyOffer={COUNTRY.monthlyOffer}
+    whatsapp={STELLA_EC.whatsapp}
+    waTag={TAG}
+    currency={STELLA_EC.currency}
+    monthlyOffer={monthly.price}
   />
 
   <EcuadorInternalSeoLinks links={internalSeoLinks.verDeportesPorInternetEcuador} />
 </main>
 
-<Footer brand={COUNTRY.brand} whatsapp={COUNTRY.whatsapp} />
+<Footer whatsapp={STELLA_EC.whatsapp} waTag={TAG} country="Ecuador" pageLinks={EC_FOOTER_PAGES} siteLinks={EC_SITE_LINKS} />
 
-<EcuadorWhatsAppFloat whatsapp={COUNTRY.whatsapp} />
+<EcuadorWhatsAppFloat whatsapp={STELLA_EC.whatsapp} waTag={TAG} />
 
 <EcuadorStickyMobileCTA
-  whatsapp={COUNTRY.whatsapp}
-  currency={COUNTRY.currency}
-  monthlyOffer={COUNTRY.monthlyOffer}
+  whatsapp={STELLA_EC.whatsapp}
+  waTag={TAG}
+  currency={STELLA_EC.currency}
+  monthlyOffer={monthly.price}
 />

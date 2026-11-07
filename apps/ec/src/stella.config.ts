@@ -1,6 +1,18 @@
-// Fuente única de verdad para la marca Stella TV en apps/ec (ec.oleadatvplus.com).
-// Igual que apps/pe/src/stella.config.ts, pero con los datos confirmados de Ecuador.
-// Ver el plan aprobado (Prompt 2 Ecuador) para el detalle de cada valor.
+// Datos de ec.oleadatvplus.com — Oleada TV comercializa Stella TV en Ecuador.
+//
+// ESTADO (7 nov 2026): todas las URLs de este dominio responden 301 hacia
+// ec.stellatvplus.com/ por una regla de Cloudflare a nivel de zona. Lo que se
+// construye desde esta app NO se ve en producción hasta que esa regla se retire.
+//
+// Precios: dólares estadounidenses (moneda de Ecuador), iguales en PE/AR/EC
+// — shared/data/stella.ts. Se eliminó el objeto COUNTRY con precios viejos
+// ($4.99 / $49.99) que convivía con estos y se mostraba en hero, CTA y JSON-LD.
+// Pantallas: 3 simultáneas, como en PE/AR y como declara el producto oficial
+// (antes decía "Hasta 4 dispositivos" en planes y "1 dispositivo" en FAQ).
+// Códigos/APK: shared/data/stella.ts (DOWNLOADS). El 5360989 y el APK 26.3.4
+// quedaron obsoletos.
+
+import { USD_PLANS, SCREENS, CHANNELS_LABEL, effectiveMonthly, totalMonths } from '@shared/data/stella';
 
 export interface StellaPlan {
   id: string;
@@ -11,48 +23,40 @@ export interface StellaPlan {
   featured?: boolean;
 }
 
+const LABELS: Record<string, string> = { '1m': '1 mes', '3m': '3 meses', '6m': '6 meses', '12m': '12 meses' };
+
 export const STELLA_EC = {
   brand: 'Stella TV',
   whatsapp: '51940405911',
+  // En Ecuador el dólar es la moneda local: se muestra "$" como en el resto del sitio.
   currency: '$',
 
-  plans: [
-    { id: '1m', label: '1 Mes', price: '9' },
-    { id: '3m', label: '3 Meses', price: '27', badge: 'Más elegido', featured: true },
-    { id: '6m', label: '6 Meses', price: '49', bonus: '+1 mes gratis — 7 meses en total' },
-    { id: '12m', label: '12 Meses', price: '95', bonus: '+2 meses gratis — 14 meses en total' },
-  ] as StellaPlan[],
+  plans: USD_PLANS.map(p => ({
+    id: p.id,
+    label: LABELS[p.id],
+    price: String(p.price),
+    badge: p.id === '3m' ? 'Más elegido' : undefined,
+    featured: p.id === '3m',
+    bonus: p.bonusMonths
+      ? `+${p.bonusMonths} ${p.bonusMonths === 1 ? 'mes gratis' : 'meses gratis'} — ${totalMonths(p)} meses en total (equivale a $${effectiveMonthly(p)}/mes)`
+      : undefined,
+  })) as StellaPlan[],
 
-  // Iguales en los 4 planes — texto exacto confirmado. Centralizado acá para que
-  // ningún componente tenga que repetirlo ni volver a hardcodear las tarjetas.
   planFeatures: [
-    '+1,000 canales en vivo',
-    'Hasta 4 dispositivos simultáneos',
-    'Cine y Series VOD',
+    `${CHANNELS_LABEL} en vivo`,
+    `${SCREENS} pantallas simultáneas`,
+    'Cine y series a demanda',
     'Full HD y Ultra HD',
     'Soporte vía WhatsApp',
-    'Activación inmediata',
+    'Activación el mismo día',
   ],
 
-  paymentMethods: ['Transferencia bancaria', 'Visa', 'Mastercard', 'PayPal'],
+  // Verificado el 7 nov 2026 en la página oficial del producto para Ecuador (misma línea
+  // de WhatsApp): solo transferencia bancaria desde Banco Pichincha o Banco Guayaquil.
+  // Se retiraron Visa, Mastercard y PayPal: no había respaldo de que se acepten.
+  paymentMethods: ['Banco Pichincha', 'Banco Guayaquil'],
+  paymentText: 'transferencia bancaria desde Banco Pichincha o Banco Guayaquil',
+  beforePayingText: 'Precio en dólares, sin conversiones. Te enviamos por el mismo chat los datos para transferir desde Banco Pichincha o Banco Guayaquil.',
 
-  // Código Downloader confirmado para Ecuador — NO es el de Perú (8821026).
-  downloaderCode: '5360989' as string | null,
-
-  apk: {
-    version: 'v26.3.4',
-    url: 'https://github.com/Cristian1828/stellatv-movil/releases/download/v1/Stella_mobile_26.3.4.apk',
-  },
-
-  logo: {
-    icon: '/img/icon.png',
-    iconTouch: '/img/icon-180.png',
-    iconFavicon: '/img/icon-32.png',
-  },
-  ogImage: '/img/og-image.png',
-
-  areaServed: ['Ecuador', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato', 'Manta', 'Portoviejo', 'Loja', 'Esmeraldas'],
-
-  // Misma calificación general confirmada por el cliente (Google) el 22 ago 2026 — 4.8/5, 120 reseñas.
-  rating: { value: '4.8', count: '120' },
+  areaServed: ['Ecuador'],
 };

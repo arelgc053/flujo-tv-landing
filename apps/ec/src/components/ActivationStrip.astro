@@ -1,11 +1,13 @@
 ---
+import { waHref } from '@shared/lib/wa';
 interface Props {
   whatsapp: string;
+  waTag: string;
   paymentMethods: string[];
 }
 
-const { whatsapp, paymentMethods } = Astro.props;
-const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola, quiero que me guíen con Oleada TV en Ecuador')}`;
+const { whatsapp, waTag, paymentMethods } = Astro.props;
+const waLink = waHref(whatsapp, 'Hola, quiero que me guíen para contratar Stella TV en Ecuador.', waTag);
 
 const steps = [
   {
@@ -17,13 +19,13 @@ const steps = [
   {
     num: '02',
     title: 'Define el plan',
-    desc: 'Empieza mensual o toma el anual si quieres pagar menos durante el año.',
+    desc: 'Empieza con 1 mes o elige 3, 6 o 12 meses; los de 6 y 12 meses traen meses gratis.',
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
   },
   {
     num: '03',
     title: 'Confirma tu pago',
-    desc: `Paga con ${paymentMethods.join(' o ')} y comparte la confirmación por WhatsApp.`,
+    desc: `Paga por transferencia bancaria desde ${paymentMethods.join(' o ')} y comparte el comprobante por WhatsApp.`,
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>`,
   },
   {

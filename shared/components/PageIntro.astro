@@ -1,0 +1,108 @@
+---
+// Cabecera ligera para páginas internas (sin imagen de fondo: carga rápida en móvil).
+import { waHref } from '../lib/wa';
+
+interface Fact { label: string; value: string; }
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Segunda línea del H1, resaltada. */
+  titleEm?: string;
+  intro: string;
+  facts?: Fact[];
+  updated?: string;
+  whatsapp: string;
+  waTag: string;
+  waText: string;
+  ctaLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+const {
+  eyebrow,
+  title,
+  titleEm,
+  intro,
+  facts = [],
+  updated,
+  whatsapp,
+  waTag,
+  waText,
+  ctaLabel = 'Contratar por WhatsApp',
+  secondaryHref,
+  secondaryLabel,
+} = Astro.props;
+const wa = waHref(whatsapp, waText, waTag);
+---
+<header class="pi" id="inicio">
+  <div class="inner pi-inner">
+    {eyebrow && <p class="pi-eyebrow">{eyebrow}</p>}
+    <h1>{title}{titleEm && <><br /><em>{titleEm}</em></>}</h1>
+    <p class="pi-intro">{intro}</p>
+    {updated && <p class="pi-updated">Actualizado: {updated}</p>}
+
+    {facts.length > 0 && (
+      <dl class="pi-facts">
+        {facts.map(f => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    )}
+
+    <div class="pi-actions">
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-wa" data-track-location="cabecera">{ctaLabel}</a>
+      {secondaryHref && secondaryLabel && <a href={secondaryHref} class="btn-ghost">{secondaryLabel}</a>}
+    </div>
+  </div>
+</header>
+
+<style>
+  .pi {
+    padding: clamp(48px, 8vw, 88px) 20px clamp(40px, 6vw, 64px);
+    background: radial-gradient(ellipse at top, var(--orange-soft), transparent 60%), var(--bg, #070707);
+    border-bottom: 1px solid var(--border);
+  }
+  .pi-inner { max-width: 860px; text-align: center; }
+  .pi-eyebrow {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin: 0 0 14px;
+  }
+  .pi h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    margin: 0 0 18px;
+  }
+  .pi h1 em { font-style: normal; color: var(--orange); }
+  .pi-intro { color: var(--text-muted); font-size: clamp(1rem, 2.2vw, 1.12rem); line-height: 1.7; margin: 0 auto 10px; max-width: 700px; }
+  .pi-updated { font-size: 0.8rem; color: var(--text-muted); opacity: 0.85; margin: 0 0 22px; }
+  .pi-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin: 0 auto 26px;
+    max-width: 760px;
+  }
+  .pi-facts div {
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+    background: var(--glass-bg, rgba(255,255,255,0.03));
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+  .pi-facts dt { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 4px; }
+  .pi-facts dd { margin: 0; color: #fff; font-weight: 800; font-size: 1.15rem; letter-spacing: 0.02em; }
+  .pi-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  @media (max-width: 560px) {
+    .pi-actions a { width: 100%; justify-content: center; }
+  }
+</style>
